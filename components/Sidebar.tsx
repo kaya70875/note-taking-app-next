@@ -34,7 +34,7 @@ export default function Sidebar() {
     const [activeItem, setActiveItem] = useState('All Notes');
 
     return (
-        <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-72'>
+        <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-80 border-r border-neutral-300'>
             <header className='logo'>
                 <Image src={logo} alt="logo" width={100} height={100} />
             </header>
