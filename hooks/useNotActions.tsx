@@ -1,3 +1,4 @@
+import { mutate } from 'swr';
 import { Note } from '../types/notes';
 
 const useNoteActions =<T extends object> () => {
@@ -32,6 +33,37 @@ const useNoteActions =<T extends object> () => {
         }
     }
 
+    const updateNote = async (noteId : string , noteData : T) => {
+        /**
+   * Updates an existing note.
+   *
+   * @param {string} noteId - The ID of the note to be updated.
+   * @param {T} noteData - The data object for the notes to be updated.
+   */
+        try {
+            const response = await fetch('/api/noteMethods' , {
+                method : 'PUT',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body  : JSON.stringify({
+                    ...noteData,
+                    noteId,
+                })
+            })
+
+            if(response.ok) {
+                const result = await response.json();
+                console.log(result.message);
+                mutate('/api/getData');
+            } else {
+                console.log('Error updating note');
+            }
+        } catch(e){
+            console.log('Error updating note');
+        }
+    }
+
     const getRelevantNotes = async (noteId : string) : Promise<Note> => {
          /**
    * Gets relevant notes. This function fetches relevant notes based on the provided note ID. Should return a Promise.
@@ -61,7 +93,7 @@ const useNoteActions =<T extends object> () => {
             throw new Error('Error fetching note');
         }
     }
-    return {createNote , getRelevantNotes}
+    return {createNote, updateNote, getRelevantNotes}
 }
 
 export default useNoteActions;
