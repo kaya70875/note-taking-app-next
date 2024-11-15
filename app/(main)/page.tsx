@@ -34,7 +34,7 @@ export default function Home() {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full max-h-full">
       <Navbar />
       <div className="flex w-full h-full">
         <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 h-full">
