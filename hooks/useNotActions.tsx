@@ -1,3 +1,5 @@
+import { Note } from '../types/notes';
+
 const useNoteActions =<T extends object> () => {
     /**
    * Adds a new note.
@@ -30,7 +32,36 @@ const useNoteActions =<T extends object> () => {
         }
     }
 
-    return {createNote}
+    const getRelevantNotes = async (noteId : string) : Promise<Note> => {
+         /**
+   * Gets relevant notes. This function fetches relevant notes based on the provided note ID. Should return a Promise.
+   *
+   * @param {string} noteId - The ID of the note to be fetched.
+   */
+        try {
+            const response = await fetch('/api/getNoteDetails' , {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body  : JSON.stringify({
+                    noteId,
+                })
+            })
+            if(response.ok) {
+                const result = await response.json();
+                return result.data;
+                // Add mutate here.
+            } else {
+                console.log('Error fetching note');
+                throw new Error('Error fetching note');
+            }
+        }catch(e) {
+            console.log(e);
+            throw new Error('Error fetching note');
+        }
+    }
+    return {createNote , getRelevantNotes}
 }
 
 export default useNoteActions;
