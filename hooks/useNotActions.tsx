@@ -24,7 +24,7 @@ const useNoteActions =<T extends object> () => {
             if(response.ok) {
                 const result = await response.json();
                 console.log(result.message);
-                // Add mutate here.
+                mutate('/api/getData');
             } else {
                 console.log('Error creating note');
             }
@@ -64,6 +64,34 @@ const useNoteActions =<T extends object> () => {
         }
     }
 
+    const deleteNote = async (noteId : string) => {
+        /**
+   * Deletes a note.
+   *
+   * @param {string} noteId - The ID of the note to be deleted.
+   */
+        try {
+            const response = await fetch('/api/noteMethods' , {
+                method : 'DELETE',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body  : JSON.stringify(noteId),
+            })
+
+            if(response.ok) {
+                const result = await response.json();
+                console.log(result.message);
+                mutate('/api/getData');
+            } else {
+                console.log('Error deleting note');
+            }
+    }
+    catch(e){
+            console.log('Error deleting note');
+        }
+    }
+
     const getRelevantNotes = async (noteId : string) : Promise<Note> => {
          /**
    * Gets relevant notes. This function fetches relevant notes based on the provided note ID. Should return a Promise.
@@ -93,7 +121,7 @@ const useNoteActions =<T extends object> () => {
             throw new Error('Error fetching note');
         }
     }
-    return {createNote, updateNote, getRelevantNotes}
+    return {createNote, updateNote, deleteNote, getRelevantNotes}
 }
 
 export default useNoteActions;
