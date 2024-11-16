@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@components/Sidebar";
+import { ArchiveProvider } from "@context/ArchiveContext";
 
 export const metadata: Metadata = {
   title: "Note Taking App",
@@ -20,10 +21,13 @@ export default function RootLayout({
       <body
         className={inter.className}
       >
-        <main className="app">
-          <Sidebar />
-          {children}
-        </main>
+        <ArchiveProvider>
+          <main className="app">
+            <Sidebar />
+            {children}
+          </main>
+        </ArchiveProvider>
+
       </body>
     </html>
   );
