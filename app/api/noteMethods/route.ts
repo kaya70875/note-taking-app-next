@@ -1,5 +1,6 @@
 import Note from "@models/note";
 import { connectToDB } from "@utils/database";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -37,11 +38,10 @@ export async function PUT (request : Request) {
     await connectToDB();
     
     const body = await request.json();
-    console.log('body' , body);
     const {title , content , tags , noteId} = body;
     
     const updatedNote = await Note.findOneAndUpdate(
-      {id : noteId},
+      {_id : noteId},
       {
         content,
         tags,
@@ -59,6 +59,26 @@ export async function PUT (request : Request) {
     console.log('error updating note : ' , e);
     return NextResponse.json({
       message: "Error updating note",
+    });
+  }
+}
+
+export async function DELETE (request : Request) {
+  try {
+    await connectToDB();
+
+    const body = await request.json();
+    const noteId = body;
+
+    const deletedNote = await Note.findOneAndDelete({_id : noteId});
+    return NextResponse.json({
+      message : "Note deleted successfully",
+      data : deletedNote,
+    })
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({
+      message: "Error deleting note",
     });
   }
 }
