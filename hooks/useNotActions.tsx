@@ -121,7 +121,40 @@ const useNoteActions =<T extends object> () => {
             throw new Error('Error fetching note');
         }
     }
-    return {createNote, updateNote, deleteNote, getRelevantNotes}
+
+    const setArchivedNotes = async (noteId : string , shouldArchive : boolean) => {
+        /**
+   * Sets archived notes. This function sets the archived status of a note. Should return a Promise.
+   *
+   * @param {string} noteId - The ID of the note to be archived.
+   * @param {boolean} shouldArchive - The status of the note to be archived.
+   */
+        try {
+            const response = await fetch('/api/setArchivedNotes' , {
+                method : 'PUT',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body  : JSON.stringify({
+                    noteId,
+                    shouldArchive,
+                })
+            })
+            if(response.ok) {
+                const result = await response.json();
+                console.log(result.message);
+                mutate('/api/getData');
+            } else {
+                console.log('Error setting archived notes');
+                throw new Error('Error setting archived notes');
+            }
+        }catch(e) {
+            console.log(e);
+            throw new Error('Error setting archived notes');
+        }
+    }
+
+    return {createNote, updateNote, deleteNote, getRelevantNotes, setArchivedNotes}
 }
 
 export default useNoteActions;
