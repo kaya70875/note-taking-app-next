@@ -5,22 +5,17 @@ import logo from '@public/images/logo.svg';
 import SvgIcon from './reusables/SvgIcon';
 import { useState } from 'react';
 import { useArchive } from '@context/ArchiveContext';
+import useFetch from '@hooks/useFetch';
+import { TagsResponse } from '../types/notes';
 
 export default function Sidebar() {
+    const { isArchiveOpen ,setIsArchiveOpen} = useArchive();
 
-    const { isArchiveOpen,setIsArchiveOpen} = useArchive();
+    // Get all tags from database and filter theme only one category.
+    const {data, loading , error} = useFetch<TagsResponse>('/api/getAllTags');
 
-    const tags = [
-        'Cooking',
-        'Coding',
-        'Design',
-        'Travel',
-        'Fitness',
-        'Music',
-        'Dev',
-        'Health',
-        'Fashion',
-    ]
+    const tags = data?.data;
+    console.log('tags : ' , tags);
 
     const sidebarItems = [
         {
@@ -45,8 +40,6 @@ export default function Sidebar() {
         }
     }
 
-    console.log(isArchiveOpen);
-
     return (
         <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-80 border-r border-neutral-300'>
             <header className='logo'>
@@ -70,7 +63,7 @@ export default function Sidebar() {
                 <section className="flex flex-col gap-4">
                     <p className='text-neutral-600'>Tags</p>
                     <ul className='flex flex-col gap-4'>
-                        {tags.map(tag => (
+                        {tags && tags?.map(tag => (
                             <li key={tag} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === tag ? 'activeItem' : ''}`} onClick={() => setActiveItem(tag)}>
                                 <div className='flex items-center gap-4'>
                                     <div className={`${activeItem === tag ? 'text-blue-500' : 'text-neutral-950'}`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3.016 5.966c.003-1.411 1.07-2.677 2.456-2.916.284-.05 3.616-.042 4.995-.041 1.364 0 2.527.491 3.49 1.452 2.045 2.042 4.088 4.085 6.128 6.13 1.208 1.21 1.224 3.066.022 4.28a805.496 805.496 0 0 1-5.229 5.228c-1.212 1.201-3.069 1.186-4.279-.022-2.064-2.058-4.127-4.115-6.182-6.182-.795-.8-1.264-1.766-1.368-2.895-.084-.903-.035-4.26-.033-5.034Z" clipRule="evenodd"/><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.907 8.315a1.607 1.607 0 0 1-1.61 1.583c-.872-.002-1.599-.73-1.594-1.596a1.604 1.604 0 0 1 1.633-1.607c.864.003 1.575.736 1.571 1.62Z" clipRule="evenodd"/></svg></div>
