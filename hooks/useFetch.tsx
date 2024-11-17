@@ -1,27 +1,24 @@
-import { Note } from "../types/notes";
-import axios from "axios";
 import useSWR from "swr";
+import axios from "axios";
 
-interface NotesResponse {
-    notes: Note[];
-}
-
-const fetcher = async () => {
-    const response = await axios.get<NotesResponse>('/api/getData');
+// Generic Fetcher Function
+const fetcher = async <T,>(url: string): Promise<T> => {
+    const response = await axios.get<T>(url);
     return response.data;
-}
+};
 
-const useFetch = () => {
-    const { data, error, isValidating } = useSWR<NotesResponse>('/api/getData', fetcher, {
+// Generic Fetch Hook
+const useFetch = <T,>(endpoint: string) => {
+    const { data, error, isValidating } = useSWR<T>(endpoint, fetcher, {
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
         revalidateOnMount: true,
     });
 
     return {
-        data: data?.notes || [], // This will give an array of notes or an empty array
+        data: data || null, // Return null if no data
         loading: isValidating,
-        error: error ? error.message : '',
+        error: error?.message || '',
     };
 };
 

@@ -1,4 +1,5 @@
 import useFetch from '@hooks/useFetch';
+import { NoteResponse } from '../types/notes';
 import React from 'react'
 
 interface AllNotesProps {
@@ -10,8 +11,10 @@ interface AllNotesProps {
 
 export default function AllNotes({ isArchive, activeNoteId, setActiveNoteId, setShowCreateNote }: AllNotesProps) {
 
-    const { data: notes, loading, error } = useFetch() || [];
+    const { data , loading, error } = useFetch<NoteResponse>('api/getData');
 
+    const notes = data?.notes ?? [];
+    
     const archivedNotes = notes?.filter(note => note.archived);
     const unarchivedNotes = notes?.filter(note => !note.archived);
 
@@ -34,7 +37,7 @@ export default function AllNotes({ isArchive, activeNoteId, setActiveNoteId, set
                     <p className="text-neutral-500 text-sm max-w-48">{note.content}</p>
                 </div>
             ))) : (
-                notes.length > 0 ? unarchivedNotes?.map(note => (
+                notes && notes?.length > 0 ? unarchivedNotes?.map(note => (
                     <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
                         setActiveNoteId(note._id)
                         setShowCreateNote(false);
