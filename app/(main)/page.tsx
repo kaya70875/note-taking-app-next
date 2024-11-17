@@ -57,8 +57,8 @@ export default function Home() {
         <section className="archive-section w-1/5 p-4 flex justify-center">
           <div className="buttons flex flex-col gap-4 w-full">
             <button onClick={() => handleArchiveNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 p-2 rounded-lg">
-              <SvgIcon path="archive" />
-              <p>Archive Note</p>
+              {isArchiveOpen ? <SvgIcon path="restore" /> : <SvgIcon path="archive" />}
+              <p>{isArchiveOpen ? 'Restore Note' : 'Archive Note'}</p>
             </button>
 
             <button onClick={() => handleDeleteNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 p-2 rounded-lg">
