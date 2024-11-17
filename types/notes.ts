@@ -9,6 +9,10 @@ export interface Note {
     updatedAt: Date;
 }
 
-export interface NoteElement {
-    note : Note[];
+export interface NoteResponse {
+    notes : Note[];
+}
+
+export interface TagsResponse {
+    data : string[];
 }
