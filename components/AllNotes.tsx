@@ -1,27 +1,47 @@
 import useFetch from '@hooks/useFetch';
-import { NoteResponse } from '../types/notes';
-import React from 'react'
+import { NoteResponse , Note } from '../types/notes';
+import React, { useEffect, useState } from 'react'
+import { useArchive } from '@context/ArchiveContext';
 
 interface AllNotesProps {
-    isArchive?: boolean;
     activeNoteId: string;
+    searchQuery: string;
     setActiveNoteId: React.Dispatch<React.SetStateAction<string>>;
     setShowCreateNote: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AllNotes({ isArchive, activeNoteId, setActiveNoteId, setShowCreateNote }: AllNotesProps) {
+export default function AllNotes({activeNoteId, setActiveNoteId, setShowCreateNote , searchQuery}: AllNotesProps) {
 
     const { data , loading, error } = useFetch<NoteResponse>('api/getData');
+    const { isArchiveOpen , setIsArchiveOpen} = useArchive();
+
+    const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
     const notes = data?.notes ?? [];
     
-    const archivedNotes = notes?.filter(note => note.archived);
-    const unarchivedNotes = notes?.filter(note => !note.archived);
+    useEffect(() => {
+        if(searchQuery) {
+            const filteredNotes = notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase()) 
+            || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
+            setFilteredNotes(filteredNotes ?? []);
+            setIsArchiveOpen(false);
+        }
+
+        else if(isArchiveOpen) {
+            const archivedNotes = notes?.filter(note => note.archived);
+            setFilteredNotes(archivedNotes ?? []);
+        }
+
+        else {
+            const unarchivedNotes = notes?.filter(note => !note.archived);
+            setFilteredNotes(unarchivedNotes ?? []);
+        }
+    } , [searchQuery , isArchiveOpen , notes]);
 
     return (
         <div className="note-cards flex flex-col gap-8 w-full p-2"> {/* All notes shown here */}
-            {isArchive && <p>All your archived notes are stored here. You can restore or delete them anytime.</p>}
-            {isArchive ? (archivedNotes?.map(note => (
+            {isArchiveOpen && <p>All your archived notes are stored here. You can restore or delete them anytime.</p>}
+            {isArchiveOpen ? (filteredNotes?.map(note => (
                 <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
                     setActiveNoteId(note._id)
                     setShowCreateNote(false);
@@ -37,7 +57,7 @@ export default function AllNotes({ isArchive, activeNoteId, setActiveNoteId, set
                     <p className="text-neutral-500 text-sm max-w-48">{note.content}</p>
                 </div>
             ))) : (
-                notes && notes?.length > 0 ? unarchivedNotes?.map(note => (
+                notes && notes?.length > 0 ? filteredNotes?.map(note => (
                     <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
                         setActiveNoteId(note._id)
                         setShowCreateNote(false);
