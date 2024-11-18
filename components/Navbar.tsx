@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SvgIcon from './reusables/SvgIcon'
 
 interface NavbarProps {
     header? : 'All Notes' | 'Archived Notes' | 'Notes Tagged:';
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Navbar({header = 'All Notes'} : NavbarProps) {
+export default function Navbar({header = 'All Notes' , setSearchQuery} : NavbarProps) {
+
     return (
         <div className='w-full flex items-center justify-between p-8 border-b border-neutral-300'>
             <header className='font-bold text-2xl'>
@@ -16,7 +18,7 @@ export default function Navbar({header = 'All Notes'} : NavbarProps) {
                     <div className='absolute top-1/2 -translate-y-1/2 left-2'>
                         <SvgIcon path='search' />
                     </div>
-                    <input type="text" placeholder='Search by title, content, or tags...' className='w-full p-3 pl-12' />
+                    <input type="text" placeholder='Search by title, content, or tags...' className='w-full p-3 pl-12' onChange={(e) => setSearchQuery(e.target.value)} />
                 </div>
                 <SvgIcon path='settings' />
             </div>
