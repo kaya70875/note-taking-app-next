@@ -8,11 +8,14 @@ import SvgIcon from "@components/reusables/SvgIcon";
 import CreateNote from "@components/CreateNote";
 import AllNotes from "@components/AllNotes";
 import { useArchive } from "@context/ArchiveContext";
+import { useToast } from "@context/ToastContext";
 
 export default function Home() {
 
   const {deleteNote , setArchivedNotes} = useNoteActions();
   const {isArchiveOpen} = useArchive();
+  
+  const {showToast} = useToast();
 
   const [activeNoteId, setActiveNoteId] = useState('');
   const [showCreateNote, setShowCreateNote] = useState(false);
@@ -25,12 +28,12 @@ export default function Home() {
     if(activeNoteId) {
       await deleteNote(noteId);
       // Give a success toast message here.
-      alert('Note deleted successfully!');
+      showToast('Note deleted successfully!', 'success');
     }
 
     else {
       // Give a toast message here.
-      alert('Please select a note to delete or archive.');
+      showToast('Please select a note to delete!', 'warning');
     }
   };
 
@@ -39,7 +42,7 @@ export default function Home() {
       // Archive the note here.
       setArchivedNotes(noteId , !isArchiveOpen);
       // Give a success toast message here.
-      alert('Note archived successfully!');
+      showToast('Note archived successfully!', 'success');
     }
   }
 
