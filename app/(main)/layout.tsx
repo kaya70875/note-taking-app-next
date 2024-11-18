@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@components/Sidebar";
 import { ArchiveProvider } from "@context/ArchiveContext";
-import { FilteredContextProvider } from "@context/FilteredNotesContext";
+import { ActiveSidebarTagContextProvider } from "@context/ActiveSidebarTagContext";
 
 export const metadata: Metadata = {
   title: "Note Taking App",
@@ -22,14 +22,14 @@ export default function RootLayout({
       <body
         className={inter.className}
       >
-        <FilteredContextProvider>
+        <ActiveSidebarTagContextProvider>
           <ArchiveProvider>
             <main className="app">
               <Sidebar />
               {children}
             </main>
           </ArchiveProvider>
-        </FilteredContextProvider>
+        </ActiveSidebarTagContextProvider>
 
 
       </body>
