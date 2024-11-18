@@ -143,7 +143,7 @@ const useNoteActions =<T extends object> () => {
             if(response.ok) {
                 const result = await response.json();
                 console.log(result.message);
-                mutate('/api/getData');
+                mutate('api/getData');
             } else {
                 console.log('Error setting archived notes');
                 throw new Error('Error setting archived notes');
