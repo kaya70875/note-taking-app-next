@@ -4,6 +4,7 @@ import "../globals.css";
 import Sidebar from "@components/Sidebar";
 import { ArchiveProvider } from "@context/ArchiveContext";
 import { ActiveSidebarTagContextProvider } from "@context/ActiveSidebarTagContext";
+import { ToastProvider } from "@context/ToastContext";
 
 export const metadata: Metadata = {
   title: "Note Taking App",
@@ -22,14 +23,17 @@ export default function RootLayout({
       <body
         className={inter.className}
       >
-        <ActiveSidebarTagContextProvider>
-          <ArchiveProvider>
-            <main className="app">
-              <Sidebar />
-              {children}
-            </main>
-          </ArchiveProvider>
-        </ActiveSidebarTagContextProvider>
+        <ToastProvider>
+          <ActiveSidebarTagContextProvider>
+            <ArchiveProvider>
+              <main className="app">
+                <Sidebar />
+                {children}
+              </main>
+            </ArchiveProvider>
+          </ActiveSidebarTagContextProvider>
+        </ToastProvider>
+
 
 
       </body>
