@@ -1,6 +1,7 @@
 import useNoteActions from '@hooks/useNotActions'
 import React, { useState } from 'react'
 import SvgIcon from './reusables/SvgIcon';
+import { useToast } from '@context/ToastContext';
 
 interface CreateNoteProps {
     closeCreateMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,6 +9,8 @@ interface CreateNoteProps {
 
 export default function CreateNote({closeCreateMode} : CreateNoteProps) {
     const { createNote } = useNoteActions();
+    const {showToast} = useToast();
+
     const [formData, setFormData] = useState({
         title: 'Enter a title...',
         content: '',
@@ -28,12 +31,12 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
                 tags: [],
             });
             // Give a success toast message here.
-            alert('Note created successfully!');
+            showToast('Note created successfully!', 'success');
         }
 
         else {
             // Give a toast message here.
-            alert('Please fill in all fields.');
+            showToast('Please fill in all the fields!', 'error');
         }
     };
 

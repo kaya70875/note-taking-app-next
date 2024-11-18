@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SvgIcon from './reusables/SvgIcon';
 import useNoteActions from '@hooks/useNotActions';
 import { Note } from '../types/notes';
+import { useToast } from '@context/ToastContext';
 
 interface NoteContentProps {
     activeNoteId: string;
@@ -9,6 +10,7 @@ interface NoteContentProps {
 
 export default function NoteContent({ activeNoteId }: NoteContentProps) {
     const { getRelevantNotes, updateNote } = useNoteActions();
+    const {showToast} = useToast();
 
     const [notes, setNotes] = useState<Note | null>(null);
     const [editMode, setEditMode] = useState(false);
@@ -43,6 +45,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
             await updateNote(notes._id, formData);
             setNotes({ ...notes, ...formData });
             setEditMode(false);
+            showToast('Note updated successfully!', 'success');
         }
     };
 
