@@ -17,6 +17,8 @@ export default function Home() {
   const [activeNoteId, setActiveNoteId] = useState('');
   const [showCreateNote, setShowCreateNote] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   // Delete and Archive actions are here...
 
   const handleDeleteNote = async (noteId: string) => {
@@ -43,14 +45,14 @@ export default function Home() {
 
   return (
     <div className="w-full max-h-full">
-      <Navbar />
+      <Navbar setSearchQuery={setSearchQuery} />
       <div className="flex w-full h-full">
         <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 h-full">
           <button className="flex items-center justify-center p-3 w-full bg-blue-500 text-neutral-50 rounded-lg" onClick={() => setShowCreateNote(true)}>
             + Create New Note
           </button>
 
-          <AllNotes isArchive={isArchiveOpen} activeNoteId={activeNoteId} setActiveNoteId={setActiveNoteId} setShowCreateNote={setShowCreateNote} />
+          <AllNotes searchQuery={searchQuery} activeNoteId={activeNoteId} setActiveNoteId={setActiveNoteId} setShowCreateNote={setShowCreateNote} />
         </section>
 
         {showCreateNote ? <CreateNote closeCreateMode={setShowCreateNote} /> : <NoteContent activeNoteId={activeNoteId} />}
