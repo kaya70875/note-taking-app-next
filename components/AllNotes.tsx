@@ -5,6 +5,7 @@ import { NoteResponse, Note } from '../types/notes';
 import React, { useEffect, useState } from 'react'
 import { useArchive } from '@context/ArchiveContext';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
+import convertDate from '@utils/helpers';
 
 interface AllNotesProps {
     activeNoteId: string;
@@ -64,10 +65,9 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                             ))}
                         </div>
                     </header>
-                    <p className="text-neutral-500 text-sm max-w-48">{note.content}</p>
+                    <p className="text-neutral-600">{note.createdAt && convertDate(note.createdAt)}</p>
                 </div>
-            ))) : (
-                notes && notes?.length > 0 ? filteredNotes?.map(note => (
+            ))) : (                notes && notes?.length > 0 ? filteredNotes?.map(note => (
                     <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
                         setActiveNoteId(note._id)
                         setShowCreateNote(false);
@@ -81,7 +81,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                             </div>
                         </header>
                         <p className="text-neutral-600">
-                            {note.createdAt.toLocaleString()}
+                            {note.createdAt && convertDate(note.createdAt)}
                         </p>
                     </div>
                 )) : (
