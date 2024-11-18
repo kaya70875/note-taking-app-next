@@ -1,7 +1,10 @@
+'use client'
+
 import useFetch from '@hooks/useFetch';
-import { NoteResponse , Note } from '../types/notes';
+import { NoteResponse, Note } from '../types/notes';
 import React, { useEffect, useState } from 'react'
 import { useArchive } from '@context/ArchiveContext';
+import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 
 interface AllNotesProps {
     activeNoteId: string;
@@ -10,33 +13,40 @@ interface AllNotesProps {
     setShowCreateNote: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AllNotes({activeNoteId, setActiveNoteId, setShowCreateNote , searchQuery}: AllNotesProps) {
+export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateNote, searchQuery }: AllNotesProps) {
 
-    const { data , loading, error } = useFetch<NoteResponse>('api/getData');
-    const { isArchiveOpen , setIsArchiveOpen} = useArchive();
+    const { data, loading, error } = useFetch<NoteResponse>('api/getData');
+    const { isArchiveOpen, setIsArchiveOpen } = useArchive();
+    
+    const {activeSidebarTag , setActiveSidebarTag} = useActiveSidebarTag();
 
     const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
     const notes = data?.notes ?? [];
-    
+
     useEffect(() => {
-        if(searchQuery) {
-            const filteredNotes = notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase()) 
-            || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
+        if (searchQuery) {
+            const filteredNotes = notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase())
+                || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
             setFilteredNotes(filteredNotes ?? []);
             setIsArchiveOpen(false);
         }
 
-        else if(isArchiveOpen) {
+        else if (isArchiveOpen) {
             const archivedNotes = notes?.filter(note => note.archived);
             setFilteredNotes(archivedNotes ?? []);
+        }
+
+        else if(activeSidebarTag) {
+            const filteredByTag = notes?.filter(note => note.tags.some(tag => tag.toLocaleLowerCase().includes(activeSidebarTag.toLocaleLowerCase())));
+            setFilteredNotes(filteredByTag ?? []);
         }
 
         else {
             const unarchivedNotes = notes?.filter(note => !note.archived);
             setFilteredNotes(unarchivedNotes ?? []);
         }
-    } , [searchQuery , isArchiveOpen , notes]);
+    }, [searchQuery, isArchiveOpen, notes , activeSidebarTag]);
 
     return (
         <div className="note-cards flex flex-col gap-8 w-full p-2"> {/* All notes shown here */}
