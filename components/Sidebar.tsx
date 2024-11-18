@@ -3,19 +3,18 @@
 import Image from 'next/image'
 import logo from '@public/images/logo.svg';
 import SvgIcon from './reusables/SvgIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useArchive } from '@context/ArchiveContext';
 import useFetch from '@hooks/useFetch';
 import { TagsResponse } from '../types/notes';
 
 export default function Sidebar() {
-    const { isArchiveOpen ,setIsArchiveOpen} = useArchive();
+    const { isArchiveOpen , setIsArchiveOpen} = useArchive();
 
     // Get all tags from database and filter theme only one category.
     const {data, loading , error} = useFetch<TagsResponse>('/api/getAllTags');
 
     const tags = data?.data;
-    console.log('tags : ' , tags);
 
     const sidebarItems = [
         {
@@ -39,6 +38,15 @@ export default function Sidebar() {
             setIsArchiveOpen(false);
         }
     }
+
+    useEffect(() => { // Set active item to all items when a search query is entered.
+        if(isArchiveOpen) {
+            setActiveItem('Archived Notes');
+        }
+        else {
+            setActiveItem('All Notes');
+        }
+    } , [isArchiveOpen]);
 
     return (
         <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-80 border-r border-neutral-300'>
