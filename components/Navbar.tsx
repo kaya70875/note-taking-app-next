@@ -1,12 +1,20 @@
+'use client';
+
 import React from 'react'
 import SvgIcon from './reusables/SvgIcon'
+import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
-    header? : 'All Notes' | 'Archived Notes' | 'Notes Tagged:';
+    header?: 'All Notes' | 'Archived Notes' | 'Notes Tagged:';
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Navbar({header = 'All Notes' , setSearchQuery} : NavbarProps) {
+export default function Navbar({ header = 'All Notes', setSearchQuery }: NavbarProps) {
+    const router = useRouter();
+
+    const navigateToSettings = () => {
+        router.push('/settings');
+    }
 
     return (
         <div className='w-full flex items-center justify-between p-8 border-b border-neutral-300'>
@@ -15,12 +23,14 @@ export default function Navbar({header = 'All Notes' , setSearchQuery} : NavbarP
             </header>
             <div className='flex items-center gap-8 w-2/6'>
                 <div className='relative w-full border border-neutral-300 rounded-lg overflow-hidden'>
-                    <div className='absolute top-1/2 -translate-y-1/2 left-2'>
+                    <div className='absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer'>
                         <SvgIcon path='search' />
                     </div>
                     <input type="text" placeholder='Search by title, content, or tags...' className='w-full p-3 pl-12' onChange={(e) => setSearchQuery(e.target.value)} />
                 </div>
-                <SvgIcon path='settings' />
+                <div className='cursor-pointer' onClick={() => navigateToSettings()}>
+                    <SvgIcon path='settings' />
+                </div>
             </div>
         </div>
     )

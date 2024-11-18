@@ -8,9 +8,12 @@ import { useArchive } from '@context/ArchiveContext';
 import useFetch from '@hooks/useFetch';
 import { TagsResponse } from '../types/notes';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
+import { useRouter } from 'next/navigation';
 
 export default function Sidebar() {
     const { isArchiveOpen , setIsArchiveOpen} = useArchive();
+
+    const router = useRouter();
 
     // Get all tags from database and filter theme only one category.
     const {data, loading , error} = useFetch<TagsResponse>('/api/getAllTags');
@@ -35,10 +38,12 @@ export default function Sidebar() {
         setActiveItem(itemName);
         if(itemName === 'Archived Notes') {
             setIsArchiveOpen(true);
+            router.push('/');
         }
         else {
             setIsArchiveOpen(false);
             setActiveSidebarTag(''); // Reset sidebar tag filters when user click all notes.
+            router.push('/');
         }
     }
 
