@@ -39,6 +39,14 @@ h1 {
   @apply bg-neutral-300;
 }
 
+.input {
+  @apply border border-neutral-200 p-3 w-1/2 rounded-lg;
+}
+
+.primary-btn {
+  @apply flex items-center justify-center p-3 bg-blue-500 text-neutral-50 rounded-lg;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
