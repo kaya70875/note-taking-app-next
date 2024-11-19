@@ -1,6 +1,7 @@
 import React from 'react'
 import SvgIcon from './reusables/SvgIcon'
 import ThemeSettingsComponent from './ThemeSettingsComponent'
+import ChangePassword from './ChangePassword'
 
 interface SettingsProps {
     settingType: 'Color Theme' | 'Font Theme' | 'Change Password' | 'Logout'
@@ -51,6 +52,10 @@ export default function Settings({ settingType }: SettingsProps) {
             )}
             {settingType === 'Font Theme' && (
                 <ThemeSettingsComponent themeList={themeOptions} themeType={settingType} />
+            )}
+
+            {settingType === 'Change Password' && (
+                <ChangePassword />
             )}
         </div>
     )
