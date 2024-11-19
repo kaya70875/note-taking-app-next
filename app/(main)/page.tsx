@@ -51,7 +51,7 @@ export default function Home() {
       <Navbar setSearchQuery={setSearchQuery} />
       <div className="flex w-full h-full">
         <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 h-full">
-          <button className="flex items-center justify-center p-3 w-full bg-blue-500 text-neutral-50 rounded-lg" onClick={() => setShowCreateNote(true)}>
+          <button className="primary-btn w-full" onClick={() => setShowCreateNote(true)}>
             + Create New Note
           </button>
 

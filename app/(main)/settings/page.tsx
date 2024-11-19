@@ -32,7 +32,7 @@ export default function page() {
         <div className='w-full h-full'>
             <Navbar setSearchQuery={setSearchQuery} />
             <div className='flex w-full h-full'>
-                <section className="settings-section flex flex-col p-6 gap-8 w-3/12 border-r border-neutral-300 h-full">
+                <section className="settings-section flex flex-col p-6 gap-8 w-4/12 border-r border-neutral-300 h-full">
                     {settingsItems.map(settings => (
                         <button className={`flex items-center justify-between p-2 rounded-lg w-3/4 ${activeItem === settings.name ? 'bg-neutral-200' : ''}`} onClick={() => setActiveItem(settings.name)}>
                             <div className='flex items-center gap-2'>
