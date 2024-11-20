@@ -3,14 +3,29 @@
 import Navbar from "@components/Navbar";
 import useNoteActions from "@hooks/useNotActions";
 import NoteContent from "@components/NoteContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SvgIcon from "@components/reusables/SvgIcon";
 import CreateNote from "@components/CreateNote";
 import AllNotes from "@components/AllNotes";
 import { useArchive } from "@context/ArchiveContext";
 import { useToast } from "@context/ToastContext";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+
+  const router = useRouter();
+  const {data : session , status} = useSession();
+
+  if(status === 'loading') {
+    return <div>Loading...</div>
+  }
+
+  useEffect(() => {
+    if(!session) {
+      router.push('/login');
+    }
+  } , [session]);
 
   const {deleteNote , setArchivedNotes} = useNoteActions();
   const {isArchiveOpen} = useArchive();
