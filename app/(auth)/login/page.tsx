@@ -1,13 +1,43 @@
 'use client';
 
 import SvgIcon from '@components/reusables/SvgIcon'
+import { useToast } from '@context/ToastContext';
 import logo from '@public/images/logo.svg'
+import { signIn, SignInResponse } from 'next-auth/react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function page() {
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const router = useRouter();
+  const {showToast} = useToast();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [authResults , setAuthResults] = useState<SignInResponse | undefined>(undefined);
+
+  const handleSubmit = async (e : React.FormEvent) => {
+    e.preventDefault();
+
+    const result = await signIn("credentials" , {
+      redirect : false,
+      email : email,
+      password : password,
+    })
+
+    setAuthResults(result);
+  }
+
+  useEffect(() => {
+    if (authResults && !authResults?.error) {
+        router.push('/');
+    } else if(authResults?.error){
+        showToast('Invalid Credentials!', 'error');
+    }
+} , [authResults])
 
   return (
     <div className='flex flex-col gap-12 p-12'>
@@ -23,7 +53,9 @@ export default function page() {
         <div className="input-wrapper">
           <label htmlFor="email">Email Address</label>
           <input type="text" className='input !w-full' id='email'
-           placeholder='email@example.com'/>
+           placeholder='email@example.com'
+           onChange={(e) => setEmail(e.currentTarget.value)}/>
+           
         </div>
 
         <div className="input-wrapper">
@@ -33,6 +65,7 @@ export default function page() {
               type={showPassword ? 'text' : 'password'}
               id="new-pass"
               className='input !w-full'
+              onChange={(e) => setPassword(e.currentTarget.value)}
             />
             <div
               className="show-pass absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
@@ -42,7 +75,7 @@ export default function page() {
             </div>
           </div>
         </div>
-        <button className="primary-btn">Sign Up</button>
+        <button type='button' className="primary-btn" onClick={handleSubmit}>Login</button>
 
         <div className="line"></div>
         <div className="google-auth flex flex-col gap-4 items-center justify-center">
