@@ -2,6 +2,7 @@ import React from 'react'
 import SvgIcon from './reusables/SvgIcon'
 import ThemeSettingsComponent from './ThemeSettingsComponent'
 import ChangePassword from './ChangePassword'
+import { signOut } from 'next-auth/react'
 
 interface SettingsProps {
     settingType: 'Color Theme' | 'Font Theme' | 'Change Password' | 'Logout'
@@ -44,6 +45,10 @@ export default function Settings({ settingType }: SettingsProps) {
             svg: (<SvgIcon path='font-monospace' />)
         }
     ]
+
+    if (settingType === 'Logout') {
+        signOut();
+    }
 
     return (
         <div className='w-full h-full p-10'>
