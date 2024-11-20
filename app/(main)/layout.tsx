@@ -8,6 +8,7 @@ import { ToastProvider } from "@context/ToastContext";
 import SessionProvider from "../../providers/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@lib/auth";
+import { NavbarHeaderProvider } from "@context/NavbarHeaderContext";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,16 +26,19 @@ export default async function RootLayout({
         className={inter.className}
       >
         <SessionProvider session={session}>
-          <ToastProvider>
-            <ActiveSidebarTagContextProvider>
-              <ArchiveProvider>
-                <main className="app">
-                  <Sidebar />
-                  {children}
-                </main>
-              </ArchiveProvider>
-            </ActiveSidebarTagContextProvider>
-          </ToastProvider>
+          <NavbarHeaderProvider>
+            <ToastProvider>
+              <ActiveSidebarTagContextProvider>
+                <ArchiveProvider>
+                  <main className="app">
+                    <Sidebar />
+                    {children}
+                  </main>
+                </ArchiveProvider>
+              </ActiveSidebarTagContextProvider>
+            </ToastProvider>
+          </NavbarHeaderProvider>
+
         </SessionProvider>
       </body>
     </html>

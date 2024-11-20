@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { useArchive } from '@context/ArchiveContext';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import convertDate from '@utils/helpers';
+import { useNavHeader } from '@context/NavbarHeaderContext';
 
 interface AllNotesProps {
     activeNoteId: string;
@@ -18,8 +19,9 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
 
     const { data, loading, error } = useFetch<NoteResponse>('api/getData');
     const { isArchiveOpen, setIsArchiveOpen } = useArchive();
+    const {setNavbarHeader} = useNavHeader();
     
-    const {activeSidebarTag , setActiveSidebarTag} = useActiveSidebarTag();
+    const {activeSidebarTag} = useActiveSidebarTag();
 
     const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
@@ -31,6 +33,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                 || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
             setFilteredNotes(filteredNotes ?? []);
             setIsArchiveOpen(false);
+            setNavbarHeader('Showing Results For:');
         }
 
         else if (isArchiveOpen) {

@@ -30,7 +30,7 @@ export default function Page() {
 
     return (
         <div className='w-full h-full'>
-            <Navbar setSearchQuery={setSearchQuery} />
+            <Navbar header='Settings' setSearchQuery={setSearchQuery} />
             <div className='flex w-full h-full'>
                 <section className="settings-section flex flex-col p-6 gap-8 w-4/12 border-r border-neutral-300 h-full">
                     {settingsItems.map(settings => (

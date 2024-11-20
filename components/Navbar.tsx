@@ -3,14 +3,17 @@
 import React from 'react'
 import SvgIcon from './reusables/SvgIcon'
 import { useRouter } from 'next/navigation';
+import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 
 interface NavbarProps {
-    header?: 'All Notes' | 'Archived Notes' | 'Notes Tagged:';
+    header?: 'All Notes' | 'Archived Notes' | 'Notes Tagged:' | 'Settings' | 'Showing Results For:';
+    searchQuery?: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Navbar({ header = 'All Notes', setSearchQuery }: NavbarProps) {
+export default function Navbar({ header = 'All Notes', setSearchQuery, searchQuery}: NavbarProps) {
     const router = useRouter();
+    const {activeSidebarTag} = useActiveSidebarTag();
 
     const navigateToSettings = () => {
         router.push('/settings');
@@ -18,8 +21,10 @@ export default function Navbar({ header = 'All Notes', setSearchQuery }: NavbarP
 
     return (
         <div className='w-full flex items-center justify-between p-8 border-b border-neutral-300'>
-            <header className='font-bold text-2xl'>
-                <h1 className='text-neutral-950'>{header}</h1>
+            <header className='font-bold text-2xl flex gap-2'>
+                <h1 className='text-neutral-950 font-bold'>{header}</h1>
+                <p className='text-neutral-950'>{header === 'Notes Tagged:' && activeSidebarTag && activeSidebarTag}</p>
+                <p>{header === 'Showing Results For:' ? searchQuery : ''}</p>
             </header>
             <div className='flex items-center gap-8 w-2/6'>
                 <div className='relative w-full border border-neutral-300 rounded-lg overflow-hidden'>

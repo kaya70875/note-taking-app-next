@@ -9,13 +9,15 @@ import CreateNote from "@components/CreateNote";
 import AllNotes from "@components/AllNotes";
 import { useArchive } from "@context/ArchiveContext";
 import { useToast } from "@context/ToastContext";
+import { useNavHeader } from "@context/NavbarHeaderContext";
 
 export default function Home() {
 
-  const {deleteNote , setArchivedNotes} = useNoteActions();
-  const {isArchiveOpen} = useArchive();
-  
-  const {showToast} = useToast();
+  const { deleteNote, setArchivedNotes } = useNoteActions();
+  const { isArchiveOpen } = useArchive();
+  const {navbarHeader , setNavbarHeader} = useNavHeader();
+
+  const { showToast } = useToast();
 
   const [activeNoteId, setActiveNoteId] = useState('');
   const [showCreateNote, setShowCreateNote] = useState(false);
@@ -25,7 +27,7 @@ export default function Home() {
   // Delete and Archive actions are here...
 
   const handleDeleteNote = async (noteId: string) => {
-    if(activeNoteId) {
+    if (activeNoteId) {
       await deleteNote(noteId);
       // Give a success toast message here.
       showToast('Note deleted successfully!', 'success');
@@ -38,9 +40,9 @@ export default function Home() {
   };
 
   const handleArchiveNote = async (noteId: string) => {
-    if(activeNoteId) {
+    if (activeNoteId) {
       // Archive the note here.
-      setArchivedNotes(noteId , !isArchiveOpen);
+      setArchivedNotes(noteId, !isArchiveOpen);
       // Give a success toast message here.
       showToast('Note archived successfully!', 'success');
     }
@@ -48,7 +50,7 @@ export default function Home() {
 
   return (
     <div className="w-full max-h-full">
-      <Navbar setSearchQuery={setSearchQuery} />
+      <Navbar searchQuery={searchQuery} header={navbarHeader} setSearchQuery={setSearchQuery} />
       <div className="flex w-full h-full">
         <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 h-full">
           <button className="primary-btn w-full" onClick={() => setShowCreateNote(true)}>
