@@ -3,6 +3,7 @@ import SvgIcon from './reusables/SvgIcon';
 import useNoteActions from '@hooks/useNotActions';
 import { Note } from '../types/notes';
 import { useToast } from '@context/ToastContext';
+import { CircularProgress } from '@mui/material';
 
 interface NoteContentProps {
     activeNoteId: string;
@@ -20,10 +21,14 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
         tags: [],
     });
 
+    const [loading , setLoading] = useState(false);
+
     useEffect(() => {
         const fetchNotes = async () => {
             if (activeNoteId) {
+                setLoading(true);
                 const fetchedNotes = await getRelevantNotes(activeNoteId);
+                setLoading(false);
                 setNotes(fetchedNotes);
                 setFormData({
                     title: fetchedNotes.title,
@@ -60,7 +65,8 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
 
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300">
-            {notes ? (
+            {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress /></div>)}
+            {notes && !loading ? (
                 <header className="flex flex-col h-full justify-between">
                     <div className="content-top flex flex-col gap-6">
                         {editMode ? (

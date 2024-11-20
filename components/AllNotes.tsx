@@ -7,6 +7,7 @@ import { useArchive } from '@context/ArchiveContext';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import convertDate from '@utils/helpers';
 import { useNavHeader } from '@context/NavbarHeaderContext';
+import { CircularProgress } from '@mui/material';
 
 interface AllNotesProps {
     activeNoteId: string;
@@ -26,6 +27,8 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
     const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
     const notes = data?.notes ?? [];
+
+    if(error) return <div>Error: {error.message}</div>
 
     useEffect(() => {
         if (searchQuery) {
@@ -54,6 +57,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
 
     return (
         <div className="note-cards flex flex-col gap-8 w-full p-2"> {/* All notes shown here */}
+            {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
             {isArchiveOpen && <p>All your archived notes are stored here. You can restore or delete them anytime.</p>}
             {isArchiveOpen ? (filteredNotes?.map(note => (
                 <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
@@ -70,7 +74,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                     </header>
                     <p className="text-neutral-600">{note.createdAt && convertDate(note.createdAt)}</p>
                 </div>
-            ))) : (                notes && notes?.length > 0 ? filteredNotes?.map(note => (
+            ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
                     <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
                         setActiveNoteId(note._id)
                         setShowCreateNote(false);
@@ -89,7 +93,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                     </div>
                 )) : (
                     <div className="flex flex-col gap-2 items-center justify-center">
-                        <p className="text-neutral-600">No notes found.</p>
+                        {!loading && <p className="text-neutral-600">No notes found.</p>}
                     </div>
                 )
             )}

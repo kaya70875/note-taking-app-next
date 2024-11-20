@@ -10,6 +10,7 @@ import { TagsResponse } from '../types/notes';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import { useRouter } from 'next/navigation';
 import { useNavHeader } from '@context/NavbarHeaderContext';
+import { CircularProgress } from '@mui/material';
 
 export default function Sidebar() {
     const { isArchiveOpen , setIsArchiveOpen} = useArchive();
@@ -20,6 +21,8 @@ export default function Sidebar() {
     const {data, loading , error} = useFetch<TagsResponse>('/api/getAllTags');
     const {setActiveSidebarTag} = useActiveSidebarTag();
     const {setNavbarHeader} = useNavHeader();
+
+    if(error) return <div>{error}</div>
 
     const tags = data?.data;
 
@@ -83,6 +86,7 @@ export default function Sidebar() {
                 <section className="flex flex-col gap-4">
                     <p className='text-neutral-600'>Tags</p>
                     <ul className='flex flex-col gap-4'>
+                    {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress color='secondary'/></div>)}
                         {tags && tags?.map(tag => (
                             <li key={tag} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === tag ? 'activeItem' : ''}`} onClick={() => {
                                 setActiveItem(tag);

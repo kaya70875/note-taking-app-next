@@ -15,7 +15,7 @@ export default function Home() {
 
   const { deleteNote, setArchivedNotes } = useNoteActions();
   const { isArchiveOpen } = useArchive();
-  const {navbarHeader , setNavbarHeader} = useNavHeader();
+  const {navbarHeader} = useNavHeader();
 
   const { showToast } = useToast();
 
