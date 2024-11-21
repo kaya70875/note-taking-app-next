@@ -4,12 +4,14 @@ import Navbar from "@components/Navbar";
 import useNoteActions from "@hooks/useNotActions";
 import NoteContent from "@components/NoteContent";
 import { useState } from "react";
-import SvgIcon from "@components/reusables/SvgIcon";
 import CreateNote from "@components/CreateNote";
 import AllNotes from "@components/AllNotes";
 import { useArchive } from "@context/ArchiveContext";
 import { useToast } from "@context/ToastContext";
 import { useNavHeader } from "@context/NavbarHeaderContext";
+import IconDelete from "@components/svgIcons/IconDelete";
+import IconArchive from "@components/svgIcons/IconArchive";
+import IconRestore from "@components/svgIcons/IconRestore";
 
 export default function Home() {
 
@@ -63,14 +65,14 @@ export default function Home() {
         {showCreateNote ? <CreateNote closeCreateMode={setShowCreateNote} /> : <NoteContent activeNoteId={activeNoteId} />}
         <section className="archive-section w-1/5 p-4 flex justify-center">
           <div className="buttons flex flex-col gap-4 w-full">
-            <button onClick={() => handleArchiveNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 p-2 rounded-lg">
-              {isArchiveOpen ? <SvgIcon path="restore" /> : <SvgIcon path="archive" />}
-              <p>{isArchiveOpen ? 'Restore Note' : 'Archive Note'}</p>
+            <button onClick={() => handleArchiveNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+              {isArchiveOpen ? <IconRestore props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <IconArchive props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
+              <p className="text-neutral-950 dark:text-neutral-100">{isArchiveOpen ? 'Restore Note' : 'Archive Note'}</p>
             </button>
 
-            <button onClick={() => handleDeleteNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 p-2 rounded-lg">
-              <SvgIcon path="delete" />
-              <p>Delete Note</p>
+            <button onClick={() => handleDeleteNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+              <IconDelete props={{color : 'text-neutral-950 dark:text-neutral-100'}} />  
+              <p className="text-neutral-950 dark:text-neutral-100">Delete Note</p>
             </button>
           </div>
         </section>
