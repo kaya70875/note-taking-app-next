@@ -11,18 +11,20 @@ import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import { useRouter } from 'next/navigation';
 import { useNavHeader } from '@context/NavbarHeaderContext';
 import { CircularProgress } from '@mui/material';
+import ChevronRight from './svgIcons/ChevronRight';
+import LogoSvg from './svgIcons/LogoSvg';
 
 export default function Sidebar() {
-    const { isArchiveOpen , setIsArchiveOpen} = useArchive();
+    const { isArchiveOpen, setIsArchiveOpen } = useArchive();
 
     const router = useRouter();
 
     // Get all tags from database and filter theme only one category.
-    const {data, loading , error} = useFetch<TagsResponse>('/api/getAllTags');
-    const {setActiveSidebarTag} = useActiveSidebarTag();
-    const {setNavbarHeader} = useNavHeader();
+    const { data, loading, error } = useFetch<TagsResponse>('/api/getAllTags');
+    const { setActiveSidebarTag } = useActiveSidebarTag();
+    const { setNavbarHeader } = useNavHeader();
 
-    if(error) return <div>{error}</div>
+    if (error) return <div>{error}</div>
 
     const tags = data?.data;
 
@@ -41,7 +43,7 @@ export default function Sidebar() {
 
     const handleSidebarItemClick = (itemName: string) => { // Open and close the archive section
         setActiveItem(itemName);
-        if(itemName === 'Archived Notes') {
+        if (itemName === 'Archived Notes') {
             setIsArchiveOpen(true);
             setNavbarHeader('Archived Notes');
             router.push('/');
@@ -55,49 +57,49 @@ export default function Sidebar() {
     }
 
     useEffect(() => { // Set active item to all items when a search query is entered.
-        if(isArchiveOpen) {
+        if (isArchiveOpen) {
             setActiveItem('Archived Notes');
         }
         else {
             setActiveItem('All Notes');
-       }
-    } , [isArchiveOpen]);
+        }
+    }, [isArchiveOpen]);
 
     return (
-        <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-80 border-r border-neutral-300'>
+        <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-80 border-r border-neutral-300 dark:border-neutral-400'>
             <header className='logo'>
-                <Image src={logo} alt="logo" width={100} height={100} />
+                <LogoSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />   
             </header>
             <div className="flex flex-col gap-6">
                 <section className="sidebar-top">
                     <ul className='flex flex-col gap-4'>
                         {sidebarItems.map(item => (
-                            <li key={item.name} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === item.name ? 'activeItem' : ''}`} onClick={() => handleSidebarItemClick(item.name)}>
+                            <li key={item.name} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`} onClick={() => handleSidebarItemClick(item.name)}>
                                 <div className='flex items-center gap-4'>
-                                    <div className={`${activeItem === item.name ? 'text-blue-500' : 'text-neutral-950'}`}>{item.icon}</div>
-                                    <p className={`${activeItem === item.name ? 'font-medium' : ''}`}>{item.name}</p>
+                                    <div className={`${activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.icon}</div>
+                                    <p className={`${activeItem === item.name ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{item.name}</p>
                                 </div>
-                                {activeItem === item.name && <SvgIcon path='chevron-right' />}
+                                {activeItem === item.name && <ChevronRight props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />}
                             </li>
                         ))}
                     </ul>
                 </section>
-                <div className="line"></div>
+                <div className="line dark:bg-neutral-400"></div>
                 <section className="flex flex-col gap-4">
-                    <p className='text-neutral-600'>Tags</p>
+                    <p className='text-neutral-600 dark:text-neutral-500'>Tags</p>
                     <ul className='flex flex-col gap-4'>
-                    {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress color='secondary'/></div>)}
+                        {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress color='secondary' /></div>)}
                         {tags && tags?.map(tag => (
-                            <li key={tag} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === tag ? 'activeItem' : ''}`} onClick={() => {
+                            <li key={tag} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === tag ? 'activeItem dark:bg-neutral-700' : ''}`} onClick={() => {
                                 setActiveItem(tag);
                                 setActiveSidebarTag(tag);
                                 setNavbarHeader('Notes Tagged:');
                             }}>
                                 <div className='flex items-center gap-4'>
-                                    <div className={`${activeItem === tag ? 'text-blue-500' : 'text-neutral-950'}`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3.016 5.966c.003-1.411 1.07-2.677 2.456-2.916.284-.05 3.616-.042 4.995-.041 1.364 0 2.527.491 3.49 1.452 2.045 2.042 4.088 4.085 6.128 6.13 1.208 1.21 1.224 3.066.022 4.28a805.496 805.496 0 0 1-5.229 5.228c-1.212 1.201-3.069 1.186-4.279-.022-2.064-2.058-4.127-4.115-6.182-6.182-.795-.8-1.264-1.766-1.368-2.895-.084-.903-.035-4.26-.033-5.034Z" clipRule="evenodd"/><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.907 8.315a1.607 1.607 0 0 1-1.61 1.583c-.872-.002-1.599-.73-1.594-1.596a1.604 1.604 0 0 1 1.633-1.607c.864.003 1.575.736 1.571 1.62Z" clipRule="evenodd"/></svg></div>
-                                    <p className={`${activeItem === tag ? 'font-medium' : ''}`}>{tag}</p>
+                                    <div className={`${activeItem === tag ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3.016 5.966c.003-1.411 1.07-2.677 2.456-2.916.284-.05 3.616-.042 4.995-.041 1.364 0 2.527.491 3.49 1.452 2.045 2.042 4.088 4.085 6.128 6.13 1.208 1.21 1.224 3.066.022 4.28a805.496 805.496 0 0 1-5.229 5.228c-1.212 1.201-3.069 1.186-4.279-.022-2.064-2.058-4.127-4.115-6.182-6.182-.795-.8-1.264-1.766-1.368-2.895-.084-.903-.035-4.26-.033-5.034Z" clipRule="evenodd" /><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.907 8.315a1.607 1.607 0 0 1-1.61 1.583c-.872-.002-1.599-.73-1.594-1.596a1.604 1.604 0 0 1 1.633-1.607c.864.003 1.575.736 1.571 1.62Z" clipRule="evenodd" /></svg></div>
+                                    <p className={`${activeItem === tag ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{tag}</p>
                                 </div>
-                                {activeItem === tag && <SvgIcon path='chevron-right' />}
+                                {activeItem === tag && <ChevronRight props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />}
                             </li>
                         ))}
                     </ul>
