@@ -41,7 +41,7 @@ export default function Page() {
                     {settingsItems.map(settings => (
                         <button key={settings.name} className={`flex items-center justify-between p-2 rounded-lg w-3/4 ${activeItem === settings.name ? 'bg-neutral-200 dark:bg-neutral-700' : ''}`} onClick={() => setActiveItem(settings.name)}>
                             <div className='flex items-center gap-2'>
-                                <div className={`icon ${activeItem === settings.name ? 'text-blue-500' : 'text-neutral-100'}`}>{settings.svg}</div>
+                                <div className={`icon ${activeItem === settings.name ? 'text-blue-500' : ''}`}>{settings.svg}</div>
                                 <p className='text-neutral-950 dark:text-neutral-100'>{settings.name}</p>
                             </div>
                             {settings.name === activeItem && <ChevronRight props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
