@@ -3,15 +3,17 @@ import React, { useState } from 'react'
 import SvgIcon from './reusables/SvgIcon';
 import { useToast } from '@context/ToastContext';
 import { useSession } from 'next-auth/react';
+import TagSvg from './svgIcons/TagSvg';
+import ClockSvg from './svgIcons/ClockSvg';
 
 interface CreateNoteProps {
     closeCreateMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function CreateNote({closeCreateMode} : CreateNoteProps) {
+export default function CreateNote({ closeCreateMode }: CreateNoteProps) {
     const { createNote } = useNoteActions();
-    const {showToast} = useToast();
-    const {data : session} = useSession();
+    const { showToast } = useToast();
+    const { data: session } = useSession();
 
     const [formData, setFormData] = useState({
         title: 'Enter a title...',
@@ -51,7 +53,7 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
         closeCreateMode(false);
     };
     return (
-        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300">
+        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300 dark:border-e-neutral-700">
             <header className="flex flex-col h-full justify-between">
                 <div className="content-top flex flex-col gap-6">
                     <input
@@ -59,13 +61,13 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
                         name="title"
                         value={formData.title}
                         onChange={handleInputChange}
-                        className="text-lg font-bold rounded-lg p-2"
+                        className="text-lg font-bold rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
                     />
                     <div className="flex flex-col gap-4">
                         <div className="memo-info flex items-center gap-8">
                             <div className="tags-section flex gap-2">
-                                <SvgIcon path="tag" />
-                                <p>Tags</p>
+                                <TagSvg props={{ color: 'text-neutral-950 dark:text-neutral-300' }} />
+                                <p className='text-neutral-950 dark:text-neutral-300'>Tags</p>
                             </div>
                             <div className="tags-section flex gap-4">
                                 <input
@@ -77,7 +79,7 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
                                             ...prev,
                                             tags: e.target.value.split(',').map((tag) => tag.trim()) as never[],
                                         }))}
-                                    className="rounded-lg p-2"
+                                    className="rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
                                     placeholder='Enter tags'
                                 />
                             </div>
@@ -85,11 +87,11 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
 
                         <div className="memo-info flex items-center gap-8">
                             <div className="tags-section flex gap-2">
-                                <SvgIcon path="clock" />
-                                <p>Last Edited</p>
+                                <ClockSvg props={{ color: 'text-neutral-950 dark:text-neutral-300' }} />
+                                <p className='text-neutral-950 dark:text-neutral-300'>Last Edited</p>
                             </div>
                             <div className="tags-section flex gap-4">
-                                <p>Not Saved Yet...</p>
+                                <p className='text-neutral-950 dark:text-neutral-300'>Not Saved Yet...</p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +102,7 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
                             name="content"
                             value={formData.content}
                             onChange={handleInputChange}
-                            className="w-full h-40 rounded-lg p-2"
+                            className="w-full h-40 rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
                             placeholder='Start typing your note here...'
                         />
                     </div>

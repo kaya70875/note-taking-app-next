@@ -66,7 +66,7 @@ export default function Sidebar() {
     }, [isArchiveOpen]);
 
     return (
-        <div className='flex flex-col p-4 gap-12 w-1/4 h-full max-w-80 border-r border-neutral-300 dark:border-neutral-400'>
+        <div className='flex flex-col p-4 gap-12 w-1/4 max-w-80 border-r border-neutral-300 dark:border-neutral-400 dark:bg-neutral-950'>
             <header className='logo'>
                 <LogoSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />   
             </header>
