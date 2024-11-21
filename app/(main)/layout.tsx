@@ -8,7 +8,6 @@ import SessionProvider from "../../providers/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@lib/auth";
 import { NavbarHeaderProvider } from "@context/NavbarHeaderContext";
-import { ThemeContextProvider, useTheme } from "@context/ThemeContext";
 import { Provider } from "@providers/ThemeProvider";
 
 const inter = Inter({ subsets: ['latin'] });
