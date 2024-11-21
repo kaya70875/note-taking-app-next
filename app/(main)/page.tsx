@@ -53,9 +53,9 @@ export default function Home() {
   return (
     <div className="w-full max-h-full">
       <Navbar searchQuery={searchQuery} header={navbarHeader} setSearchQuery={setSearchQuery} />
-      <div className="flex w-full h-[87.8%] dark:bg-neutral-950">
-        <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
-          <button className="primary-btn w-full" onClick={() => setShowCreateNote(true)}>
+      <div className="flex w-full h-[89.5%] dark:bg-neutral-950">
+        <section className="notes-section flex flex-col items-center p-6 xl:p-4 lg:p-2 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
+          <button className="primary-btn w-full lg:text-sm" onClick={() => setShowCreateNote(true)}>
             + Create New Note
           </button>
 
@@ -63,14 +63,14 @@ export default function Home() {
         </section>
 
         {showCreateNote ? <CreateNote closeCreateMode={setShowCreateNote} /> : <NoteContent activeNoteId={activeNoteId} />}
-        <section className="archive-section w-1/5 p-4 flex justify-center">
+        <section className="archive-section w-1/5 p-4 lg:p-2 flex justify-center">
           <div className="buttons flex flex-col gap-4 w-full">
-            <button onClick={() => handleArchiveNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+            <button onClick={() => handleArchiveNote(activeNoteId)} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
               {isArchiveOpen ? <IconRestore props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <IconArchive props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
               <p className="text-neutral-950 dark:text-neutral-100">{isArchiveOpen ? 'Restore Note' : 'Archive Note'}</p>
             </button>
 
-            <button onClick={() => handleDeleteNote(activeNoteId)} className="flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+            <button onClick={() => handleDeleteNote(activeNoteId)} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
               <IconDelete props={{color : 'text-neutral-950 dark:text-neutral-100'}} />  
               <p className="text-neutral-950 dark:text-neutral-100">Delete Note</p>
             </button>
