@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@components/Sidebar";
@@ -9,6 +8,8 @@ import SessionProvider from "../../providers/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@lib/auth";
 import { NavbarHeaderProvider } from "@context/NavbarHeaderContext";
+import { ThemeContextProvider, useTheme } from "@context/ThemeContext";
+import { Provider } from "@providers/ThemeProvider";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +22,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={inter.className}
       >
@@ -30,15 +31,17 @@ export default async function RootLayout({
             <ToastProvider>
               <ActiveSidebarTagContextProvider>
                 <ArchiveProvider>
-                  <main className="app">
-                    <Sidebar />
-                    {children}
-                  </main>
+                  <Provider>
+                    <main className='app dark:bg-neutral-950'>
+                      <Sidebar />
+                      {children}
+                    </main>
+                  </Provider>
+
                 </ArchiveProvider>
               </ActiveSidebarTagContextProvider>
             </ToastProvider>
           </NavbarHeaderProvider>
-
         </SessionProvider>
       </body>
     </html>
