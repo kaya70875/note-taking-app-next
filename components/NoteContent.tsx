@@ -4,6 +4,8 @@ import useNoteActions from '@hooks/useNotActions';
 import { Note } from '../types/notes';
 import { useToast } from '@context/ToastContext';
 import { CircularProgress } from '@mui/material';
+import ClockSvg from './svgIcons/ClockSvg';
+import TagSvg from './svgIcons/TagSvg';
 
 interface NoteContentProps {
     activeNoteId: string;
@@ -64,7 +66,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
     };
 
     return (
-        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300">
+        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300 dark:border-neutral-700">
             {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress /></div>)}
             {notes && !loading ? (
                 <header className="flex flex-col h-full justify-between">
@@ -78,14 +80,14 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                                 className="text-lg font-bold border rounded-lg p-2"
                             />
                         ) : (
-                            <h1 className="text-lg font-bold">{notes.title}</h1>
+                            <h1 className="text-lg font-bold dark:text-neutral-50">{notes.title}</h1>
                         )}
 
                         <div className="flex flex-col gap-4">
                             <div className="memo-info flex items-center gap-8">
                                 <div className="tags-section flex gap-2">
-                                    <SvgIcon path="tag" />
-                                    <p>Tags</p>
+                                    <TagSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />
+                                    <p className='dark:text-neutral-300'>Tags</p>
                                 </div>
                                 <div className="tags-section flex gap-4">
                                     {editMode ? (
@@ -103,7 +105,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                                         />
                                     ) : (
                                         notes.tags.map((tag) => (
-                                            <p className="text-neutral-950" key={tag}>
+                                            <p className="text-neutral-950 dark:text-neutral-300" key={tag}>
                                                 {tag}
                                             </p>
                                         ))
@@ -113,15 +115,15 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
 
                             <div className="memo-info flex items-center gap-8">
                                 <div className="tags-section flex gap-2">
-                                    <SvgIcon path="clock" />
-                                    <p>Last Edited</p>
+                                    <ClockSvg props={{color : 'text-neutral-950 dark:text-neutral-300'}} />
+                                    <p className='text-neutral-950 dark:text-neutral-300'>Last Edited</p>
                                 </div>
                                 <div className="tags-section flex gap-4">
-                                    <p>{new Date(notes.updatedAt).toLocaleDateString()}</p>
+                                    <p className='dark:text-neutral-300'>{new Date(notes.updatedAt).toLocaleDateString()}</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="line"></div>
+                        <div className="line dark:bg-neutral-700"></div>
 
                         <div className="content-itself">
                             {editMode ? (
@@ -132,12 +134,12 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                                     className="w-full h-40 border rounded-lg p-2"
                                 />
                             ) : (
-                                <p className="max-w-screen-sm">{notes.content}</p>
+                                <p className="max-w-screen-sm dark:text-neutral-300">{notes.content}</p>
                             )}
                         </div>
                     </div>
 
-                    <div className="content-buttons flex items-center gap-4 p-8 border-t border-neutral-300 w-full">
+                    <div className="content-buttons flex items-center gap-4 p-8 border-t border-neutral-300 dark:border-neutral-700 w-full">
                         {editMode ? (
                             <>
                                 <button
@@ -148,7 +150,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                                 </button>
                                 <button
                                     onClick={handleCancel}
-                                    className="flex items-center justify-center bg-neutral-200 p-3 border-none text-neutral-600 rounded-lg"
+                                    className="flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 p-3 border-none text-neutral-600 rounded-lg"
                                 >
                                     Cancel
                                 </button>
@@ -165,8 +167,8 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                 </header>
             ) : (
                 <div className="flex flex-col items-center justify-center gap-4 pt-12">
-                    <h2 className="text-2xl text-neutral-950">Notes are shown here.</h2>
-                    <p>Choose a note to get started!</p>
+                    <h2 className="text-2xl text-neutral-950 dark:text-neutral-300">Notes are shown here.</h2>
+                    <p className='dark:text-neutral-300'>Choose a note to get started!</p>
                 </div>
             )}
         </div>
