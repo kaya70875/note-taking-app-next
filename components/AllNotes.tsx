@@ -58,9 +58,9 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
     return (
         <div className="note-cards flex flex-col gap-8 w-full p-2"> {/* All notes shown here */}
             {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
-            {isArchiveOpen && <p>All your archived notes are stored here. You can restore or delete them anytime.</p>}
+            {isArchiveOpen && <p className='dark:text-neutral-50'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
             {isArchiveOpen ? (filteredNotes?.map(note => (
-                <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
+                <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} onClick={() => {
                     setActiveNoteId(note._id)
                     setShowCreateNote(false);
                 }}>
@@ -68,14 +68,14 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                         <h2 className="font-bold text-lg max-w-48">{note.title}</h2>
                         <div className="tag-wrapper flex gap-2 p-1">
                             {note.tags.map(tag => (
-                                <p key={tag} className="bg-neutral-200 p-1 rounded-lg">{tag}</p>
+                                <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 p-1 rounded-lg text-sm">{tag}</p>
                             ))}
                         </div>
                     </header>
-                    <p className="text-neutral-600">{note.createdAt && convertDate(note.createdAt)}</p>
+                    <p className="text-neutral-600 dark:text-neutral-500 mt-2">{note.createdAt && convertDate(note.createdAt)}</p>
                 </div>
             ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
-                    <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 rounded-lg' : ''}`} key={note._id} onClick={() => {
+                    <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} onClick={() => {
                         setActiveNoteId(note._id)
                         setShowCreateNote(false);
                     }}>
@@ -83,11 +83,11 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                             <h2 className="font-bold text-lg max-w-48">{note.title}</h2>
                             <div className="tag-wrapper flex gap-2 p-1">
                                 {note.tags.map(tag => (
-                                    <p key={tag} className="bg-neutral-200 p-1 rounded-lg">{tag}</p>
+                                    <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 p-1 rounded-lg text-sm">{tag}</p>
                                 ))}
                             </div>
                         </header>
-                        <p className="text-neutral-600">
+                        <p className="text-neutral-600 dark:text-neutral-500 mt-2">
                             {note.createdAt && convertDate(note.createdAt)}
                         </p>
                     </div>

@@ -52,7 +52,7 @@ export default function Home() {
     <div className="w-full max-h-full">
       <Navbar searchQuery={searchQuery} header={navbarHeader} setSearchQuery={setSearchQuery} />
       <div className="flex w-full h-full">
-        <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 h-full">
+        <section className="notes-section flex flex-col items-center p-6 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
           <button className="primary-btn w-full" onClick={() => setShowCreateNote(true)}>
             + Create New Note
           </button>
