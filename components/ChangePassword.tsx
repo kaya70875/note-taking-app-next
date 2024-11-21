@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import SvgIcon from './reusables/SvgIcon'
+import IconInfo from './svgIcons/IconInfo';
+import HidePassword from './svgIcons/HidePassword';
+import ShowPassword from './svgIcons/ShowPassword';
 
 export default function ChangePassword() {
 
@@ -17,30 +20,30 @@ export default function ChangePassword() {
 
             <div className='flex flex-col gap-8'>
                 <div className="input-wrapper flex flex-col gap-1 relative">
-                    <label htmlFor="old-pass">Old Password</label>
-                    <input type={showPassword.oldPassword ? 'text' : 'password'} id="old-pass" className='input' />
+                    <label className='dark:text-neutral-300' htmlFor="old-pass">Old Password</label>
+                    <input type={showPassword.oldPassword ? 'text' : 'password'} id="old-pass" className='input dark:border-neutral-700' />
                     <div className="show-pass w-1/2 absolute right-10 top-1/2 -translate-y-1/1 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword })}>
-                        {showPassword.oldPassword ? <SvgIcon path='hide-password' /> : <SvgIcon path='show-password' />}
+                        {showPassword.oldPassword ? <HidePassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <ShowPassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
                     </div>
                 </div>
 
                 <div className="input-wrapper flex flex-col gap-1 relative">
-                    <label htmlFor="new-pass">New Password</label>
-                    <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className='input' />
+                    <label className='dark:text-neutral-300' htmlFor="new-pass">New Password</label>
+                    <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className='input dark:border-neutral-700' />
                     <div className="input-info flex items-center gap-1">
-                        <SvgIcon path='info' />
-                        <p>At least 8 characters</p>
+                        <IconInfo props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
+                        <p className='text-neutral-950 dark:text-neutral-300'>At least 8 characters</p>
                     </div>
                     <div className="show-pass w-1/2 absolute right-10 top-1/2 -translate-y-1/2 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, newPassword: !showPassword.newPassword })}>
-                        {showPassword.newPassword ? <SvgIcon path='hide-password' /> : <SvgIcon path='show-password' />}
+                        {showPassword.newPassword ? <HidePassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <ShowPassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
                     </div>
                 </div>
 
                 <div className="input-wrapper flex flex-col gap-1 relative">
-                    <label htmlFor="confirm-pass">Confirm New Password</label>
-                    <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className='input' />
+                    <label className='dark:text-neutral-300' htmlFor="confirm-pass">Confirm New Password</label>
+                    <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className='input dark:border-neutral-700' />
                     <div className="show-pass w-1/2 absolute right-10 top-1/2 -translate-y-1/1 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}>
-                        {showPassword.confirmPassword ? <SvgIcon path='hide-password' /> : <SvgIcon path='show-password' />}
+                        {showPassword.confirmPassword ? <HidePassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <ShowPassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
                     </div>
                 </div>
 
