@@ -2,6 +2,7 @@ import useNoteActions from '@hooks/useNotActions'
 import React, { useState } from 'react'
 import SvgIcon from './reusables/SvgIcon';
 import { useToast } from '@context/ToastContext';
+import { useSession } from 'next-auth/react';
 
 interface CreateNoteProps {
     closeCreateMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +11,7 @@ interface CreateNoteProps {
 export default function CreateNote({closeCreateMode} : CreateNoteProps) {
     const { createNote } = useNoteActions();
     const {showToast} = useToast();
+    const {data : session} = useSession();
 
     const [formData, setFormData] = useState({
         title: 'Enter a title...',
@@ -24,7 +26,7 @@ export default function CreateNote({closeCreateMode} : CreateNoteProps) {
 
     const handleCreate = async () => {
         if (formData.title && formData.content && formData.tags) {
-            await createNote(formData, '650505650505650505650506');
+            await createNote(formData, session?.user.id!);
             setFormData({
                 title: '',
                 content: '',
