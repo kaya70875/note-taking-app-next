@@ -1,8 +1,5 @@
 'use client';
 
-import Image from 'next/image'
-import logo from '@public/images/logo.svg';
-import SvgIcon from './reusables/SvgIcon';
 import { useEffect, useState } from 'react';
 import { useArchive } from '@context/ArchiveContext';
 import useFetch from '@hooks/useFetch';
