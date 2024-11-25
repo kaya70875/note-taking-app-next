@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@components/Sidebar";
-import { ActiveSidebarTagContextProvider } from "@context/ActiveSidebarTagContext";
 import { ToastProvider } from "@context/ToastContext";
 import SessionProvider from "../../providers/SessionProvider";
 import { getServerSession } from "next-auth";
@@ -25,14 +24,12 @@ export default async function RootLayout({
       >
         <SessionProvider session={session}>
           <ToastProvider>
-            <ActiveSidebarTagContextProvider>
-              <Provider>
-                <main className='app dark:bg-neutral-950'>
-                  <Sidebar />
-                  {children}
-                </main>
-              </Provider>
-            </ActiveSidebarTagContextProvider>
+            <Provider>
+              <main className='app dark:bg-neutral-950'>
+                <Sidebar />
+                {children}
+              </main>
+            </Provider>
           </ToastProvider>
         </SessionProvider>
       </body>
