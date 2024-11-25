@@ -3,10 +3,9 @@
 import useFetch from '@hooks/useFetch';
 import { NoteResponse, Note } from '../types/notes';
 import React, { useEffect, useState } from 'react'
-import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import convertDate from '@utils/helpers';
 import { CircularProgress } from '@mui/material';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface AllNotesProps {
     searchQuery: string;
@@ -18,14 +17,13 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     const notes = data?.notes ?? [];
 
     const pathName = usePathname();
-    const isArchiveOpen = pathName.includes('/archived');
-
     const params = useParams();
-    const activeNoteId = params.id;
-
     const router = useRouter();
+    const searchParams = useSearchParams();
     
-    const {activeSidebarTag} = useActiveSidebarTag();
+    const activeSidebarTag = searchParams.get('tag'); // Get active tag from query.
+    const isArchiveOpen = pathName.includes('/archived'); // Check if path is includes archive or not.
+    const activeNoteId = params.id; // Get active noteId from url.
 
     const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
