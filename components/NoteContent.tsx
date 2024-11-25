@@ -67,7 +67,6 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
 
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300 dark:border-neutral-700">
-            {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress /></div>)}
             {notes && !loading ? (
                 <header className="flex flex-col h-full justify-between">
                     <div className="content-top flex flex-col gap-6">
@@ -166,10 +165,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                     </div>
                 </header>
             ) : (
-                <div className="flex flex-col items-center justify-center gap-4 pt-12">
-                    <h2 className="text-2xl text-neutral-950 dark:text-neutral-300">Notes are shown here.</h2>
-                    <p className='dark:text-neutral-300'>Choose a note to get started!</p>
-                </div>
+                <div className='w-full h-full flex items-center justify-center'><CircularProgress /></div>
             )}
         </div>
     );
