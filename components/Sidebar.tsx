@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useArchive } from '@context/ArchiveContext';
+import { useState } from 'react';
 import useFetch from '@hooks/useFetch';
 import { TagsResponse } from '../types/notes';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
@@ -12,8 +11,6 @@ import ChevronRight from './svgIcons/ChevronRight';
 import LogoSvg from './svgIcons/LogoSvg';
 
 export default function Sidebar() {
-    const { isArchiveOpen, setIsArchiveOpen } = useArchive();
-
     const router = useRouter();
 
     // Get all tags from database and filter theme only one category.
@@ -41,26 +38,15 @@ export default function Sidebar() {
     const handleSidebarItemClick = (itemName: string) => { // Open and close the archive section
         setActiveItem(itemName);
         if (itemName === 'Archived Notes') {
-            setIsArchiveOpen(true);
             setNavbarHeader('Archived Notes');
-            router.push('/');
+            router.push('/archived');
         }
         else {
-            setIsArchiveOpen(false);
             setActiveSidebarTag(''); // Reset sidebar tag filters when user click all notes.
             setNavbarHeader('All Notes');
-            router.push('/');
+            router.push('/notes');
         }
     }
-
-    useEffect(() => { // Set active item to all items when a search query is entered.
-        if (isArchiveOpen) {
-            setActiveItem('Archived Notes');
-        }
-        else {
-            setActiveItem('All Notes');
-        }
-    }, [isArchiveOpen]);
 
     return (
         <div className='flex flex-col p-4 gap-12 w-1/4 max-w-80 border-r border-neutral-300 dark:border-neutral-400 dark:bg-neutral-950'>
