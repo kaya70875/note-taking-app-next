@@ -27,7 +27,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
 
     useEffect(() => {
         const fetchNotes = async () => {
-            if (activeNoteId) {
+            if (activeNoteId) { // if activeNoteId fetch notes.
                 setLoading(true);
                 const fetchedNotes = await getRelevantNotes(activeNoteId);
                 setLoading(false);
