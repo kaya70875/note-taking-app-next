@@ -5,7 +5,6 @@ import { NoteResponse, Note } from '../types/notes';
 import React, { useEffect, useState } from 'react'
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import convertDate from '@utils/helpers';
-import { useNavHeader } from '@context/NavbarHeaderContext';
 import { CircularProgress } from '@mui/material';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 
@@ -25,8 +24,6 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     const activeNoteId = params.id;
 
     const router = useRouter();
-
-    const {setNavbarHeader} = useNavHeader();
     
     const {activeSidebarTag} = useActiveSidebarTag();
 
@@ -37,7 +34,6 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
             const filteredNotes = notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase())
                 || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
             setFilteredNotes(filteredNotes ?? []);
-            setNavbarHeader('Showing Results For:');
         }
 
         else if (isArchiveOpen) {

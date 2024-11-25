@@ -6,7 +6,6 @@ import { ToastProvider } from "@context/ToastContext";
 import SessionProvider from "../../providers/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@lib/auth";
-import { NavbarHeaderProvider } from "@context/NavbarHeaderContext";
 import { Provider } from "@providers/ThemeProvider";
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,18 +24,16 @@ export default async function RootLayout({
         className={inter.className}
       >
         <SessionProvider session={session}>
-          <NavbarHeaderProvider>
-            <ToastProvider>
-              <ActiveSidebarTagContextProvider>
-                <Provider>
-                  <main className='app dark:bg-neutral-950'>
-                    <Sidebar />
-                    {children}
-                  </main>
-                </Provider>
-              </ActiveSidebarTagContextProvider>
-            </ToastProvider>
-          </NavbarHeaderProvider>
+          <ToastProvider>
+            <ActiveSidebarTagContextProvider>
+              <Provider>
+                <main className='app dark:bg-neutral-950'>
+                  <Sidebar />
+                  {children}
+                </main>
+              </Provider>
+            </ActiveSidebarTagContextProvider>
+          </ToastProvider>
         </SessionProvider>
       </body>
     </html>
