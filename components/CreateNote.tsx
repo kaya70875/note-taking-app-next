@@ -1,16 +1,16 @@
 import useNoteActions from '@hooks/useNotActions'
 import React, { useState } from 'react'
-import SvgIcon from './reusables/SvgIcon';
 import { useToast } from '@context/ToastContext';
 import { useSession } from 'next-auth/react';
 import TagSvg from './svgIcons/TagSvg';
 import ClockSvg from './svgIcons/ClockSvg';
+import { useRouter } from 'next/navigation';
 
-interface CreateNoteProps {
-    closeCreateMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
-export default function CreateNote({ closeCreateMode }: CreateNoteProps) {
+export default function CreateNote() {
+
+    const router = useRouter();
+
     const { createNote } = useNoteActions();
     const { showToast } = useToast();
     const { data: session } = useSession();
@@ -50,7 +50,7 @@ export default function CreateNote({ closeCreateMode }: CreateNoteProps) {
             content: '',
             tags: [],
         });
-        closeCreateMode(false);
+        router.push('/notes');
     };
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300 dark:border-e-neutral-700">
