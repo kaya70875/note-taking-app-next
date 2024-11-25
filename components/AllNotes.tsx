@@ -3,39 +3,40 @@
 import useFetch from '@hooks/useFetch';
 import { NoteResponse, Note } from '../types/notes';
 import React, { useEffect, useState } from 'react'
-import { useArchive } from '@context/ArchiveContext';
 import { useActiveSidebarTag } from '@context/ActiveSidebarTagContext';
 import convertDate from '@utils/helpers';
 import { useNavHeader } from '@context/NavbarHeaderContext';
 import { CircularProgress } from '@mui/material';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 interface AllNotesProps {
-    activeNoteId: string;
     searchQuery: string;
-    setActiveNoteId: React.Dispatch<React.SetStateAction<string>>;
-    setShowCreateNote: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateNote, searchQuery }: AllNotesProps) {
+export default function AllNotes({ searchQuery }: AllNotesProps) {
 
-    const { data, loading, error } = useFetch<NoteResponse>('api/getData');
-    const { isArchiveOpen, setIsArchiveOpen } = useArchive();
+    const { data, loading, error } = useFetch<NoteResponse>('/api/getData');
+    const notes = data?.notes ?? [];
+
+    const pathName = usePathname();
+    const isArchiveOpen = pathName.includes('/archived');
+
+    const params = useParams();
+    const activeNoteId = params.id;
+
+    const router = useRouter();
+
     const {setNavbarHeader} = useNavHeader();
     
     const {activeSidebarTag} = useActiveSidebarTag();
 
     const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
-    const notes = data?.notes ?? [];
-
-    if(error) return <div>Error: {error.message}</div>
-
     useEffect(() => {
         if (searchQuery) {
             const filteredNotes = notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase())
                 || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
             setFilteredNotes(filteredNotes ?? []);
-            setIsArchiveOpen(false);
             setNavbarHeader('Showing Results For:');
         }
 
@@ -61,8 +62,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
             {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-center lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
             {isArchiveOpen ? (filteredNotes?.map(note => (
                 <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} onClick={() => {
-                    setActiveNoteId(note._id)
-                    setShowCreateNote(false);
+                    router.push(`/archived/${note._id}`);
                 }}>
                     <header className="flex flex-col gap-2" >
                         <h2 className="font-bold text-lg lg:text-base max-w-48">{note.title}</h2>
@@ -76,8 +76,7 @@ export default function AllNotes({ activeNoteId, setActiveNoteId, setShowCreateN
                 </div>
             ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
                     <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} onClick={() => {
-                        setActiveNoteId(note._id)
-                        setShowCreateNote(false);
+                        router.push(`/notes/${note._id}`);
                     }}>
                         <header className="flex flex-col gap-2" >
                             <h2 className="font-bold text-lg lg:text-base max-w-48">{note.title}</h2>
