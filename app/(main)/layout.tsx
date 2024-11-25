@@ -36,7 +36,6 @@ export default async function RootLayout({
                       {children}
                     </main>
                   </Provider>
-
                 </ArchiveProvider>
               </ActiveSidebarTagContextProvider>
             </ToastProvider>
