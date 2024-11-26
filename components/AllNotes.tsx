@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import convertDate from '@utils/helpers';
 import { CircularProgress } from '@mui/material';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface AllNotesProps {
     searchQuery: string;
@@ -69,9 +70,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                     <p className="text-neutral-600 dark:text-neutral-500 mt-2 lg:text-sm">{note.createdAt && convertDate(note.createdAt)}</p>
                 </div>
             ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
-                    <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} onClick={() => {
-                        router.push(`/notes/${note._id}`);
-                    }}>
+                    <Link href={`/notes/${note._id}${activeSidebarTag ? `?tag=${activeSidebarTag}` : ''}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
                         <header className="flex flex-col gap-2" >
                             <h2 className="font-bold text-lg lg:text-base max-w-48">{note.title}</h2>
                             <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2">
@@ -83,7 +82,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                         <p className="text-neutral-600 dark:text-neutral-500 mt-2 lg:text-sm">
                             {note.createdAt && convertDate(note.createdAt)}
                         </p>
-                    </div>
+                    </Link>
                 )) : (
                     <div className="flex flex-col gap-2 items-center justify-center">
                         {!loading && <p className="text-neutral-600">No notes found.</p>}
