@@ -8,13 +8,13 @@ import React from 'react'
 
 interface NoteContentNavProps {
     navType: 'note' | 'create';
-    handleCreate : () => void;
-    handleCancel : () => void;
-    editMode? : boolean;
-    setEditMode? : React.Dispatch<React.SetStateAction<boolean>>;
+    handleCreate: () => void;
+    handleCancel: () => void;
+    editMode?: boolean;
+    setEditMode?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function NoteContentNav({ navType = 'note' , handleCancel , handleCreate , setEditMode , editMode}: NoteContentNavProps) {
+export default function NoteContentNav({ navType = 'note', handleCancel, handleCreate, setEditMode, editMode }: NoteContentNavProps) {
     const router = useRouter();
     const params = useParams();
     const pathName = usePathname();
@@ -71,8 +71,16 @@ export default function NoteContentNav({ navType = 'note' , handleCancel , handl
                 )}
 
                 <p onClick={handleCancel}>Cancel</p>
-                {editMode && <p className='text-blue-500' onClick={handleCreate}>Save Note</p>}
-                {!editMode && <p className='text-blue-500' onClick={() => setEditMode && setEditMode(true)}>Edit Note</p>}
+                {navType === 'create' ? (
+                    <p className='text-blue-500' onClick={handleCreate}>Create Note</p>
+                ) : (
+                    <>
+                        {editMode && <p className='text-blue-500' onClick={handleCreate}>Save Note</p>}
+                        {!editMode && <p className='text-blue-500' onClick={() => setEditMode && setEditMode(true)}>Edit Note</p>}
+                    </>
+
+                )}
+
             </div>
         </div>
     )

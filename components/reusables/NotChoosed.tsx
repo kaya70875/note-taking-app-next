@@ -1,9 +1,11 @@
 import AllNotes from '@components/AllNotes';
 import useScreenSize from '@hooks/useScreenSize';
+import { usePathname } from 'next/navigation';
 import React from 'react'
 
 export default function NotChoosed() {
     const { isTablet } = useScreenSize();
+    const pathName = usePathname();
 
     return (
         <div className='content-section w-full flex flex-1 flex-col gap-4 p-4 lg:p-0 border-r lg:border-none border-neutral-300 dark:border-neutral-700'>
@@ -13,7 +15,7 @@ export default function NotChoosed() {
                     <p className='dark:text-neutral-300'>Choose a note to get started!</p>
                 </div>
             ) : (
-                <AllNotes searchQuery='' />
+                pathName === '/archived' && <AllNotes searchQuery='' />
             )}
         </div>
     )
