@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import SvgIcon from './reusables/SvgIcon';
-import useNoteActions from '@hooks/useNotActions';
-import { Note } from '../types/notes';
+'use client';
+
+import ClockSvg from '@components/svgIcons/ClockSvg';
+import TagSvg from '@components/svgIcons/TagSvg';
 import { useToast } from '@context/ToastContext';
+import useNoteActions from '@hooks/useNotActions';
 import { CircularProgress } from '@mui/material';
-import ClockSvg from './svgIcons/ClockSvg';
-import TagSvg from './svgIcons/TagSvg';
+import { Note } from '../types/notes';
+import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import NoteContentNav from '@components/layoutShift/NoteContentNav';
 
-interface NoteContentProps {
-    activeNoteId: string;
-}
+export default function page() {
 
-export default function NoteContent({ activeNoteId }: NoteContentProps) {
     const { getRelevantNotes, updateNote } = useNoteActions();
-    const {showToast} = useToast();
+    const { showToast } = useToast();
+
+    const params = useParams();
+    const id = params.id; // Access dynamic route parameter like this in next 15.
 
     const [notes, setNotes] = useState<Note | null>(null);
     const [editMode, setEditMode] = useState(false);
@@ -21,26 +24,32 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
         title: '',
         content: '',
         tags: [],
+
     });
 
-    const [loading , setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchNotes = async () => {
-            if (activeNoteId) { // if activeNoteId fetch notes.
-                setLoading(true);
-                const fetchedNotes = await getRelevantNotes(activeNoteId);
-                setLoading(false);
-                setNotes(fetchedNotes);
-                setFormData({
-                    title: fetchedNotes.title,
-                    content: fetchedNotes.content,
-                    tags: fetchedNotes.tags,
-                });
+            if (id) {
+                try {
+                    setLoading(true);
+                    const fetchedNotes = await getRelevantNotes(id as string);
+                    setNotes(fetchedNotes);
+                    setFormData({
+                        title: fetchedNotes.title,
+                        content: fetchedNotes.content,
+                        tags: fetchedNotes.tags,
+                    });
+                } catch (error) {
+                    console.error('Failed to fetch note:', error);
+                } finally {
+                    setLoading(false); // Always stop loading
+                }
             }
         };
         fetchNotes();
-    }, [activeNoteId]);
+    }, [id]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -66,7 +75,9 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
     };
 
     return (
-        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300 dark:border-neutral-700">
+        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-neutral-700">
+            <NoteContentNav />
+            <div className="line"></div>
             {notes && !loading ? (
                 <header className="flex flex-col h-full justify-between">
                     <div className="content-top flex flex-col gap-6">
@@ -85,7 +96,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                         <div className="flex flex-col gap-4">
                             <div className="memo-info flex items-center gap-8">
                                 <div className="tags-section flex gap-2">
-                                    <TagSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />
+                                    <TagSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                                     <p className='dark:text-neutral-300'>Tags</p>
                                 </div>
                                 <div className="tags-section flex gap-4">
@@ -114,7 +125,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
 
                             <div className="memo-info flex items-center gap-8">
                                 <div className="tags-section flex gap-2">
-                                    <ClockSvg props={{color : 'text-neutral-950 dark:text-neutral-300'}} />
+                                    <ClockSvg props={{ color: 'text-neutral-950 dark:text-neutral-300' }} />
                                     <p className='text-neutral-950 dark:text-neutral-300'>Last Edited</p>
                                 </div>
                                 <div className="tags-section flex gap-4">
@@ -138,7 +149,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                         </div>
                     </div>
 
-                    <div className="content-buttons flex items-center gap-4 p-8 border-t border-neutral-300 dark:border-neutral-700 w-full">
+                    <div className="content-buttons flex items-center gap-4 p-8 border-t lg:border-none border-neutral-300 dark:border-neutral-700 w-full">
                         {editMode ? (
                             <>
                                 <button
@@ -157,7 +168,7 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                         ) : (
                             <button
                                 onClick={() => setEditMode(true)}
-                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg"
+                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg lg:hidden"
                             >
                                 Edit Note
                             </button>
@@ -168,5 +179,5 @@ export default function NoteContent({ activeNoteId }: NoteContentProps) {
                 <div className='w-full h-full flex items-center justify-center'><CircularProgress /></div>
             )}
         </div>
-    );
+    )
 }
