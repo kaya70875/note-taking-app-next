@@ -54,7 +54,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     return (
         <div className="note-cards flex flex-col gap-8 lg:gap-2 w-full"> {/* All notes shown here */}
             {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
-            {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-center lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
+            {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
             {isArchiveOpen ? (filteredNotes?.map(note => (
                 <div className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} onClick={() => {
                     router.push(`/archived/${note._id}`);
@@ -72,7 +72,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
             ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
                     <Link href={`/notes/${note._id}${activeSidebarTag ? `?tag=${activeSidebarTag}` : ''}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
                         <header className="flex flex-col gap-2" >
-                            <h2 className="font-bold text-lg lg:text-base max-w-48">{note.title}</h2>
+                            <h2 className="font-bold text-lg lg:text-base">{note.title}</h2>
                             <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2">
                                 {note.tags.slice(0 , 2).map(tag => (
                                     <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 p-1 rounded-lg text-sm">{tag}</p>

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import SvgIcon from './reusables/SvgIcon'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import useNavHeader from '@hooks/useNavHeader';
 
 interface NavbarProps {
     searchQuery?: string;
@@ -11,30 +12,15 @@ interface NavbarProps {
 
 export default function Navbar({ setSearchQuery, searchQuery}: NavbarProps) {
     const router = useRouter();
-    const pathName = usePathname();
     const searchParams = useSearchParams();
+
+    const {navHeader} = useNavHeader();
 
     const activeSidebarTag = searchParams.get('tag');
     
-    const [navHeader , setNavHeader] = useState('');
-
     const navigateToSettings = () => {
         router.push('/settings');
     }
-
-    useEffect(() => {
-        if(pathName === '/notes' && !searchParams.has('tag')) {
-            setNavHeader('All Notes');
-        }
-
-        else if(searchParams.has('tag')) {
-            setNavHeader('Notes Tagged:');
-        }
-
-        else if(pathName.includes('archived')) {
-            setNavHeader('Archived Notes');
-        }
-    }, [pathName , searchParams]);
 
     return (
         <div className='w-full flex items-center justify-between p-8 border-b border-neutral-300 dark:border-neutral-700'>

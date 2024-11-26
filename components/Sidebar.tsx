@@ -7,11 +7,14 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CircularProgress } from '@mui/material';
 import ChevronRight from './svgIcons/ChevronRight';
 import LogoSvg from './svgIcons/LogoSvg';
+import useScreenSize from '@hooks/useScreenSize';
 
 export default function Sidebar() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathName = usePathname();
+
+    const {isTablet} = useScreenSize();
 
     // Get all tags from database and filter theme only one category.
     const { data, loading, error } = useFetch<TagsResponse>('/api/getAllTags');
@@ -54,7 +57,7 @@ export default function Sidebar() {
     }
 
     return (
-        <div className='flex flex-col p-4 gap-12 w-1/4 max-w-80 border-r border-neutral-300 dark:border-neutral-400 dark:bg-neutral-950'>
+        <div className={`${isTablet ? 'hidden' : 'block'} flex flex-col p-4 gap-12 w-1/4 max-w-80 border-r border-neutral-300 dark:border-neutral-400 dark:bg-neutral-950`}>
             <header className='logo'>
                 <LogoSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />   
             </header>
