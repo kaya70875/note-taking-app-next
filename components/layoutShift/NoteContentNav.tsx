@@ -6,13 +6,21 @@ import useNoteActions from '@hooks/useNotActions'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 
-export default function NoteContentNav() {
+interface NoteContentNavProps {
+    navType: 'note' | 'create';
+    handleCreate : () => void;
+    handleCancel : () => void;
+    editMode? : boolean;
+    setEditMode? : React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function NoteContentNav({ navType = 'note' , handleCancel , handleCreate , setEditMode , editMode}: NoteContentNavProps) {
     const router = useRouter();
     const params = useParams();
     const pathName = usePathname();
 
-    const {deleteNote , setArchivedNotes} = useNoteActions();
-    const {showToast} = useToast();
+    const { deleteNote, setArchivedNotes } = useNoteActions();
+    const { showToast } = useToast();
 
     const activeNoteId = params.id;
 
@@ -51,14 +59,20 @@ export default function NoteContentNav() {
             </div>
 
             <div className='flex gap-4 items-center'>
-                <div className="delete" onClick={handleDeleteNote}>
-                    <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
-                </div>
-                <div className="archive" onClick={handleArchiveNote}>
-                    <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
-                </div>
-                <p>Cancel</p>
-                <p className='text-blue-500'>Save Note</p>
+                {navType === 'note' && (
+                    <>
+                        <div className="delete" onClick={handleDeleteNote}>
+                            <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
+                        </div>
+                        <div className="archive" onClick={handleArchiveNote}>
+                            <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
+                        </div>
+                    </>
+                )}
+
+                <p onClick={handleCancel}>Cancel</p>
+                {editMode && <p className='text-blue-500' onClick={handleCreate}>Save Note</p>}
+                {!editMode && <p className='text-blue-500' onClick={() => setEditMode && setEditMode(true)}>Edit Note</p>}
             </div>
         </div>
     )

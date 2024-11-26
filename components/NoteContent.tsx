@@ -76,7 +76,7 @@ export default function page() {
 
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-neutral-700">
-            <NoteContentNav />
+            <NoteContentNav handleCancel={handleCancel} handleCreate={handleSave} setEditMode={setEditMode} editMode={editMode} navType='note' />
             <div className="line"></div>
             {notes && !loading ? (
                 <header className="flex flex-col h-full justify-between">
