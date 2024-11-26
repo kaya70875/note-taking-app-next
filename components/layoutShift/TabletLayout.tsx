@@ -12,9 +12,11 @@ export default function TabletLayout({children} : {children: React.ReactNode}) {
 
     const currentTag = searchParams.get('tag');
 
+    const hideNavHeader = pathName === '/create';
+
   return (
     <div className='bg-neutral-100 w-full h-full p-4 rounded-lg'>
-        <div className='text-xl font-bold py-2'>{navHeader}</div>
+        {!hideNavHeader && <div className='text-xl font-bold py-2'>{navHeader}</div>}
         {pathName === '/notes' && !searchParams.has('tag') ? <AllNotes searchQuery='' /> : children}
         {searchParams.has('tag') && !currentTag && <AllTags />}
         {pathName === '/notes' && currentTag && <AllNotes searchQuery={''} />}
