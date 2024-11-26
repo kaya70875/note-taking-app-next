@@ -3,13 +3,14 @@
 import { useState } from 'react';
 import useFetch from '@hooks/useFetch';
 import { TagsResponse } from '../types/notes';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CircularProgress } from '@mui/material';
 import ChevronRight from './svgIcons/ChevronRight';
 import LogoSvg from './svgIcons/LogoSvg';
 
 export default function Sidebar() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const pathName = usePathname();
 
     // Get all tags from database and filter theme only one category.
@@ -61,12 +62,12 @@ export default function Sidebar() {
                 <section className="sidebar-top">
                     <ul className='flex flex-col gap-4'>
                         {sidebarItems.map(item => (
-                            <li key={item.name} className={`flex items-center justify-between p-2 cursor-pointer ${activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`} onClick={() => handleSidebarItemClick(item.name)}>
+                            <li key={item.name} className={`flex items-center justify-between p-2 cursor-pointer ${!searchParams.has('tag') && activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`} onClick={() => handleSidebarItemClick(item.name)}>
                                 <div className='flex items-center gap-4'>
-                                    <div className={`${activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.icon}</div>
-                                    <p className={`${activeItem === item.name ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{item.name}</p>
+                                    <div className={`${!searchParams.has('tag') && activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.icon}</div>
+                                    <p className={`${!searchParams.has('tag') && activeItem === item.name ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{item.name}</p>
                                 </div>
-                                {activeItem === item.name && <ChevronRight props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />}
+                                {!searchParams.has('tag') && activeItem === item.name && <ChevronRight props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />}
                             </li>
                         ))}
                     </ul>
