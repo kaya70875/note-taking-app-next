@@ -5,6 +5,8 @@ import { useSession } from 'next-auth/react';
 import TagSvg from './svgIcons/TagSvg';
 import ClockSvg from './svgIcons/ClockSvg';
 import { useRouter } from 'next/navigation';
+import NoteContentNav from './layoutShift/NoteContentNav';
+import useScreenSize from '@hooks/useScreenSize';
 
 
 export default function CreateNote() {
@@ -13,6 +15,9 @@ export default function CreateNote() {
 
     const { createNote } = useNoteActions();
     const { showToast } = useToast();
+
+    const { isTablet } = useScreenSize();
+
     const { data: session } = useSession();
 
     const [formData, setFormData] = useState({
@@ -53,7 +58,9 @@ export default function CreateNote() {
         router.push('/notes');
     };
     return (
-        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r border-neutral-300 dark:border-e-neutral-700">
+        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
+            <NoteContentNav handleCancel={handleCancel} handleCreate={handleCreate} navType='create' />
+            <div className="line"></div>
             <header className="flex flex-col h-full justify-between">
                 <div className="content-top flex flex-col gap-6">
                     <input
@@ -109,20 +116,23 @@ export default function CreateNote() {
                 </div>
 
                 <div className="content-buttons flex items-center gap-4 p-8 border-t border-neutral-300 w-full">
-                    <>
-                        <button
-                            onClick={handleCreate}
-                            className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg"
-                        >
-                            Save Note
-                        </button>
-                        <button
-                            onClick={handleCancel}
-                            className="flex items-center justify-center bg-neutral-200 p-3 border-none text-neutral-600 rounded-lg"
-                        >
-                            Cancel
-                        </button>
-                    </>
+                    {!isTablet && (
+                        <>
+                            <button
+                                onClick={handleCreate}
+                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg"
+                            >
+                                Save Note
+                            </button>
+                            <button
+                                onClick={handleCancel}
+                                className="flex items-center justify-center bg-neutral-200 p-3 border-none text-neutral-600 rounded-lg"
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    )}
+
                 </div>
             </header>
         </div>
