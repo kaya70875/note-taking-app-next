@@ -115,7 +115,7 @@ export default function CreateNote() {
                     </div>
                 </div>
 
-                <div className="content-buttons flex items-center gap-4 p-8 border-t border-neutral-300 w-full">
+                <div className="content-buttons flex items-center gap-4 p-8 border-t lg: border-none border-neutral-300 dark:border-neutral-700 w-full">
                     {!isTablet && (
                         <>
                             <button

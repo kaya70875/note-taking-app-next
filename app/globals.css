@@ -41,7 +41,7 @@ label {
 .line {
   width: 100%;
   height: 1px;
-  @apply bg-neutral-300;
+  @apply bg-neutral-300 dark:bg-neutral-700;
 }
 
 .input {

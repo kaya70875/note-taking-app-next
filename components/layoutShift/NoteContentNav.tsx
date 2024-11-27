@@ -1,10 +1,12 @@
 import SvgIcon from '@components/reusables/SvgIcon'
+import ArrowLeft from '@components/svgIcons/ArrowLeft'
 import IconArchive from '@components/svgIcons/IconArchive'
 import IconDelete from '@components/svgIcons/IconDelete'
 import { useToast } from '@context/ToastContext'
 import useNoteActions from '@hooks/useNotActions'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import React from 'react'
+import Back from './Back'
 
 interface NoteContentNavProps {
     navType: 'note' | 'create';
@@ -54,8 +56,7 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
     return (
         <div className='flex w-full items-center justify-between'>
             <div className='flex gap-2 items-center'>
-                <SvgIcon path='arrow-left' />
-                <p onClick={() => router.back()}>Go Back</p>
+                <Back />
             </div>
 
             <div className='flex gap-4 items-center'>
@@ -78,7 +79,6 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
                         {editMode && <p className='text-blue-500' onClick={handleCreate}>Save Note</p>}
                         {!editMode && <p className='text-blue-500' onClick={() => setEditMode && setEditMode(true)}>Edit Note</p>}
                     </>
-
                 )}
 
             </div>
