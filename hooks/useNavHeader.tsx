@@ -5,7 +5,7 @@ const useNavHeader = () => {
 
     const pathName = usePathname();
     const searchParams = useSearchParams();
-    const [navHeader , setNavHeader] = useState('');
+    const [navHeader , setNavHeader] = useState<string | JSX.Element>('');
 
     const decideNavHeader = () => {
         useEffect(() => {
@@ -14,7 +14,12 @@ const useNavHeader = () => {
             }
     
             else if(searchParams.has('tag') && searchParams.get('tag')) {
-                setNavHeader('Notes Tagged:');
+                setNavHeader(
+                    <div className="flex gap-2 items-center">
+                        <h2 className="text-neutral-600 font-bold">Notes Tagged:</h2>
+                        <h2 className="text-neutral-950 font-bold">{searchParams.get('tag')}</h2>
+                    </div>
+                );
             }
 
             else if(searchParams.has('tag') && !searchParams.get('tag')) {
