@@ -5,11 +5,12 @@ const useNavHeader = () => {
 
     const pathName = usePathname();
     const searchParams = useSearchParams();
+
     const [navHeader , setNavHeader] = useState<string | JSX.Element>('');
 
     const decideNavHeader = () => {
         useEffect(() => {
-            if(pathName === '/notes' && !searchParams.has('tag')) {
+            if(pathName === '/notes' && !searchParams.has('tag') && !searchParams.has('search')) {
                 setNavHeader('All Notes');
             }
     
@@ -22,12 +23,12 @@ const useNavHeader = () => {
                 );
             }
 
-            else if(searchParams.has('tag') && !searchParams.get('tag')) {
-                setNavHeader('Tags');
+            else if(searchParams.has('search')) {
+                setNavHeader('Search');
             }
 
-            else if(pathName.includes('trash')) {
-                setNavHeader('Trash');
+            else if(searchParams.has('tag') && !searchParams.get('tag')) {
+                setNavHeader('Tags');
             }
     
             else if(pathName.includes('archived')) {
