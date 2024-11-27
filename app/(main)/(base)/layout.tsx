@@ -78,7 +78,7 @@ export default function Layout({
                 </div>
             ) : (
                 <>
-                    <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                    <Navbar setSearchQuery={setSearchQuery} />
                     <div className="flex w-full h-[89.5%] dark:bg-neutral-950">
                         <section className="notes-section flex flex-col p-6 xl:p-4 lg:p-2 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
                             <button className="primary-btn w-full lg:text-sm" onClick={() => router.push('/create')}>
