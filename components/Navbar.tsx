@@ -10,14 +10,14 @@ interface NavbarProps {
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Navbar({ setSearchQuery, searchQuery}: NavbarProps) {
+export default function Navbar({ setSearchQuery, searchQuery }: NavbarProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const {navHeader} = useNavHeader();
+    const { navHeader } = useNavHeader();
 
     const activeSidebarTag = searchParams.get('tag');
-    
+
     const navigateToSettings = () => {
         router.push('/settings');
     }
