@@ -65,7 +65,7 @@ export default function Layout({
         <div className="w-full max-h-full">
             {isTablet ? (
                 <div className="flex flex-col justify-center h-full bg-neutral-200 dark:bg-neutral-900">
-                    <div className="logo p-6">
+                    <div className="logo px-4 py-6">
                         <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                     </div>
                     <TabletLayout>

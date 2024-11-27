@@ -53,7 +53,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
 
     return (
         <div className='flex flex-col justify-between items-end h-[89.7%]'>
-            <div className="note-cards flex flex-col gap-8 lg:gap-2 w-full"> {/* All notes shown here */}
+            <div className="note-cards flex flex-col gap-3 lg:gap-4 w-full"> {/* All notes shown here */}
                 {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
                 {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
                 {isArchiveOpen ? (filteredNotes?.map(note => (
@@ -68,7 +68,12 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                                 ))}
                             </div>
                         </header>
-                        <p className="text-neutral-600 dark:text-neutral-500 mt-2 lg:text-sm">{note.createdAt && convertDate(note.createdAt)}</p>
+                        <div className='flex flex-col gap-2'>
+                            <p className="text-neutral-600 dark:text-neutral-500 mt-2 lg:text-sm">
+                                {note.createdAt && convertDate(note.createdAt)}
+                            </p>
+                            <div className="line dark:bg-neutral-700"></div>
+                        </div>
                     </div>
                 ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
                     <Link href={`/notes/${note._id}${activeSidebarTag ? `?tag=${activeSidebarTag}` : ''}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
@@ -80,9 +85,13 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                                 ))}
                             </div>
                         </header>
-                        <p className="text-neutral-600 dark:text-neutral-500 mt-2 lg:text-sm">
-                            {note.createdAt && convertDate(note.createdAt)}
-                        </p>
+                        <div className='flex flex-col gap-2'>
+                            <p className="text-neutral-600 dark:text-neutral-500 mt-2 lg:text-sm">
+                                {note.createdAt && convertDate(note.createdAt)}
+                            </p>
+                            <div className="line dark:bg-neutral-700"></div>
+                        </div>
+
                     </Link>
                 )) : (
                     <div className="flex flex-col gap-2 items-center justify-center">

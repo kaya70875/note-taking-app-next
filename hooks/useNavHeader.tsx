@@ -18,7 +18,7 @@ const useNavHeader = () => {
                 setNavHeader(
                     <div className="flex gap-2 items-center">
                         <h2 className="text-neutral-600 font-bold">Notes Tagged:</h2>
-                        <h2 className="text-neutral-950 font-bold">{searchParams.get('tag')}</h2>
+                        <h2 className="font-bold">{searchParams.get('tag')}</h2>
                     </div>
                 );
             }
