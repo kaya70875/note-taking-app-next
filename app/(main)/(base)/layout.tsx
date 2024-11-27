@@ -64,7 +64,7 @@ export default function Layout({
     return (
         <div className="w-full max-h-full">
             {isTablet ? (
-                <div className="flex flex-col justify-center h-full bg-neutral-200">
+                <div className="flex flex-col justify-center h-full bg-neutral-200 dark:bg-neutral-900">
                     <div className="logo p-6">
                         <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                     </div>
@@ -72,7 +72,7 @@ export default function Layout({
                         {children}
                     </TabletLayout>
 
-                    <div className="bottom-navbar bg-neutral-100">
+                    <div className="bottom-navbar bg-neutral-100 dark:bg-neutral-950">
                         <BottomNavbar />
                     </div>
                 </div>
