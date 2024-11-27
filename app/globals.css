@@ -23,19 +23,19 @@ body {
 }
 
 p {
-  @apply text-neutral-900 dark:text-neutral-100 font-normal;
+  @apply text-neutral-900 dark:text-neutral-300 font-normal;
 }
 
 h2 {
-  @apply text-neutral-950 dark:text-neutral-100 font-bold text-lg;
+  @apply text-neutral-950 dark:text-neutral-200 font-bold text-lg;
 }
 
 h1 {
-  @apply font-bold text-2xl text-neutral-950 dark:text-neutral-50;
+  @apply font-bold text-2xl text-neutral-950 dark:text-neutral-300;
 }
 
 label {
-  @apply font-medium text-neutral-950 dark:text-neutral-100;
+  @apply font-medium text-neutral-950 dark:text-neutral-200;
 }
 
 .line {
