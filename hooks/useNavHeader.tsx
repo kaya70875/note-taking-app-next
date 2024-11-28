@@ -10,7 +10,7 @@ const useNavHeader = () => {
 
     const decideNavHeader = () => {
         useEffect(() => {
-            if(pathName === '/notes' && !searchParams.has('tag') && !searchParams.has('search')) {
+            if(pathName.includes('/notes') && !searchParams.has('tag') && !searchParams.has('search')) {
                 setNavHeader('All Notes');
             }
     
