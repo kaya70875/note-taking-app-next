@@ -52,7 +52,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     }, [searchQuery, isArchiveOpen, data, activeSidebarTag]);
 
     return (
-        <div className='flex flex-col justify-between items-end h-[89.7%]'>
+        <div className='flex flex-col justify-between items-end h-[89.7%] overflow-auto'>
             <div className="note-cards flex flex-col gap-3 lg:gap-4 w-full"> {/* All notes shown here */}
                 {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
                 {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
@@ -100,7 +100,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                 )
                 )}
             </div>
-            <button className='create-btn-ellipse hidden lg:flex items-center justify-center p-4 h-14 w-14 text-neutral-50 bg-blue-500 rounded-full' onClick={() => router.push('/create')}>+</button>
+            <button className='create-btn-ellipse hidden lg:flex items-center justify-center p-4 h-14 w-14 text-neutral-50 bg-blue-500 rounded-full absolute bottom-20 right-4' onClick={() => router.push('/create')}>+</button>
         </div>
 
 
