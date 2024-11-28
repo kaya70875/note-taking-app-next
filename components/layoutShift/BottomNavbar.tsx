@@ -1,10 +1,13 @@
 import IconArchive from '@components/svgIcons/IconArchive'
 import IconSettings from '@components/svgIcons/IconSettings'
 import TagSvg from '@components/svgIcons/TagSvg'
+import { getFullUrl } from '@utils/helpers'
 import Link from 'next/link'
 import React from 'react'
 
 export default function BottomNavbar() {
+
+    const pathName = getFullUrl();
 
     const navbarItems = [
         {
@@ -34,12 +37,16 @@ export default function BottomNavbar() {
         }
     ]
 
+    const activeItem = navbarItems.find(item => pathName === item.route)?.name;
+
     return (
         <div className='flex p-4 w-full items-center justify-around'>
             {navbarItems.map((item, index) => (
-                <Link key={index} href={item.route} className='flex flex-col items-center gap-2 cursor-pointer'>
-                    {item.icon}
-                    <p className='text-neutral-950 dark:text-neutral-50 text-sm'>{item.name}</p>
+                <Link key={index} href={item.route} className={`flex flex-col items-center gap-2 px-4 rounded-lg py-2 cursor-pointer ${activeItem === item.name ? 'bg-blue-50' : ''}`}>
+                    <div className={`icon ${activeItem === item.name ? 'text-blue-500' : ''}`}>
+                        {item.icon}
+                    </div>
+                    <p className={`text-sm ${activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.name}</p>
                 </Link>
             ))}
         </div>
