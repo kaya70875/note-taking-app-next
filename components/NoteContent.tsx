@@ -9,11 +9,14 @@ import { Note } from '../types/notes';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import NoteContentNav from '@components/layoutShift/NoteContentNav';
+import useScreenSize from '@hooks/useScreenSize';
 
 export default function page() {
 
     const { getRelevantNotes, updateNote } = useNoteActions();
     const { showToast } = useToast();
+
+    const {isTablet } = useScreenSize();
 
     const params = useParams();
     const id = params.id; // Access dynamic route parameter like this in next 15.
@@ -76,7 +79,7 @@ export default function page() {
 
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-neutral-700">
-            <NoteContentNav handleCancel={handleCancel} handleCreate={handleSave} setEditMode={setEditMode} editMode={editMode} navType='note' />
+            {isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleSave} setEditMode={setEditMode} editMode={editMode} navType='note' />}
             <div className="line"></div>
             {notes && !loading ? (
                 <header className="flex flex-col h-full justify-between">

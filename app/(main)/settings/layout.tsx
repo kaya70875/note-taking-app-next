@@ -26,14 +26,24 @@ export default function RootLayout({
             )}
             <div className='w-full h-full lg:flex flex-col-reverse rounded-lg'>
                 {isTablet ? (<BottomNavbar />) : (<Navbar />)}
-                <div className='flex w-full h-full'>
-                    {pathName === '/settings' ? <SettingsSidebar /> : ( // İf route is settings render sidebar only if not (settings/theme for ex.) render children content only.
-                        <div className="w-full h-full p-10 lg:p-6 lg:flex flex-col gap-2">
-                            <Back />
+                {isTablet ? (
+                    <div className='flex w-full h-full'>
+                        {pathName === '/settings' ? <SettingsSidebar /> : ( // İf route is settings render sidebar only if not (settings/theme for ex.) render children content only.
+                            <div className="w-full h-full p-10 lg:p-6 lg:flex flex-col gap-2">
+                                {isTablet && <Back />}
+                                {children}
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className="flex w-full h-full">
+                        <SettingsSidebar />
+                        <div className="w-full h-full p-10">
                             {children}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
+
             </div>
         </div>
 

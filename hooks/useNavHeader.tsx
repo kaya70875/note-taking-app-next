@@ -34,6 +34,11 @@ const useNavHeader = () => {
             else if(pathName.includes('archived')) {
                 setNavHeader('Archived Notes');
             }
+
+            else if(pathName.includes('/settings')) {
+                setNavHeader('Settings');
+            }
+
         }, [pathName , searchParams]);
     }
 

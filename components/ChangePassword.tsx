@@ -19,7 +19,7 @@ export default function ChangePassword() {
             </header>
 
             <div className='flex flex-col gap-8'>
-                <div className="input-wrapper w-1/2 xxl:w-3/4 xl:w-full flex flex-col gap-1 relative">
+                <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="old-pass">Old Password</label>
                     <input type={showPassword.oldPassword ? 'text' : 'password'} id="old-pass" className='input dark:border-neutral-700' />
                     <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword })}>
@@ -29,7 +29,7 @@ export default function ChangePassword() {
                     </div>
                 </div>
 
-                <div className="input-wrapper w-1/2 xxl:w-3/4 xl:w-full flex flex-col gap-1 relative">
+                <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="new-pass">New Password</label>
                     <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className='input dark:border-neutral-700' />
                     <div className="input-info flex items-center gap-1">
@@ -43,7 +43,7 @@ export default function ChangePassword() {
                     </div>
                 </div>
 
-                <div className="input-wrapper w-1/2 xxl:w-3/4 xl:w-full flex flex-col gap-1 relative">
+                <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="confirm-pass">Confirm New Password</label>
                     <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className='input dark:border-neutral-700' />
                     <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}>
@@ -54,7 +54,7 @@ export default function ChangePassword() {
                     </div>
                 </div>
 
-                <div className='flex w-1/2 items-center justify-end'>
+                <div className='flex w-1/2 items-center justify-end xxl:justify-start'>
                     <button className="primary-btn w-1/2 max-w-48">
                         Change Password
                     </button>
