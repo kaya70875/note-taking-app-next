@@ -54,7 +54,7 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
                 {themeList.map((option) => (
                     <div
                         key={option.name}
-                        className={`flex items-center justify-between gap-4 border border-neutral-300 dark:border-neutral-700 p-4 w-1/2 rounded-lg cursor-pointer ${
+                        className={`flex items-center justify-between gap-4 border border-neutral-300 dark:border-neutral-700 p-4 w-1/2 xxl:w-2/3 xl:w-full rounded-lg cursor-pointer ${
                             selectedTheme === option.name ? 'ring ring-blue-500' : ''
                         }`}
                         onClick={() => handleThemeChange(option.name)}

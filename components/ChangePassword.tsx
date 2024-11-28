@@ -19,31 +19,38 @@ export default function ChangePassword() {
             </header>
 
             <div className='flex flex-col gap-8'>
-                <div className="input-wrapper flex flex-col gap-1 relative">
+                <div className="input-wrapper w-1/2 xxl:w-3/4 xl:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="old-pass">Old Password</label>
                     <input type={showPassword.oldPassword ? 'text' : 'password'} id="old-pass" className='input dark:border-neutral-700' />
-                    <div className="show-pass w-1/2 absolute right-10 top-1/2 -translate-y-1/1 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword })}>
-                        {showPassword.oldPassword ? <HidePassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <ShowPassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
+                    <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword })}>
+                        <div className='eye-icon'>
+                            {showPassword.oldPassword ? <HidePassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <ShowPassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
+                        </div>
                     </div>
                 </div>
 
-                <div className="input-wrapper flex flex-col gap-1 relative">
+                <div className="input-wrapper w-1/2 xxl:w-3/4 xl:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="new-pass">New Password</label>
                     <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className='input dark:border-neutral-700' />
                     <div className="input-info flex items-center gap-1">
                         <IconInfo props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                         <p className='text-neutral-950 dark:text-neutral-300'>At least 8 characters</p>
                     </div>
-                    <div className="show-pass w-1/2 absolute right-10 top-1/2 -translate-y-1/2 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, newPassword: !showPassword.newPassword })}>
-                        {showPassword.newPassword ? <HidePassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <ShowPassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
+                    <div className="show-pass w-full absolute top-1/2 right-0 -translate-y-4 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, newPassword: !showPassword.newPassword })}>
+                        <div className="eye-icon">
+                            {showPassword.newPassword ? <HidePassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <ShowPassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
+                        </div>
                     </div>
                 </div>
 
-                <div className="input-wrapper flex flex-col gap-1 relative">
+                <div className="input-wrapper w-1/2 xxl:w-3/4 xl:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="confirm-pass">Confirm New Password</label>
                     <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className='input dark:border-neutral-700' />
-                    <div className="show-pass w-1/2 absolute right-10 top-1/2 -translate-y-1/1 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}>
-                        {showPassword.confirmPassword ? <HidePassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} /> : <ShowPassword props={{color : 'text-neutral-950 dark:text-neutral-100'}} />}
+                    <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}>
+                        <div className="eye-icon">
+                            {showPassword.confirmPassword ? <HidePassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <ShowPassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
+
+                        </div>
                     </div>
                 </div>
 
