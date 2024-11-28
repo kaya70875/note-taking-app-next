@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(req: NextRequest) {
-    const protectedRoutes = ['/settings', '/'];
+    const protectedRoutes = ['/settings', '/notes' , '/archived' , '/'];
     const currentPath = req.nextUrl.pathname;
     const isProtectedRoute = protectedRoutes.includes(currentPath);
 
