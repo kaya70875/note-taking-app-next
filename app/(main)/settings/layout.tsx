@@ -1,16 +1,14 @@
 'use client';
 
-import { Inter } from "next/font/google";
 import BottomNavbar from "@components/layoutShift/BottomNavbar";
 import Navbar from "@components/Navbar";
 import ChevronRight from "@components/svgIcons/ChevronRight";
 import useScreenSize from "@hooks/useScreenSize";
-import { useState } from "react";
 import IconSun from "@components/svgIcons/IconSun";
 import IconFont from "@components/svgIcons/IconFont";
 import IconLock from "@components/svgIcons/IconLock";
 import IconLogout from "@components/svgIcons/IconLogout";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function RootLayout({
     children,
@@ -41,10 +39,11 @@ export default function RootLayout({
         }
     ] as const;
 
-    const [activeItem, setActiveItem] = useState<'Color Theme' | 'Font Theme' | 'Change Password' | 'Logout' | ''>('');
-
     const { isTablet } = useScreenSize();
     const router = useRouter();
+    const pathName = usePathname();
+
+    const activeItem = settingsItems.find(item => pathName.includes(`settings${item.route}`))?.name; // Find the active item based on the pathname
 
     return (
         <div className='w-full h-full lg:flex flex-col-reverse'>
@@ -53,7 +52,6 @@ export default function RootLayout({
                 <section className="settings-section flex flex-col p-6 gap-8 w-4/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
                     {settingsItems.map(settings => (
                         <button key={settings.name} className={`flex items-center justify-between p-2 rounded-lg w-3/4 ${activeItem === settings.name ? 'bg-neutral-200 dark:bg-neutral-700' : ''}`} onClick={() => {
-                            setActiveItem(settings.name);
                             router.push(`/settings${settings.route}`);
                         }}>
                             <div className='flex items-center gap-2'>
