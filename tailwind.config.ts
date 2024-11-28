@@ -16,6 +16,8 @@ export default {
       mdp: { max: "899px" },
       md: { max: "767px" },
       sm: { max: "639px" },
+      xs : { max: "479px" },
+      xxs : { max: "379px" },
     },
     colors: {
       "neutral-950": "#0E121B",
