@@ -39,6 +39,10 @@ const useNavHeader = () => {
                 setNavHeader('Settings');
             }
 
+            else if(pathName.includes('/create')) {
+                setNavHeader('Create Note');
+            }
+
         }, [pathName , searchParams]);
     }
 
