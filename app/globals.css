@@ -45,7 +45,7 @@ label {
 }
 
 .input {
-  @apply border border-neutral-200 p-3 w-1/2 rounded-lg outline-none;
+  @apply border border-neutral-200 p-3 w-full rounded-lg outline-none;
 }
 
 .input-invalid {
@@ -58,4 +58,8 @@ label {
 
 .primary-btn {
   @apply flex items-center justify-center p-3 bg-blue-500 text-neutral-50 rounded-lg;
+}
+
+.eye-icon {
+  @apply absolute right-3 translate-y-1;
 }

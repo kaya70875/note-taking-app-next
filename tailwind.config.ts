@@ -10,6 +10,7 @@ export default {
   theme: {
     screens: {
       // Desktop-first breakpoints
+      xxl: { max: "1440px" },
       xl: { max: "1279px" },
       lg: { max: "1023px" },
       mdp: { max: "899px" },
