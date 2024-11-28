@@ -59,7 +59,7 @@ export default function CreateNote() {
     };
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
-            <NoteContentNav handleCancel={handleCancel} handleCreate={handleCreate} navType='create' />
+            { isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleCreate} navType='create' />}
             <div className="line"></div>
             <header className="flex flex-col h-full justify-between">
                 <div className="content-top flex flex-col gap-6">
