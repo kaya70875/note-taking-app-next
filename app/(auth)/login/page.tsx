@@ -33,7 +33,7 @@ export default function page() {
 
   useEffect(() => {
     if (authResults && !authResults?.error) {
-        router.push('/');
+        router.push('/notes');
     } else if(authResults?.error){
         showToast('Invalid Credentials!', 'error');
     }
