@@ -11,12 +11,8 @@ import IconFont from "@components/svgIcons/IconFont";
 import IconLock from "@components/svgIcons/IconLock";
 import IconLogout from "@components/svgIcons/IconLogout";
 import { useRouter } from "next/navigation";
-import { WrappedNextRouterError } from "next/dist/server/route-modules/app-route/module";
 
-
-const inter = Inter({ subsets: ['latin'] });
-
-export default async function RootLayout({
+export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -45,7 +41,7 @@ export default async function RootLayout({
         }
     ] as const;
 
-    const [activeItem, setActiveItem] = useState<'Color Theme' | 'Font Theme' | 'Change Password' | 'Logout'>('Color Theme');
+    const [activeItem, setActiveItem] = useState<'Color Theme' | 'Font Theme' | 'Change Password' | 'Logout' | ''>('');
 
     const { isTablet } = useScreenSize();
     const router = useRouter();

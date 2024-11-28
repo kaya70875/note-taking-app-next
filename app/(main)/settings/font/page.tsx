@@ -1,4 +1,3 @@
-'use client';
 
 import IconMonoSpace from '@components/svgIcons/IconMonoSpace'
 import IconSansSerif from '@components/svgIcons/IconSansSerif'
