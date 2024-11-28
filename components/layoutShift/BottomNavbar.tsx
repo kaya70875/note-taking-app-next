@@ -46,7 +46,7 @@ export default function BottomNavbar() {
                     <div className={`icon ${activeItem === item.name ? 'text-blue-500' : ''}`}>
                         {item.icon}
                     </div>
-                    <p className={`text-sm ${activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.name}</p>
+                    <p className={`text-sm ${activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'} xs:hidden`}>{item.name}</p>
                 </Link>
             ))}
         </div>

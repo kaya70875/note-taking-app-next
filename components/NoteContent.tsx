@@ -78,7 +78,7 @@ export default function page() {
     };
 
     return (
-        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-neutral-700">
+        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 border-r lg:border-none border-neutral-300 dark:border-neutral-700">
             {isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleSave} setEditMode={setEditMode} editMode={editMode} navType='note' />}
             <div className="line"></div>
             {notes && !loading ? (
@@ -152,7 +152,7 @@ export default function page() {
                         </div>
                     </div>
 
-                    <div className="content-buttons flex items-center gap-4 p-8 border-t lg:border-none border-neutral-300 dark:border-neutral-700 w-full">
+                    <div className="content-buttons flex items-center gap-4 py-4 border-t lg:border-none border-neutral-300 dark:border-neutral-700 w-full">
                         {editMode ? (
                             <>
                                 <button

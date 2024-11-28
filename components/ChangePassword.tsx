@@ -54,8 +54,8 @@ export default function ChangePassword() {
                     </div>
                 </div>
 
-                <div className='flex w-1/2 items-center justify-end xxl:justify-start'>
-                    <button className="primary-btn w-1/2 max-w-48">
+                <div className='flex w-1/2 md:w-3/4 items-center justify-end xxl:justify-start'>
+                    <button className="primary-btn w-1/2 sm:w-full max-w-48">
                         Change Password
                     </button>
                 </div>

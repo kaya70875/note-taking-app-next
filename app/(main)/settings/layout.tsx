@@ -24,7 +24,7 @@ export default function RootLayout({
                     <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                 </div>
             )}
-            <div className='w-full h-full lg:flex flex-col-reverse rounded-lg'>
+            <div className='w-full h-[89.7%] lg:flex flex-col-reverse rounded-lg'>
                 {isTablet ? (<BottomNavbar />) : (<Navbar />)}
                 {isTablet ? (
                     <div className='flex w-full h-full'>

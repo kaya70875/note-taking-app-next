@@ -58,9 +58,9 @@ export default function CreateNote() {
         router.push('/notes');
     };
     return (
-        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
+        <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
             { isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleCreate} navType='create' />}
-            <div className="line"></div>
+            {isTablet && <div className="line"></div>}
             <header className="flex flex-col h-full justify-between">
                 <div className="content-top flex flex-col gap-6">
                     <input
@@ -115,7 +115,7 @@ export default function CreateNote() {
                     </div>
                 </div>
 
-                <div className="content-buttons flex items-center gap-4 p-8 border-t lg: border-none border-neutral-300 dark:border-neutral-700 w-full">
+                <div className="content-buttons flex items-center gap-4 border-t lg: border-none border-neutral-300 dark:border-neutral-700 w-full">
                     {!isTablet && (
                         <>
                             <button
