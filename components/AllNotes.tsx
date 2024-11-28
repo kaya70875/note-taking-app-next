@@ -49,7 +49,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
             const unarchivedNotes = notes?.filter(note => !note.archived);
             setFilteredNotes(unarchivedNotes ?? []);
         }
-    }, [searchQuery, isArchiveOpen, notes, activeSidebarTag]);
+    }, [searchQuery, isArchiveOpen, data, activeSidebarTag]);
 
     return (
         <div className='flex flex-col justify-between items-end h-[89.7%]'>
