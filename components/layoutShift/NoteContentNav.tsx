@@ -5,8 +5,9 @@ import IconDelete from '@components/svgIcons/IconDelete'
 import { useToast } from '@context/ToastContext'
 import useNoteActions from '@hooks/useNotActions'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 import Back from './Back'
+import Modal from '@components/Modal'
 
 interface NoteContentNavProps {
     navType: 'note' | 'create';
@@ -24,13 +25,18 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
     const { deleteNote, setArchivedNotes } = useNoteActions();
     const { showToast } = useToast();
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [isLoading, setLoading] = useState(false);
+
     const activeNoteId = params.id;
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
+            setLoading(true);
             await deleteNote(activeNoteId as string);
             // Give a success toast message here.
             showToast('Note deleted successfully!', 'success');
+            setLoading(false);
             router.push('/notes');
         }
 
@@ -62,11 +68,15 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
             <div className='flex gap-4 items-center'>
                 {navType === 'note' && (
                     <>
-                        <div className="delete" onClick={handleDeleteNote}>
+                        <div className="delete" onClick={() => setModalOpen(prev => !prev)}>
                             <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                         </div>
                         <div className="archive" onClick={handleArchiveNote}>
                             <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
+                        </div>
+
+                        <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
+                            {modalOpen && <Modal onClose={setModalOpen} onDelete={handleDeleteNote} loading={isLoading} />}
                         </div>
                     </>
                 )}

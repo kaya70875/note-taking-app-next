@@ -3,6 +3,7 @@
 import AllNotes from "@components/AllNotes";
 import BottomNavbar from "@components/layoutShift/BottomNavbar";
 import TabletLayout from "@components/layoutShift/TabletLayout";
+import Modal from "@components/Modal";
 import Navbar from "@components/Navbar";
 import IconArchive from "@components/svgIcons/IconArchive";
 import IconDelete from "@components/svgIcons/IconDelete";
@@ -25,21 +26,26 @@ export default function Layout({
 
     const { showToast } = useToast();
     const { deleteNote, setArchivedNotes } = useNoteActions();
-    const { isTablet , isLoading} = useScreenSize();
+    const { isTablet, isLoading } = useScreenSize();
 
     const pathName = usePathname();
     const router = useRouter();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const params = useParams();
     const activeNoteId = params.id; // Access dynamic route parameter like this in next 15.
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading , setLoading] = useState(false);
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
+            setLoading(true);
             await deleteNote(activeNoteId as string);
             // Give a success toast message here.
             showToast('Note deleted successfully!', 'success');
+            setLoading(false);
+            setModalOpen(false);
             router.push('/notes');
         }
 
@@ -62,12 +68,12 @@ export default function Layout({
         return pathName.includes('/archived');
     }
 
-    if(isLoading) {
+    if (isLoading) {
         return <div className="flex items-center justify-center w-full h-full"><CircularProgress /></div>
     }
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full ">
             {isTablet ? (
                 <div className="flex flex-col h-full bg-neutral-200 dark:bg-neutral-900">
                     <div className="logo px-4 py-6">
@@ -101,10 +107,15 @@ export default function Layout({
                                     <p className="text-neutral-950 dark:text-neutral-100">{isArchiveOpen() ? 'Restore Note' : 'Archive Note'}</p>
                                 </button>
 
-                                <button onClick={() => handleDeleteNote} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+                                <button onClick={() => setModalOpen(prev => !prev)} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
                                     <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                                     <p className="text-neutral-950 dark:text-neutral-100">Delete Note</p>
                                 </button>
+
+                                <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
+                                    {modalOpen && <Modal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading}/>}
+                                </div>
+
                             </div>
                         </section>
                     </div>
