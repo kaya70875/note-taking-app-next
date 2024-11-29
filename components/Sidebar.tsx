@@ -14,7 +14,7 @@ export default function Sidebar() {
     const searchParams = useSearchParams();
     const pathName = usePathname();
 
-    const {isTablet} = useScreenSize();
+    const {isTablet , isLoading} = useScreenSize();
 
     // Get all tags from database and filter theme only one category.
     const { data, loading, error } = useFetch<TagsResponse>('/api/getAllTags');
@@ -54,6 +54,10 @@ export default function Sidebar() {
     const handleTagClick = (tag: string) => {
         setActiveNavTag(tag);
         router.push(`/notes?tag=${tag}`);
+    }
+
+    if(isLoading) {
+        return;
     }
 
     return (

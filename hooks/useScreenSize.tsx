@@ -1,28 +1,29 @@
 'use client';
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 const useScreenSize = () => {
+    const [isTablet, setIsTablet] = useState<boolean | null>(null);
 
-    const [isTablet, setIsTablet] = useState(false);
+    useEffect(() => {
+        const checkIsTablet = () => {
+            setIsTablet(window.innerWidth <= 1024);
+        };
 
-    const checkForSize = () => {
-        useEffect(() => {
-            const checkIsTablet = () => {
-                setIsTablet(window.matchMedia('(max-width: 1024px)').matches);
-            }
+        // Set initial state
+        checkIsTablet();
 
-            checkIsTablet();
+        // Listen for resize events
+        window.addEventListener('resize', checkIsTablet);
 
-            window.addEventListener('resize', checkIsTablet);
+        return () => window.removeEventListener('resize', checkIsTablet);
+    }, []);
 
-            return () => window.removeEventListener('resize', checkIsTablet);
-        }, [])
+    if(isTablet === null) {
+        return {isTablet : null , isLoading : true}
     }
 
-    checkForSize();
-
-    return { isTablet }
-}
+    return { isTablet , isLoading : false};
+};
 
 export default useScreenSize;

@@ -11,6 +11,7 @@ import LogoSvg from "@components/svgIcons/LogoSvg";
 import { useToast } from "@context/ToastContext";
 import useNoteActions from "@hooks/useNotActions";
 import useScreenSize from "@hooks/useScreenSize";
+import { CircularProgress } from "@mui/material";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -24,7 +25,7 @@ export default function Layout({
 
     const { showToast } = useToast();
     const { deleteNote, setArchivedNotes } = useNoteActions();
-    const { isTablet } = useScreenSize();
+    const { isTablet , isLoading} = useScreenSize();
 
     const pathName = usePathname();
     const router = useRouter();
@@ -59,6 +60,10 @@ export default function Layout({
 
     const isArchiveOpen = () => {
         return pathName.includes('/archived');
+    }
+
+    if(isLoading) {
+        return <div className="flex items-center justify-center w-full h-full"><CircularProgress /></div>
     }
 
     return (
