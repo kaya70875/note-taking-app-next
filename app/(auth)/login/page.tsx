@@ -14,30 +14,34 @@ export default function page() {
   const [password, setPassword] = useState('');
 
   const router = useRouter();
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [authResults , setAuthResults] = useState<SignInResponse | undefined>(undefined);
+  const [authResults, setAuthResults] = useState<SignInResponse | undefined>(undefined);
 
-  const handleSubmit = async (e : React.FormEvent) => {
+  const [loading , setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const result = await signIn("credentials" , {
-      redirect : false,
-      email : email,
-      password : password,
+    setLoading(true);
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password,
     })
 
     setAuthResults(result);
+    setLoading(false);
   }
 
   useEffect(() => {
     if (authResults && !authResults?.error) {
-        router.push('/notes');
-    } else if(authResults?.error){
-        showToast('Invalid Credentials!', 'error');
+      router.push('/notes');
+    } else if (authResults?.error) {
+      showToast('Invalid Credentials!', 'error');
     }
-} , [authResults])
+  }, [authResults])
 
   return (
     <div className='flex flex-col gap-12 p-12 xs:p-4'>
@@ -53,9 +57,9 @@ export default function page() {
         <div className="input-wrapper">
           <label htmlFor="email">Email Address</label>
           <input type="text" className='input !w-full' id='email'
-           placeholder='email@example.com'
-           onChange={(e) => setEmail(e.currentTarget.value)}/>
-           
+            placeholder='email@example.com'
+            onChange={(e) => setEmail(e.currentTarget.value)} />
+
         </div>
 
         <div className="input-wrapper">
@@ -75,7 +79,7 @@ export default function page() {
             </div>
           </div>
         </div>
-        <button type='button' className="primary-btn" onClick={handleSubmit}>Login</button>
+        <button type='button' disabled={loading} className="primary-btn disabled:opacity-50 disabled:hover:bg-blue-600" onClick={handleSubmit}>Login</button>
 
         <div className="line"></div>
         <div className="google-auth flex flex-col gap-4 items-center justify-center">

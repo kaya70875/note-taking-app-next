@@ -77,7 +77,7 @@ label {
 }
 
 .primary-btn {
-  @apply flex items-center justify-center p-3 bg-blue-500 text-neutral-50 rounded-lg;
+  @apply flex items-center justify-center p-3 bg-blue-500 text-neutral-50 rounded-lg active:opacity-80;
 }
 
 .eye-icon {

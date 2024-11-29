@@ -1,6 +1,7 @@
 'use client';
 
 import SvgIcon from '@components/reusables/SvgIcon';
+import { useToast } from '@context/ToastContext';
 import { useAuthActions } from '@hooks/useAuthActions';
 import logo from '@public/images/logo.svg';
 import Image from 'next/image'
@@ -65,7 +66,8 @@ export default function page() {
   const [showPassword, setShowPassword] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const {handleSignUp} = useAuthActions();
+  const { handleSignUp } = useAuthActions();
+  const { showToast } = useToast();
 
   const router = useRouter();
 
@@ -80,17 +82,17 @@ export default function page() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(!state.validEmail || !state.validPass) {
+    if (!state.validEmail || !state.validPass) {
       dispatch({ type: REDUCER_ACTION_TYPE.SET_ERROR, payload: 'Please fill in all fields correctly.' });
       return;
     }
 
     if (state.validEmail && state.validPass) {
       dispatch({ type: REDUCER_ACTION_TYPE.SET_LOADING, payload: true });
-      await handleSignUp({email : state.email , password : state.password});
+      await handleSignUp({ email: state.email, password: state.password });
       dispatch({ type: REDUCER_ACTION_TYPE.SET_LOADING, payload: false });
 
-      alert('account created redirecting...');
+      showToast('Account Created Successfully!', 'success');
       router.push('/login');
     }
   }
@@ -109,8 +111,8 @@ export default function page() {
         <div className="input-wrapper">
           <label htmlFor="email">Email Address</label>
           <input type="text" className={`${!state.validEmail && state.email ? 'input-invalid !w-full' : 'input !w-full'}`} id='email'
-           placeholder='email@example.com'
-           onChange={(e) => dispatch({ type: REDUCER_ACTION_TYPE.SET_EMAIL, payload: e.currentTarget.value })} />
+            placeholder='email@example.com'
+            onChange={(e) => dispatch({ type: REDUCER_ACTION_TYPE.SET_EMAIL, payload: e.currentTarget.value })} />
         </div>
 
         <div className="input-wrapper">
@@ -134,7 +136,8 @@ export default function page() {
             <p>At least 8 characters</p>
           </div>
         </div>
-        <button type='button' className="primary-btn" onClick={handleSubmit}>Sign Up</button>
+        <button type='button' disabled={state.loading} className="primary-btn disabled:opacity-50 disabled:hover:bg-blue-600"
+          onClick={handleSubmit}>Sign Up</button>
 
         <div className="line"></div>
         <div className="google-auth flex flex-col gap-4 items-center justify-center">
