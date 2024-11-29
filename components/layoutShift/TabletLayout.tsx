@@ -43,7 +43,7 @@ export default function TabletLayout({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div className='bg-neutral-100 dark:bg-neutral-950 w-full h-full p-4 xs:p-3 xxs:p-2 rounded-tr-lg rounded-tl-lg flex flex-col gap-2'>
+    <div className='bg-neutral-100 dark:bg-neutral-950 w-full h-[80%] overflow-hidden p-4 xs:p-3 xxs:p-2 rounded-tr-lg rounded-tl-lg flex flex-col gap-2'>
       {pathName === '/notes' && currentTag && (
         <Back />
       )}
