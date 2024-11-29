@@ -29,14 +29,14 @@
 
 
 body {
-  height: 100vh;
+  height: 100svh;
   @apply dark:bg-neutral-950;
   overflow: hidden;
 }
 
 .app {
   display: flex;
-  height: 100vh;
+  height: 100svh;
   overflow: hidden;
 
 }
