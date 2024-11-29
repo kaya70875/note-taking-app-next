@@ -53,7 +53,7 @@ export default function TabletLayout({ children }: { children: React.ReactNode }
           <div className='absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer'>
             <SvgIcon path='search' />
           </div>
-          <input type="text" placeholder='Search by title, content, or tags...' className='w-full p-3 pl-12' onChange={(e) => {
+          <input type="text" placeholder='Search by title, content, or tags...' className='w-full p-3 pl-12 outline-none' onChange={(e) => {
             handleSearchChange(e);
           }} />
         </div>
