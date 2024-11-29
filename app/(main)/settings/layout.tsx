@@ -20,11 +20,11 @@ export default function RootLayout({
     return (
         <div className="w-full h-full">
             {isTablet && (
-                <div className="p-6 bg-neutral-200 dark:bg-neutral-400">
+                <div className="px-4 xs:px-2 py-6 xs:py-3 bg-neutral-200 dark:bg-neutral-400">
                     <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                 </div>
             )}
-            <div className='w-full h-[89.7%] lg:flex flex-col-reverse rounded-lg'>
+            <div className='w-full h-[92.7%] lg:flex flex-col-reverse rounded-lg'>
                 {isTablet ? (<BottomNavbar />) : (<Navbar />)}
                 {isTablet ? (
                     <div className='flex w-full h-full'>

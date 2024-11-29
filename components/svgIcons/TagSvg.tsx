@@ -5,7 +5,7 @@ interface SvgProps extends React.SVGProps<SVGSVGElement> {
   strokeWidth?:number;
 }
 
-const TagSvg = ({props , strokeWidth} : SvgProps) => (
+const TagSvg = ({props , strokeWidth=1.6} : SvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
