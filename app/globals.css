@@ -31,11 +31,14 @@
 body {
   height: 100vh;
   @apply dark:bg-neutral-950;
+  overflow: hidden;
 }
 
 .app {
   display: flex;
   height: 100vh;
+  overflow: hidden;
+
 }
 
 .activeItem {

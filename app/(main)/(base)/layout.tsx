@@ -90,7 +90,7 @@ export default function Layout({
             ) : (
                 <>
                     <Navbar setSearchQuery={setSearchQuery} />
-                    <div className="flex w-full dark:bg-neutral-950">
+                    <div className="flex w-full h-full dark:bg-neutral-950">
                         <section className="notes-section flex flex-col p-6 xl:p-4 lg:p-2 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
                             <button className="primary-btn w-full lg:text-sm" onClick={() => router.push('/create')}>
                                 + Create New Note
