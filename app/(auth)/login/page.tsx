@@ -40,7 +40,7 @@ export default function page() {
 } , [authResults])
 
   return (
-    <div className='flex flex-col gap-12 p-12'>
+    <div className='flex flex-col gap-12 p-12 xs:p-4'>
       <header className='flex flex-col gap-4 items-center justify-center text-center'>
         <Image src={logo} alt='logo' className='w-32 h-18' />
         <div className='flex flex-col gap-1'>
