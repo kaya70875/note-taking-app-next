@@ -5,6 +5,7 @@ import { useToast } from '@context/ToastContext';
 import logo from '@public/images/logo.svg'
 import { signIn, SignInResponse } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +20,7 @@ export default function page() {
   const [showPassword, setShowPassword] = useState(false);
   const [authResults, setAuthResults] = useState<SignInResponse | undefined>(undefined);
 
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +64,10 @@ export default function page() {
         </div>
 
         <div className="input-wrapper">
-          <label htmlFor="new-pass" className="block mb-1">Password</label>
+          <div className='flex w-full justify-between items-center'>
+            <label htmlFor="new-pass" className="block mb-1">Password</label>
+            <Link href='/forgot-password' className='text-sm text-primary-500 hover:underline'>Forgot Password?</Link>
+          </div>
           <div className="relative w-full">
             <input
               type={showPassword ? 'text' : 'password'}
