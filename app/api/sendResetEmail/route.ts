@@ -12,7 +12,7 @@ export async function POST(req : Request) {
     }
 
     // Generate a JWT token
-    const token = jwt.sign({email} , process.env.JWT_SECRET as string, { expiresIn: '1h' });
+    const token = jwt.sign({email} , process.env.NEXT_PUBLIC_JWT_SECRET as string, { expiresIn: '1h' });
 
     // Create a reset link with the token
     const resetLink = `http://localhost:3000/reset-password?token=${token}`;
