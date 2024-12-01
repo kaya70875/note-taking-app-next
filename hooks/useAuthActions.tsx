@@ -45,15 +45,12 @@ export const useAuthActions = () => {
 
     const handleResetPassword = async(token : string , newPassword : string) => {
         try {
-            // verify the token
-
-            const decoded : any = jwt.verify(token as string , process.env.NEXT_PUBLIC_JWT_SECRET as string);
             const response = await fetch('/api/resetPassword', {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
                 },
-                body : JSON.stringify({email : decoded.email , newPassword})
+                body : JSON.stringify({token , newPassword})
             });
 
             if(response.ok) {
