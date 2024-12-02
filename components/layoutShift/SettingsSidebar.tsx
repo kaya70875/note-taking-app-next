@@ -40,7 +40,7 @@ export default function SettingsSidebar() {
         <section className="settings-section flex flex-col p-6 gap-8 w-4/12 xxl:w-5/12 xl:w-7/12 lg:w-full border-r lg:border-none border-neutral-300 dark:border-neutral-700 h-full">
             {settingsItems.map(settings => (
                 <button key={settings.name} className={`flex items-center justify-between p-2 rounded-lg w-3/4 ${activeItem === settings.name ? 'bg-neutral-200 dark:bg-neutral-700' : ''}`} onClick={() => {
-                    router.push(`/settings${settings.route}`);
+                    router.push(`${settings.name !== 'Logout' ? `/settings${settings.route}` : '/login'}`);
                 }}>
                     <div className='flex items-center gap-2'>
                         <div className={`icon ${activeItem === settings.name ? 'text-blue-500' : ''}`}>{settings.svg}</div>
