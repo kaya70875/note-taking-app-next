@@ -71,7 +71,7 @@ export default function CreateNote() {
                         className="text-lg font-bold rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
                     />
                     <div className="flex flex-col gap-4">
-                        <div className="memo-info flex items-center gap-8">
+                        <div className="memo-info flex items-center gap-8 w-full">
                             <div className="tags-section flex gap-2">
                                 <TagSvg props={{ color: 'text-neutral-950 dark:text-neutral-300' }} />
                                 <p className='text-neutral-950 dark:text-neutral-300'>Tags</p>
@@ -86,7 +86,7 @@ export default function CreateNote() {
                                             ...prev,
                                             tags: e.target.value.split(',').map((tag) => tag.trim()) as never[],
                                         }))}
-                                    className="rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
+                                    className="rounded-lg p-2 border w-full border-neutral-300 dark:border-neutral-700"
                                     placeholder='Enter tags'
                                 />
                             </div>
