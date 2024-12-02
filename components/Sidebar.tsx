@@ -8,6 +8,7 @@ import { CircularProgress } from '@mui/material';
 import ChevronRight from './svgIcons/ChevronRight';
 import LogoSvg from './svgIcons/LogoSvg';
 import useScreenSize from '@hooks/useScreenSize';
+import Link from 'next/link';
 
 export default function Sidebar() {
     const router = useRouter();
@@ -41,16 +42,6 @@ export default function Sidebar() {
         || tags?.find(tag => pathName.includes(tag)) 
         || 'All Notes';
 
-    const handleSidebarItemClick = (itemName: string) => { // Open and close the archive section
-        setActiveNavTag(itemName);
-        if (itemName === 'Archived Notes') {
-            router.push('/archived');
-        }
-        else {
-            router.push('/notes');
-        }
-    }
-
     const handleTagClick = (tag: string) => {
         setActiveNavTag(tag);
         router.push(`/notes?tag=${tag}`);
@@ -69,13 +60,13 @@ export default function Sidebar() {
                 <section className="sidebar-top">
                     <ul className='flex flex-col gap-4'>
                         {sidebarItems.map(item => (
-                            <li key={item.name} className={`flex items-center justify-between p-2 cursor-pointer ${!searchParams.has('tag') && activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`} onClick={() => handleSidebarItemClick(item.name)}>
+                            <Link href={item.name === 'Archived Notes' ? '/archived' : '/notes'} key= {item.name} className={`flex items-center justify-between p-2 cursor-pointer ${!searchParams.has('tag') && activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`} onClick={() => setActiveNavTag(item.name)}>
                                 <div className='flex items-center gap-4'>
                                     <div className={`${!searchParams.has('tag') && activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.icon}</div>
                                     <p className={`${!searchParams.has('tag') && activeItem === item.name ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{item.name}</p>
                                 </div>
                                 {!searchParams.has('tag') && activeItem === item.name && <ChevronRight props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />}
-                            </li>
+                            </Link>
                         ))}
                     </ul>
                 </section>

@@ -1,10 +1,8 @@
 import React from 'react'
 import SuccessIcon from './svgIcons/SuccessIcon'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 
 export default function SuccessComponent({ message, title }: { message: string, title: string }) {
-
-    const router = useRouter();
 
     return (
         <div className='flex flex-col items-center justify-center gap-8 p-12 xs:p-3 bg-neutral-100 rounded-lg'>
@@ -17,7 +15,7 @@ export default function SuccessComponent({ message, title }: { message: string, 
                 <p>{message}</p>
             </div>
 
-            <div className="primary-btn cursor-pointer" onClick={() => router.push('/login')}>Go Back</div>
+            <Link href={'/login'} className="primary-btn cursor-pointer">Go Back</Link>
         </div>
     )
 }

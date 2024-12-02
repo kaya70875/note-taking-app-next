@@ -1,21 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react'
 import SvgIcon from './reusables/SvgIcon'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import useNavHeader from '@hooks/useNavHeader';
+import Link from 'next/link';
 
 interface NavbarProps {
     setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function Navbar({ setSearchQuery }: NavbarProps) {
-    const router = useRouter();
     const { navHeader } = useNavHeader();
-
-    const navigateToSettings = () => {
-        router.push('/settings');
-    }
 
     return (
         <div className='w-full flex items-center justify-between p-8 border-b border-neutral-300 dark:border-neutral-700'>
@@ -29,9 +23,9 @@ export default function Navbar({ setSearchQuery }: NavbarProps) {
                     </div>
                     <input type="text" placeholder='Search by title, content, or tags...' className='w-full p-3 pl-12 outline-none' onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)} />
                 </div>
-                <div className='cursor-pointer' onClick={() => navigateToSettings()}>
+                <Link href={'/settings'} className='cursor-pointer' >
                     <SvgIcon path='settings' />
-                </div>
+                </Link>
             </div>
         </div>
     )
