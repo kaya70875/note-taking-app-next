@@ -36,7 +36,7 @@ export default function page() {
     }
 
     return (
-        <Suspense fallback={<div>Loading...</div>}> // To fix Missing Suspense boundary with useSearchParams error.
+        <Suspense fallback={<div>Loading...</div>}> {/* To fix Missing Suspense boundary with useSearchParams error. */}
             {!success ? (
                 <div className='flex flex-col gap-8 p-12 xs:p-4'>
                     <header className='flex flex-col gap-4 items-center justify-center text-center'>
