@@ -19,7 +19,6 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
 
     const pathName = usePathname();
     const params = useParams();
-    const router = useRouter();
     const searchParams = useSearchParams();
 
     const activeSidebarTag = searchParams.get('tag'); // Get active tag from query.

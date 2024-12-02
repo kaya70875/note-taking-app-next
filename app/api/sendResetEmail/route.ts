@@ -15,7 +15,7 @@ export async function POST(req : Request) {
     const token = jwt.sign({email} , process.env.NEXT_PUBLIC_JWT_SECRET as string, { expiresIn: '1h' });
 
     // Create a reset link with the token
-    const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+    const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
 
     try {
         // Set up Nodemailer transporter
