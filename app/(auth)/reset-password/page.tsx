@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react'
 import logo from '@public/images/logo.svg'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useAuthActions } from '@hooks/useAuthActions'
-import { set } from 'mongoose';
 import SuccessComponent from '@components/SuccessComponent';
+import { Suspense, useState } from 'react';
 
 export default function page() {
 
@@ -15,11 +14,11 @@ export default function page() {
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
 
-    const [newPassword, setNewPassword] = React.useState('');
-    const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [loading, setLoading] = React.useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const [success, setSuccess] = React.useState(false);
+    const [success, setSuccess] = useState(false);
 
     const handleClick = async () => {
 
@@ -37,7 +36,7 @@ export default function page() {
     }
 
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}> // To fix Missing Suspense boundary with useSearchParams error.
             {!success ? (
                 <div className='flex flex-col gap-8 p-12 xs:p-4'>
                     <header className='flex flex-col gap-4 items-center justify-center text-center'>
@@ -66,7 +65,7 @@ export default function page() {
             ) : (
                 <SuccessComponent title='Password Reset Successfully!' message='Your password has been successfully reset. You can now log in with your new password.' />
             )}
-        </>
+        </Suspense>
 
     )
 }
