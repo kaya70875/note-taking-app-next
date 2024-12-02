@@ -13,6 +13,7 @@ const useFetch = <T,>(endpoint: string) => {
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
         revalidateOnMount: true,
+        dedupingInterval : 60000,
     });
 
     return {
