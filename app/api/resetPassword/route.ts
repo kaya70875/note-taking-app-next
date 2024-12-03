@@ -1,48 +1,52 @@
+import { authOptions } from "@lib/auth";
 import User from "@models/user";
 import { connectToDB } from "@utils/database";
-import bcrypt from "bcrypt";
-import verifyToken from "@utils/verifyToken";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return NextResponse.json("Unauthorized", { status: 401 });
+    }
+
+    const userId = session.user.id;
+
     await connectToDB();
 
     const body = await req.json();
-    const { token, newPassword } = body;
+    const { currentPassword, newPassword } = body;
 
-    if (!token || !newPassword) {
-      return NextResponse.json(
-        { error: "Missing token or new password" },
-        { status: 400 }
-      );
+    if (!newPassword) {
+      return NextResponse.json("Missing new password", { status: 400 });
     }
 
-    const payload = await verifyToken(token); // Decode and verify the token
-    const email = payload.email; // Extract the email from the token payload
+    const user = await User.findOne({ userId });
 
-    const user = await User.findOne({ email });
+    // Check if current password is correct
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
 
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    if (!isMatch) {
+      return NextResponse.json("Incorrect password", { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const updatedPassword = await user.updateOne({
+    const updatedPassword = await user?.updateOne({
       password: hashedPassword,
-      new : true,
+      new: true,
     });
 
-    return NextResponse.json(
-      { message: "Password updated successfully" },
-      { status: 200 },
-    );
-  } catch (error) {
-    console.error("Error updating password:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      message: "Password updated successfully",
+      status: 200,
+      data: updatedPassword,
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json("Internal Server Error", { status: 500 });
   }
 }
