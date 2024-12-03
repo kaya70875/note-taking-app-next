@@ -9,7 +9,7 @@ import { Suspense, useState } from 'react';
 
 export default function page() {
 
-    const { handleResetPassword } = useAuthActions();
+    const { handleResetPasswordWithEmail } = useAuthActions();
 
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
@@ -24,7 +24,7 @@ export default function page() {
 
         if (newPassword === confirmPassword) {
             setLoading(true);
-            await handleResetPassword(token as string, newPassword);
+            await handleResetPasswordWithEmail(token as string, newPassword);
             setSuccess(true);
             setLoading(false);
         }
