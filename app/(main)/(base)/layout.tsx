@@ -61,7 +61,7 @@ export default function Layout({
             // Archive the note here.
             setArchivedNotes(activeNoteId as string, !isArchiveOpen());
             // Give a success toast message here.
-            showToast('Note archived successfully!', 'success');
+            showToast(`Note ${isArchiveOpen() ? 'restored' : 'archived'} successfully!`, 'success');
         }
     }
 
@@ -103,7 +103,7 @@ export default function Layout({
                         {children}
                         <section className="archive-section w-1/5 p-4 lg:p-2 flex justify-center">
                             <div className="buttons flex flex-col gap-4 w-full">
-                                <button onClick={() => handleArchiveNote} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+                                <button onClick={handleArchiveNote} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
                                     {isArchiveOpen() ? <IconRestore props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
                                     <p className="text-neutral-950 dark:text-neutral-100">{isArchiveOpen() ? 'Restore Note' : 'Archive Note'}</p>
                                 </button>

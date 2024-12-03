@@ -8,6 +8,7 @@ import { useParams, usePathname, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import Back from './Back'
 import Modal from '@components/Modal'
+import IconRestore from '@components/svgIcons/IconRestore'
 
 interface NoteContentNavProps {
     navType: 'note' | 'create';
@@ -51,7 +52,7 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
             // Archive the note here.
             setArchivedNotes(activeNoteId as string, !isArchiveOpen());
             // Give a success toast message here.
-            showToast('Note archived successfully!', 'success');
+            showToast(`Note ${isArchiveOpen() ? 'restored' : 'archived'} successfully!`, 'success');
         }
     }
 
@@ -72,7 +73,7 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
                             <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                         </div>
                         <div className="archive" onClick={handleArchiveNote}>
-                            <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
+                            { !isArchiveOpen() ? (<IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />) : (<IconRestore props={{color : 'text-neutral-950 dark:text-neutral-50'}} />) }
                         </div>
 
                         <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
