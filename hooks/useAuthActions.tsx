@@ -43,9 +43,9 @@ export const useAuthActions = () => {
         }
     }
 
-    const handleResetPassword = async(token : string , newPassword : string) => {
+    const handleResetPasswordWithEmail = async(token : string , newPassword : string) => {
         try {
-            const response = await fetch('/api/resetPassword', {
+            const response = await fetch('/api/resetPasswordWithEmail', {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
@@ -62,6 +62,29 @@ export const useAuthActions = () => {
         console.error(e);
     }
 
+}
+
+    const handleResetPassword = async(currentPassword : string , newPassword : string) => {
+        try {
+            const response = await fetch('/api/resetPassword', {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({currentPassword , newPassword})
+            });
+
+            if(!response.ok) {
+                const error = await response.json();
+                return {error : error.message || 'Failed to change password'};
+            }
+
+            const data = await response.json();
+            return data;
+
+        } catch(e : any) {
+            return console.error(e);
+        }
     }
-    return {handleSignUp , handleSendResetPassword , handleResetPassword}
+    return {handleSignUp , handleSendResetPassword , handleResetPasswordWithEmail , handleResetPassword}
 }
