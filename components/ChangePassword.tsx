@@ -70,7 +70,7 @@ export default function ChangePassword() {
 
                 <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="new-pass">New Password</label>
-                    <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className={`input dark:border-neutral-700 ${!state.validPass && state.password ? 'input-invalid !w-full' : ''}`} onChange={(e) => dispatch({ type:REDUCER_ACTION_TYPE.SET_PASSWORD , payload: e.currentTarget.value })} />
+                    <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className={`${!state.validPass && state.password ? 'input-invalid !w-full' : 'input dark:border-neutral-700'}`} onChange={(e) => dispatch({ type:REDUCER_ACTION_TYPE.SET_PASSWORD , payload: e.currentTarget.value })} />
                     <div className="input-info flex items-center gap-1">
                         <IconInfo props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                         <p className='text-neutral-950 dark:text-neutral-300'>At least 8 characters</p>
@@ -84,7 +84,7 @@ export default function ChangePassword() {
 
                 <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="confirm-pass">Confirm New Password</label>
-                    <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className={`dark:border-neutral-700 ${state.confirmPassword && !state.validMatch ? 'input-invalid !w-full' : 'input'}`} onChange={(e) => dispatch({ type:REDUCER_ACTION_TYPE.SET_CONFIRM_PASSWORD , payload: e.currentTarget.value })} />
+                    <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className={`${state.confirmPassword && !state.validMatch ? 'input-invalid !w-full' : 'input dark:border-neutral-700'}`} onChange={(e) => dispatch({ type:REDUCER_ACTION_TYPE.SET_CONFIRM_PASSWORD , payload: e.currentTarget.value })} />
                     <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}>
                         <div className="eye-icon">
                             {showPassword.confirmPassword ? <HidePassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <ShowPassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
