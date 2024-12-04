@@ -49,7 +49,7 @@ export default function Sidebar() {
             <header className='logo'>
                 <LogoSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />   
             </header>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 overflow-hidden h-full">
                 <section className="sidebar-top">
                     <ul className='flex flex-col gap-4'>
                         {sidebarItems.map(item => (
@@ -64,9 +64,9 @@ export default function Sidebar() {
                     </ul>
                 </section>
                 <div className="line dark:bg-neutral-400"></div>
-                <section className="flex flex-col gap-4">
+                <section className="flex flex-col gap-4 min-h-0 flex-1">
                     <p className='text-neutral-600 dark:text-neutral-500'>Tags</p>
-                    <ul className='flex flex-col gap-4 overflow-auto'>
+                    <div className='flex flex-col gap-4 overflow-y-auto'>
                         {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress color='secondary' /></div>)}
                         {tags && tags?.map(tag => (
                             <Link href={`/notes?tag=${tag}`} key={tag} className={`flex items-center justify-between p-2 cursor-pointer ${activeTag === tag ? 'activeItem dark:bg-neutral-700' : ''}`} >
@@ -77,7 +77,7 @@ export default function Sidebar() {
                                 {activeTag === tag && <ChevronRight props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />}
                             </Link>
                         ))}
-                    </ul>
+                    </div>
                 </section>
             </div>
 

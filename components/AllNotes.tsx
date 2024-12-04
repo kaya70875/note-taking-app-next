@@ -51,7 +51,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     }, [searchQuery, isArchiveOpen, data, activeSidebarTag]);
 
     return (
-        <div className='flex flex-col justify-between items-end h-[89.7%] lg:h-[95%] overflow-auto'>
+        <div className='flex flex-col justify-between items-end h-full overflow-auto'>
             <div className="note-cards flex flex-col gap-3 lg:gap-4 w-full"> {/* All notes shown here */}
                 {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
                 {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
