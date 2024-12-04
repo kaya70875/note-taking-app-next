@@ -31,6 +31,7 @@ export default function page() {
     });
 
     const [loading, setLoading] = useState(false);
+    const [saveLoading , setSaveLoading] = useState(false);
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -61,7 +62,9 @@ export default function page() {
 
     const handleSave = async () => {
         if (notes) {
+            setSaveLoading(true);
             await updateNote(notes._id, formData);
+            setSaveLoading(false);
             setNotes({ ...notes, ...formData });
             setEditMode(false);
             showToast('Note updated successfully!', 'success');
@@ -153,11 +156,12 @@ export default function page() {
                     </div>
 
                     <div className="content-buttons flex items-center gap-4 py-4 border-t lg:border-none border-neutral-300 dark:border-neutral-700 w-full">
-                        {editMode ? (
+                        {!isTablet && editMode ? (
                             <>
                                 <button
                                     onClick={handleSave}
-                                    className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg"
+                                    className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg disabled:opacity-50 disabled:hover:bg-blue-600"
+                                    disabled={saveLoading}
                                 >
                                     Save Note
                                 </button>

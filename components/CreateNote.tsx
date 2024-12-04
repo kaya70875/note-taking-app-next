@@ -26,6 +26,8 @@ export default function CreateNote() {
         tags: [],
     });
 
+    const [loading, setLoading] = useState(false);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -33,7 +35,9 @@ export default function CreateNote() {
 
     const handleCreate = async () => {
         if (formData.title && formData.content && formData.tags) {
+            setLoading(true);
             await createNote(formData, session?.user.id!);
+            setLoading(false);
             setFormData({
                 title: '',
                 content: '',
@@ -120,7 +124,8 @@ export default function CreateNote() {
                         <>
                             <button
                                 onClick={handleCreate}
-                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg"
+                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg disabled:opacity-50 disabled:hover:bg-blue-600"
+                                disabled={loading}
                             >
                                 Save Note
                             </button>
