@@ -82,7 +82,7 @@ export default function page() {
             {isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleSave} setEditMode={setEditMode} editMode={editMode} navType='note' />}
             {isTablet && <div className="line"></div>}
             {notes && !loading ? (
-                <header className="flex flex-col h-full justify-between">
+                <header className="flex flex-col h-[85%] justify-between">
                     <div className="content-top flex flex-col gap-6">
                         {editMode ? (
                             <input
