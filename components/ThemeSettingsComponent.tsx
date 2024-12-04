@@ -2,7 +2,7 @@
 
 import { useFont } from '@context/FontContext';
 import { useTheme } from 'next-themes';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface ThemeSettingsComponentProps {
     themeType: 'Color Theme' | 'Font Theme';
@@ -30,13 +30,23 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
     const [selectedTheme, setSelectedTheme] = useState<string>(initializeTheme);
     const [selectedFont, setSelectedFont] = useState<string>(initializeFontTheme);
 
-    const handleThemeChange = (theme: string) => {
+    useEffect(() => { // Initialize the selected theme on first mount.
+        if(selectedFont === 'Sans-serif') {
+            setFont('inter');
+        } else if (selectedFont === 'Serif') {
+            setFont('noto');
+        } else if (selectedFont === 'Monospace') {
+            setFont('mono');
+        }
+    } , [])
+
+    const handleThemeChange = (option: string) => {
         if (themeType === 'Color Theme') {
 
-            setSelectedTheme(theme); // Update the selected theme
-            localStorage.setItem('themePref', theme);
+            setSelectedTheme(option); // Update the selected theme
+            localStorage.setItem('themePref', option);
 
-            if (theme === 'Dark Mode') {
+            if (option === 'Dark Mode') {
                 setTheme('dark');
             } else {
                 setTheme('light');
@@ -45,14 +55,14 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
 
         else if (themeType === 'Font Theme') {
 
-            setSelectedFont(theme); // Update the selected font
-            localStorage.setItem('fontPref', theme);
+            setSelectedFont(option); // Update the selected font
+            localStorage.setItem('fontPref', option);
 
-            if (theme === 'Sans-serif') {
+            if (option === 'Sans-serif') {
                 setFont('inter');
-            } else if (theme === 'Serif') {
+            } else if (option === 'Serif') {
                 setFont('noto');
-            } else if (theme === 'Monospace') {
+            } else if (option === 'Monospace') {
                 setFont('mono');
             }
         }
@@ -97,7 +107,6 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
                         <input
                             type="radio"
                             id={option.name}
-                            name="color-theme"
                             value={option.name}
                             checked={(themeType === 'Color Theme' ? selectedTheme : selectedFont) === option.name}
                             readOnly
