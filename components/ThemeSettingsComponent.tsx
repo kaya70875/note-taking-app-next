@@ -1,7 +1,8 @@
 'use client';
 
+import { useFont } from '@context/FontContext';
 import { useTheme } from 'next-themes';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 interface ThemeSettingsComponentProps {
     themeType: 'Color Theme' | 'Font Theme';
@@ -17,17 +18,43 @@ function initializeTheme() {
     return savedTheme || 'Light Mode';
 }
 
+function initializeFontTheme() {
+    const savedFont = localStorage.getItem('fontPref');
+    return savedFont || 'Sans-serif';
+}
+
 export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSettingsComponentProps) {
     const { setTheme } = useTheme();
+    const { setFont } = useFont();
+
     const [selectedTheme, setSelectedTheme] = useState<string>(initializeTheme);
+    const [selectedFont, setSelectedFont] = useState<string>(initializeFontTheme);
 
     const handleThemeChange = (theme: string) => {
-        setSelectedTheme(theme); // Update the selected theme
-        localStorage.setItem('themePref', theme);
-        if (theme === 'Dark Mode') {
-            setTheme('dark');
-        } else {
-            setTheme('light');
+        if (themeType === 'Color Theme') {
+
+            setSelectedTheme(theme); // Update the selected theme
+            localStorage.setItem('themePref', theme);
+
+            if (theme === 'Dark Mode') {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+
+        else if (themeType === 'Font Theme') {
+
+            setSelectedFont(theme); // Update the selected font
+            localStorage.setItem('fontPref', theme);
+
+            if (theme === 'Sans-serif') {
+                setFont('inter');
+            } else if (theme === 'Serif') {
+                setFont('noto');
+            } else if (theme === 'Monospace') {
+                setFont('mono');
+            }
         }
     };
 
@@ -54,9 +81,8 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
                 {themeList.map((option) => (
                     <div
                         key={option.name}
-                        className={`flex items-center justify-between gap-4 border border-neutral-300 dark:border-neutral-700 p-4 w-1/2 xxl:w-2/3 xl:w-full rounded-lg cursor-pointer ${
-                            selectedTheme === option.name ? 'ring ring-blue-500' : ''
-                        }`}
+                        className={`flex items-center justify-between gap-4 border border-neutral-300 dark:border-neutral-700 p-4 w-1/2 xxl:w-2/3 xl:w-full rounded-lg cursor-pointer ${(themeType === 'Color Theme' ? selectedTheme : selectedFont) === option.name ? 'ring ring-blue-500' : ''
+                            }`}
                         onClick={() => handleThemeChange(option.name)}
                     >
                         <div className="flex items-center gap-4">
@@ -73,7 +99,7 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
                             id={option.name}
                             name="color-theme"
                             value={option.name}
-                            checked={selectedTheme === option.name}
+                            checked={(themeType === 'Color Theme' ? selectedTheme : selectedFont) === option.name}
                             readOnly
                         />
                     </div>
