@@ -49,6 +49,7 @@ const useNoteActions =<T extends object> () => {
                 body  : JSON.stringify({
                     ...noteData,
                     noteId,
+                    updatedAt : new Date(),
                 })
             })
 

@@ -37,14 +37,14 @@ export async function PUT (request : Request) {
     await connectToDB();
     
     const body = await request.json();
-    const {title , content , tags , noteId} = body;
-    
+    const {title , content , tags , noteId , updatedAt} = body;    
     const updatedNote = await Note.findOneAndUpdate(
       {_id : noteId},
       {
         content,
         tags,
         title,
+        updatedAt,
       },
       {new: true}
     )
