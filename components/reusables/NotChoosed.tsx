@@ -9,7 +9,7 @@ export default function NotChoosed() {
     const searchParams = useSearchParams();
 
     return (
-        <div className={`content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 lg:p-0 border-r lg:border-none border-neutral-300 dark:border-neutral-700 ${searchParams.has('tag') ? 'hidden' : 'block'}`}>
+        <div className={`content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 lg:p-0 border-r lg:border-none border-neutral-300 dark:border-neutral-700 ${isTablet && searchParams.has('tag') ? 'hidden' : 'block'}`}>
             {!isTablet ? (
                 <div className="flex flex-col items-center justify-center gap-4 pt-12">
                     <h2 className="text-2xl text-neutral-950 dark:text-neutral-300">Notes are shown here.</h2>
