@@ -8,6 +8,26 @@
   margin: 0;
 }
 
+/* Custom font imports */
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-noto: 'Noto-Serif', sans-serif;
+  --font-mono: 'Source-Code-Pro', sans-serif;
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-noto {
+  font-family: var(--font-noto);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
 /* Add these styles to your existing globals.css */
 
 /* Custom Scrollbar */
