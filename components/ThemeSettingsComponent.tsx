@@ -30,16 +30,6 @@ export default function ThemeSettingsComponent({ themeType, themeList }: ThemeSe
     const [selectedTheme, setSelectedTheme] = useState<string>(initializeTheme);
     const [selectedFont, setSelectedFont] = useState<string>(initializeFontTheme);
 
-    useEffect(() => { // Initialize the selected theme on first mount.
-        if(selectedFont === 'Sans-serif') {
-            setFont('inter');
-        } else if (selectedFont === 'Serif') {
-            setFont('noto');
-        } else if (selectedFont === 'Monospace') {
-            setFont('mono');
-        }
-    } , [])
-
     const handleThemeChange = (option: string) => {
         if (themeType === 'Color Theme') {
 
