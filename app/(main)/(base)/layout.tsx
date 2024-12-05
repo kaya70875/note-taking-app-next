@@ -13,6 +13,7 @@ import { useToast } from "@context/ToastContext";
 import useNoteActions from "@hooks/useNotActions";
 import useScreenSize from "@hooks/useScreenSize";
 import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -38,6 +39,8 @@ export default function Layout({
 
     const [searchQuery, setSearchQuery] = useState('');
     const [loading , setLoading] = useState(false);
+
+    const DynamicModal = dynamic(() => import('@components/Modal') , {ssr : false});
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
@@ -114,7 +117,7 @@ export default function Layout({
                                 </button>
 
                                 <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
-                                    {modalOpen && <Modal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading}/>}
+                                    {modalOpen && <DynamicModal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading}/>}
                                 </div>
 
                             </div>
