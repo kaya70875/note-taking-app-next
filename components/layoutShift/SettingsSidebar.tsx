@@ -4,12 +4,11 @@ import IconLock from '@components/svgIcons/IconLock';
 import IconLogout from '@components/svgIcons/IconLogout';
 import IconSun from '@components/svgIcons/IconSun';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React from 'react'
 
 export default function SettingsSidebar() {
 
-    const router = useRouter();
     const pathName = usePathname();
 
     const settingsItems = [
