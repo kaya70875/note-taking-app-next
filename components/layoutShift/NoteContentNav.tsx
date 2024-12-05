@@ -30,7 +30,7 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
 
     const activeNoteId = params.id;
 
-    const DynamicModal = dynamic(() => import('@components/Modal'));
+    const DynamicModal = dynamic(() => import('@components/Modal') , {ssr : false});
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
