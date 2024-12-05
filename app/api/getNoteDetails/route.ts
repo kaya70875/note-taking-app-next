@@ -6,8 +6,7 @@ export async function POST(request : Request) {
     try {
         await connectToDB();
 
-        const body = await request.json();
-        const { noteId } = body;
+        const {noteId} = await request.json();
 
         const relevantNotes = await Note.findById(noteId).select("content title tags updatedAt");
 

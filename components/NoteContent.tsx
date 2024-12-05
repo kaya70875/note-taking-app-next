@@ -7,7 +7,7 @@ import useNoteActions from '@hooks/useNotActions';
 import { CircularProgress } from '@mui/material';
 import { Note } from '../types/notes';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import NoteContentNav from '@components/layoutShift/NoteContentNav';
 import useScreenSize from '@hooks/useScreenSize';
 
@@ -34,6 +34,10 @@ export default function page() {
 
     const [status , setStatus] = useState<Status>('ready');
     const [disabled ,  setDisabled] = useState(false);
+
+    const formattedDate = useMemo(() => {
+        return notes ? new Date(notes.updatedAt).toLocaleDateString() : ''
+    }, [notes?.updatedAt]);
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -137,7 +141,7 @@ export default function page() {
                                     <p className='text-neutral-950 dark:text-neutral-300'>Last Edited</p>
                                 </div>
                                 <div className="tags-section flex gap-4">
-                                    <p className='dark:text-neutral-300'>{new Date(notes.updatedAt).toLocaleDateString()}</p>
+                                    <p className='dark:text-neutral-300'>{formattedDate}</p>
                                 </div>
                             </div>
                         </div>
