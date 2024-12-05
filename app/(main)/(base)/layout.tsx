@@ -74,7 +74,7 @@ export default function Layout({
     }
 
     return (
-        <div className="w-full h-full ">
+        <div className="flex flex-col w-full">
             {isTablet ? (
                 <div className="flex flex-col justify-between h-full bg-neutral-200 dark:bg-neutral-900">
                     <div className="logo px-4 xs:px-2 py-6 xs:py-3">
@@ -91,8 +91,8 @@ export default function Layout({
             ) : (
                 <>
                     <Navbar setSearchQuery={setSearchQuery} />
-                    <div className="flex w-full h-full dark:bg-neutral-950">
-                        <section className="notes-section flex flex-col p-6 xl:p-4 lg:p-2 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700 h-full">
+                    <div className="flex w-full flex-grow min-h-0 dark:bg-neutral-950">
+                        <section className="notes-section flex flex-col p-6 xl:p-4 lg:p-2 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700">
                             <Link href={'/create'} className="primary-btn w-full lg:text-sm" >
                                 + Create New Note
                             </Link>
