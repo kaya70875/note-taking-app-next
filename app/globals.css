@@ -51,14 +51,13 @@
 body {
   height: 100svh;
   @apply dark:bg-neutral-950;
-  overflow: hidden;
 }
 
 .app {
   display: flex;
+  justify-content: center;
   height: 100svh;
-  overflow: hidden;
-
+  overflow: hidden
 }
 
 .activeItem {
