@@ -11,6 +11,8 @@ import React, { useEffect, useState } from 'react'
 import NoteContentNav from '@components/layoutShift/NoteContentNav';
 import useScreenSize from '@hooks/useScreenSize';
 
+type Status = 'ready' | 'fetching' | 'done' | 'error';
+
 export default function page() {
 
     const { getRelevantNotes, updateNote } = useNoteActions();
@@ -30,14 +32,14 @@ export default function page() {
 
     });
 
-    const [loading, setLoading] = useState(false);
-    const [saveLoading , setSaveLoading] = useState(false);
+    const [status , setStatus] = useState<Status>('ready');
+    const [disabled ,  setDisabled] = useState(false);
 
     useEffect(() => {
         const fetchNotes = async () => {
             if (id) {
                 try {
-                    setLoading(true);
+                    setStatus('fetching');
                     const fetchedNotes = await getRelevantNotes(id as string);
                     setNotes(fetchedNotes);
                     setFormData({
@@ -48,7 +50,7 @@ export default function page() {
                 } catch (error) {
                     console.error('Failed to fetch note:', error);
                 } finally {
-                    setLoading(false); // Always stop loading
+                    setStatus('done');
                 }
             }
         };
@@ -62,9 +64,9 @@ export default function page() {
 
     const handleSave = async () => {
         if (notes) {
-            setSaveLoading(true);
+            setDisabled(true);
             await updateNote(notes._id, formData);
-            setSaveLoading(false);
+            setDisabled(false);
             setNotes({ ...notes, ...formData });
             setEditMode(false);
             showToast('Note updated successfully!', 'success');
@@ -84,7 +86,7 @@ export default function page() {
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 border-r lg:border-none border-neutral-300 dark:border-neutral-700">
             {isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleSave} setEditMode={setEditMode} editMode={editMode} navType='note' />}
             {isTablet && <div className="line"></div>}
-            {notes && !loading ? (
+            {notes && status === 'done' ? (
                 <header className="flex flex-col h-[85%] justify-between">
                     <div className="content-top flex flex-col gap-6">
                         {editMode ? (
@@ -161,7 +163,7 @@ export default function page() {
                                 <button
                                     onClick={handleSave}
                                     className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg disabled:opacity-50 disabled:hover:bg-blue-600"
-                                    disabled={saveLoading}
+                                    disabled={disabled}
                                 >
                                     Save Note
                                 </button>
