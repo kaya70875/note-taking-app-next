@@ -1,5 +1,3 @@
-import SvgIcon from '@components/reusables/SvgIcon'
-import ArrowLeft from '@components/svgIcons/ArrowLeft'
 import IconArchive from '@components/svgIcons/IconArchive'
 import IconDelete from '@components/svgIcons/IconDelete'
 import { useToast } from '@context/ToastContext'
@@ -9,6 +7,7 @@ import React, { useState } from 'react'
 import Back from './Back'
 import Modal from '@components/Modal'
 import IconRestore from '@components/svgIcons/IconRestore'
+import dynamic from 'next/dynamic'
 
 interface NoteContentNavProps {
     navType: 'note' | 'create';
@@ -30,6 +29,8 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
     const [isLoading, setLoading] = useState(false);
 
     const activeNoteId = params.id;
+
+    const DynamicModal = dynamic(() => import('@components/Modal'));
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
@@ -77,7 +78,7 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
                         </div>
 
                         <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
-                            {modalOpen && <Modal onClose={setModalOpen} onDelete={handleDeleteNote} loading={isLoading} />}
+                            {modalOpen && <DynamicModal onClose={setModalOpen} onDelete={handleDeleteNote} loading={isLoading} />}
                         </div>
                     </>
                 )}
