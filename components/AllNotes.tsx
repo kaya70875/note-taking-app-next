@@ -1,8 +1,8 @@
 'use client'
 
 import useFetch from '@hooks/useFetch';
-import { NoteResponse, Note } from '../types/notes';
-import React, { useEffect, useState } from 'react'
+import { NoteResponse } from '../types/notes';
+import React, { useMemo } from 'react'
 import convertDate from '@utils/helpers';
 import { CircularProgress } from '@mui/material';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -25,28 +25,22 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     const isArchiveOpen = pathName.includes('/archived'); // Check if path is includes archive or not.
     const activeNoteId = params.id; // Get active noteId from url.
 
-    const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
-
-    useEffect(() => {
+    const filteredNotes = useMemo(() => {
         if (searchQuery) {
-            const filteredNotes = notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase())
+            return notes?.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase())
                 || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
-            setFilteredNotes(filteredNotes ?? []);
         }
 
         else if (isArchiveOpen) {
-            const archivedNotes = notes?.filter(note => note.archived);
-            setFilteredNotes(archivedNotes ?? []);
+            return notes?.filter(note => note.archived);
         }
 
         else if (activeSidebarTag) {
-            const filteredByTag = notes?.filter(note => note.tags.some(tag => tag.toLocaleLowerCase().includes(activeSidebarTag.toLocaleLowerCase())));
-            setFilteredNotes(filteredByTag ?? []);
+            return notes?.filter(note => note.tags.some(tag => tag.toLocaleLowerCase().includes(activeSidebarTag.toLocaleLowerCase())));
         }
 
         else {
-            const unarchivedNotes = notes?.filter(note => !note.archived);
-            setFilteredNotes(unarchivedNotes ?? []);
+            return notes?.filter(note => !note.archived);
         }
     }, [searchQuery, isArchiveOpen, data, activeSidebarTag]);
 
