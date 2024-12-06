@@ -10,6 +10,7 @@ import IconDelete from "@components/svgIcons/IconDelete";
 import IconRestore from "@components/svgIcons/IconRestore";
 import LogoSvg from "@components/svgIcons/LogoSvg";
 import { useToast } from "@context/ToastContext";
+import { useDebounce } from "@hooks/useDebounce";
 import useNoteActions from "@hooks/useNotActions";
 import useScreenSize from "@hooks/useScreenSize";
 import { CircularProgress } from "@mui/material";
@@ -38,6 +39,7 @@ export default function Layout({
     const activeNoteId = params.id; // Access dynamic route parameter like this in next 15.
 
     const [searchQuery, setSearchQuery] = useState('');
+    const debouncedSearch = useDebounce(searchQuery);
     const [loading , setLoading] = useState(false);
 
     const DynamicModal = dynamic(() => import('@components/Modal') , {ssr : false});
@@ -100,7 +102,7 @@ export default function Layout({
                                 + Create New Note
                             </Link>
 
-                            <AllNotes searchQuery={searchQuery} />
+                            <AllNotes searchQuery={debouncedSearch} />
                         </section>
 
                         {children}

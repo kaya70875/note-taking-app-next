@@ -5,6 +5,7 @@ import AllTags from './AllTags';
 import useNavHeader from '@hooks/useNavHeader';
 import Back from './Back';
 import SvgIcon from '@components/reusables/SvgIcon';
+import { useDebounce } from '@hooks/useDebounce';
 
 export default function TabletLayout({ children }: { children: React.ReactNode }) {
   const pathName = usePathname();
@@ -20,6 +21,7 @@ export default function TabletLayout({ children }: { children: React.ReactNode }
   const hideNavHeader = pathName === '/create' || pathName === `/notes/${activeNoteId}`; // Hide nav header when on create or note page.
 
   const [searchQuery, setSearchQuery] = useState(''); // We use local state to store the search query instead of query params FOR FILTERING!...
+  const debouncedSearch = useDebounce(searchQuery);
 
   useEffect(() => { // Reset search query when search params is removed.
     if (!searchParams.has('search')) {
@@ -59,9 +61,9 @@ export default function TabletLayout({ children }: { children: React.ReactNode }
         </div>
       )}
 
-      {pathName === '/notes' && !searchParams.has('tag') ? <AllNotes searchQuery={searchQuery} /> : children}
+      {pathName === '/notes' && !searchParams.has('tag') ? <AllNotes searchQuery={debouncedSearch} /> : children}
       {searchParams.has('tag') && !currentTag && <AllTags />}
-      {pathName === '/notes' && currentTag && <AllNotes searchQuery={searchQuery} />}
+      {pathName === '/notes' && currentTag && <AllNotes searchQuery={debouncedSearch} />}
     </div>
   )
 }
