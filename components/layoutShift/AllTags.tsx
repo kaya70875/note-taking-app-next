@@ -3,7 +3,7 @@ import { TagsResponse } from '../../types/notes';
 import React from 'react'
 import TagSvg from '@components/svgIcons/TagSvg';
 import Link from 'next/link';
-import { CircularProgress } from '@mui/material';
+import { LoadingState } from '@components/reusables/LoadingState';
 
 export default function AllTags() {
 
@@ -14,7 +14,7 @@ export default function AllTags() {
 
     return (
         <div className='flex flex-col gap-4 mt-4 xs:mt-0 overflow-auto'>
-            {loading && <CircularProgress />}
+            {loading && <LoadingState />}
             {tags?.map(tag => (
                 <div className='flex flex-col gap-3' key={tag}>
                     <Link href={`/notes?tag=${tag}`} className='flex items-center gap-2'>

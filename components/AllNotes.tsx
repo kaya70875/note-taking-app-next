@@ -4,9 +4,9 @@ import useFetch from '@hooks/useFetch';
 import { NoteResponse } from '../types/notes';
 import React, { useMemo } from 'react'
 import convertDate from '@utils/helpers';
-import { CircularProgress } from '@mui/material';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { LoadingState } from './reusables/LoadingState';
 
 interface AllNotesProps {
     searchQuery: string;
@@ -47,7 +47,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     return (
         <div className='flex flex-col justify-between items-end overflow-auto'>
             <div className="note-cards flex flex-col gap-3 lg:gap-4 w-full p-1"> {/* All notes shown here */}
-                {loading && (<div className='flex items-center justify-center'><CircularProgress /></div>)}
+                {loading && (<LoadingState />)}
                 {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
                 {isArchiveOpen ? (filteredNotes?.map(note => (
                     <Link href={`/archived/${note._id}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >

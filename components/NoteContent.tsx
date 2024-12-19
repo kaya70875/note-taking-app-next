@@ -4,13 +4,13 @@ import ClockSvg from '@components/svgIcons/ClockSvg';
 import TagSvg from '@components/svgIcons/TagSvg';
 import { useToast } from '@context/ToastContext';
 import useNoteActions from '@hooks/useNotActions';
-import { CircularProgress } from '@mui/material';
 import { Note } from '../types/notes';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react'
 import NoteContentNav from '@components/layoutShift/NoteContentNav';
 import useScreenSize from '@hooks/useScreenSize';
 import dynamic from '@node_modules/next/dynamic';
+import { LoadingState } from './reusables/LoadingState';
 
 const DynamicTextEditor = dynamic(() => import('./QuillEditor') , {ssr : false});
 
@@ -181,7 +181,7 @@ export default function page() {
                     </div>
                 </header>
             ) : (
-                <div className='w-full h-full flex items-center justify-center'><CircularProgress /></div>
+                <LoadingState />
             )}
         </div>
     )

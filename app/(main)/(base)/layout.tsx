@@ -3,8 +3,8 @@
 import AllNotes from "@components/AllNotes";
 import BottomNavbar from "@components/layoutShift/BottomNavbar";
 import TabletLayout from "@components/layoutShift/TabletLayout";
-import Modal from "@components/Modal";
 import Navbar from "@components/Navbar";
+import { LoadingState } from "@components/reusables/LoadingState";
 import IconArchive from "@components/svgIcons/IconArchive";
 import IconDelete from "@components/svgIcons/IconDelete";
 import IconRestore from "@components/svgIcons/IconRestore";
@@ -12,7 +12,6 @@ import LogoSvg from "@components/svgIcons/LogoSvg";
 import { useToast } from "@context/ToastContext";
 import useNoteActions from "@hooks/useNotActions";
 import useScreenSize from "@hooks/useScreenSize";
-import { CircularProgress } from "@mui/material";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -73,7 +72,7 @@ export default function Layout({
     }
 
     if (isLoading) {
-        return <div className="flex items-center justify-center w-full h-full"><CircularProgress /></div>
+        return <LoadingState />
     }
 
     return (
