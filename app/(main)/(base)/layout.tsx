@@ -15,7 +15,7 @@ import useScreenSize from "@hooks/useScreenSize";
 import { isArchiveOpen } from "@utils/isArchiveOpen";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 type LayoutProps = {

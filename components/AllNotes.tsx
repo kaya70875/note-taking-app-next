@@ -4,7 +4,7 @@ import useFetch from '@hooks/useFetch';
 import { NoteResponse } from '../types/notes';
 import React, { useMemo } from 'react'
 import convertDate from '@utils/helpers';
-import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { LoadingState } from './reusables/LoadingState';
 import { isArchiveOpen } from '@utils/isArchiveOpen';
