@@ -10,6 +10,9 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react'
 import NoteContentNav from '@components/layoutShift/NoteContentNav';
 import useScreenSize from '@hooks/useScreenSize';
+import dynamic from '@node_modules/next/dynamic';
+
+const DynamicTextEditor = dynamic(() => import('./QuillEditor') , {ssr : false});
 
 type Status = 'ready' | 'fetching' | 'done' | 'error';
 
@@ -147,18 +150,7 @@ export default function page() {
                         </div>
                         <div className="line dark:bg-neutral-700"></div>
 
-                        <div className="content-itself">
-                            {editMode ? (
-                                <textarea
-                                    name="content"
-                                    value={formData.content}
-                                    onChange={handleInputChange}
-                                    className="w-full h-40 border rounded-lg p-2"
-                                />
-                            ) : (
-                                <p className="max-w-screen-sm dark:text-neutral-300">{notes.content}</p>
-                            )}
-                        </div>
+                        <DynamicTextEditor type='edit' editMode={editMode} formData={formData} setFormData={setFormData} />
                     </div>
 
                     <div className="content-buttons flex items-center gap-4 py-4 border-t lg:border-none border-neutral-300 dark:border-neutral-700 w-full">

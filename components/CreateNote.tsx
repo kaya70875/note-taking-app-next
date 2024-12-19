@@ -7,7 +7,10 @@ import ClockSvg from './svgIcons/ClockSvg';
 import { useRouter } from 'next/navigation';
 import NoteContentNav from './layoutShift/NoteContentNav';
 import useScreenSize from '@hooks/useScreenSize';
+import dynamic from '@node_modules/next/dynamic';
+import { Note } from '../types/notes';
 
+const DynamicTextEditor = dynamic(() => import('./QuillEditor') , {ssr : false});
 
 export default function CreateNote() {
 
@@ -20,7 +23,7 @@ export default function CreateNote() {
 
     const { data: session } = useSession();
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Note>>({
         title: 'Enter a title...',
         content: '',
         tags: [],
@@ -108,15 +111,7 @@ export default function CreateNote() {
                     </div>
                     <div className="line"></div>
 
-                    <div className="content-itself">
-                        <textarea
-                            name="content"
-                            value={formData.content}
-                            onChange={handleInputChange}
-                            className="w-full h-40 rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
-                            placeholder='Start typing your note here...'
-                        />
-                    </div>
+                    <DynamicTextEditor type='create' formData={formData} setFormData={setFormData} />
                 </div>
 
                 <div className="content-buttons flex items-center gap-4 border-t lg: border-none border-neutral-300 dark:border-neutral-700 w-full">
