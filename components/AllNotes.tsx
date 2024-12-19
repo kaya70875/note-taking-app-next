@@ -7,6 +7,7 @@ import convertDate from '@utils/helpers';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { LoadingState } from './reusables/LoadingState';
+import { isArchiveOpen } from '@utils/isArchiveOpen';
 
 interface AllNotesProps {
     searchQuery: string;
@@ -17,13 +18,13 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
     const { data, loading, error } = useFetch<NoteResponse>('/api/getData');
     const notes = data?.notes ?? [];
 
-    const pathName = usePathname();
     const params = useParams();
     const searchParams = useSearchParams();
 
     const activeSidebarTag = searchParams.get('tag'); // Get active tag from query.
-    const isArchiveOpen = pathName.includes('/archived'); // Check if path is includes archive or not.
     const activeNoteId = params.id; // Get active noteId from url.
+
+    const isArchive = isArchiveOpen();
 
     const filteredNotes = useMemo(() => {
         if (searchQuery) {
@@ -31,7 +32,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                 || note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLocaleLowerCase())));
         }
 
-        else if (isArchiveOpen) {
+        else if (isArchive) {
             return notes?.filter(note => note.archived);
         }
 
@@ -42,14 +43,14 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
         else {
             return notes?.filter(note => !note.archived);
         }
-    }, [searchQuery, isArchiveOpen, data, activeSidebarTag]);
+    }, [searchQuery, isArchive, data, activeSidebarTag]);
 
     return (
         <div className='flex flex-col justify-between items-end overflow-auto'>
             <div className="note-cards flex flex-col gap-3 lg:gap-4 w-full p-1"> {/* All notes shown here */}
                 {loading && (<LoadingState />)}
-                {isArchiveOpen && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
-                {isArchiveOpen ? (filteredNotes?.map(note => (
+                {isArchive && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
+                {isArchive ? (filteredNotes?.map(note => (
                     <Link href={`/archived/${note._id}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
                         <header className="flex flex-col gap-2" >
                             <h2 className="font-bold text-lg lg:text-base">{note.title}</h2>

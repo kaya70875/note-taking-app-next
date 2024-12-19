@@ -8,6 +8,7 @@ import Back from './Back'
 import Modal from '@components/Modal'
 import IconRestore from '@components/svgIcons/IconRestore'
 import dynamic from 'next/dynamic'
+import { isArchiveOpen } from '@utils/isArchiveOpen'
 
 interface NoteContentNavProps {
     navType: 'note' | 'create';
@@ -20,7 +21,6 @@ interface NoteContentNavProps {
 export default function NoteContentNav({ navType = 'note', handleCancel, handleCreate, setEditMode, editMode }: NoteContentNavProps) {
     const router = useRouter();
     const params = useParams();
-    const pathName = usePathname();
 
     const { deleteNote, setArchivedNotes } = useNoteActions();
     const { showToast } = useToast();
@@ -31,6 +31,8 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
     const activeNoteId = params.id;
 
     const DynamicModal = dynamic(() => import('@components/Modal') , {ssr : false});
+
+    const isArchive = isArchiveOpen();
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
@@ -51,14 +53,10 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
     const handleArchiveNote = async () => {
         if (activeNoteId) {
             // Archive the note here.
-            setArchivedNotes(activeNoteId as string, !isArchiveOpen());
+            setArchivedNotes(activeNoteId as string, !isArchive);
             // Give a success toast message here.
-            showToast(`Note ${isArchiveOpen() ? 'restored' : 'archived'} successfully!`, 'success');
+            showToast(`Note ${isArchive ? 'restored' : 'archived'} successfully!`, 'success');
         }
-    }
-
-    const isArchiveOpen = () => {
-        return pathName.includes('/archived');
     }
 
     return (
@@ -74,7 +72,7 @@ export default function NoteContentNav({ navType = 'note', handleCancel, handleC
                             <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                         </div>
                         <div className="archive" onClick={handleArchiveNote}>
-                            { !isArchiveOpen() ? (<IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />) : (<IconRestore props={{color : 'text-neutral-950 dark:text-neutral-50'}} />) }
+                            { !isArchive ? (<IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />) : (<IconRestore props={{color : 'text-neutral-950 dark:text-neutral-50'}} />) }
                         </div>
 
                         <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>

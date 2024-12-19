@@ -12,6 +12,7 @@ import LogoSvg from "@components/svgIcons/LogoSvg";
 import { useToast } from "@context/ToastContext";
 import useNoteActions from "@hooks/useNotActions";
 import useScreenSize from "@hooks/useScreenSize";
+import { isArchiveOpen } from "@utils/isArchiveOpen";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -29,7 +30,6 @@ export default function Layout({
     const { deleteNote, setArchivedNotes } = useNoteActions();
     const { isTablet, isLoading } = useScreenSize();
 
-    const pathName = usePathname();
     const router = useRouter();
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -40,6 +40,8 @@ export default function Layout({
     const [loading , setLoading] = useState(false);
 
     const DynamicModal = dynamic(() => import('@components/Modal') , {ssr : false});
+
+    const isArchive = isArchiveOpen();
 
     const handleDeleteNote = async () => {
         if (activeNoteId) {
@@ -61,14 +63,10 @@ export default function Layout({
     const handleArchiveNote = async () => {
         if (activeNoteId) {
             // Archive the note here.
-            setArchivedNotes(activeNoteId as string, !isArchiveOpen());
+            setArchivedNotes(activeNoteId as string, !isArchive);
             // Give a success toast message here.
-            showToast(`Note ${isArchiveOpen() ? 'restored' : 'archived'} successfully!`, 'success');
+            showToast(`Note ${isArchive ? 'restored' : 'archived'} successfully!`, 'success');
         }
-    }
-
-    const isArchiveOpen = () => {
-        return pathName.includes('/archived');
     }
 
     if (isLoading) {
@@ -106,8 +104,8 @@ export default function Layout({
                         <section className="archive-section w-1/5 p-4 lg:p-2 flex justify-center">
                             <div className="buttons flex flex-col gap-4 w-full">
                                 <button onClick={handleArchiveNote} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
-                                    {isArchiveOpen() ? <IconRestore props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
-                                    <p className="text-neutral-950 dark:text-neutral-100">{isArchiveOpen() ? 'Restore Note' : 'Archive Note'}</p>
+                                    {isArchive ? <IconRestore props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
+                                    <p className="text-neutral-950 dark:text-neutral-100">{isArchive ? 'Restore Note' : 'Archive Note'}</p>
                                 </button>
 
                                 <button onClick={() => setModalOpen(prev => !prev)} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
