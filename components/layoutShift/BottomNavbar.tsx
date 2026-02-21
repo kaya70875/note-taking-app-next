@@ -19,22 +19,22 @@ export default function BottomNavbar() {
         {
             name: 'Search',
             route: '/notes?search=',
-            icon: (<IconSearch props={{color : 'text-neutral-950 dark:text-neutral-50'}} />),
+            icon: (<IconSearch props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />),
         },
         {
-            name : 'Archive',
+            name: 'Archive',
             route: '/archived',
-            icon : (<IconArchive props={{color : 'text-neutral-950 dark:text-neutral-50'}} />),
+            icon: (<IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />),
         },
         {
-            name : 'Tags',
-            route : '/notes?tag=',
-            icon : (<TagSvg props={{color : 'text-neutral-950 dark:text-neutral-50'}} />)
+            name: 'Tags',
+            route: '/notes?tag=',
+            icon: (<TagSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />)
         },
         {
-            name : 'Settings',
-            route : '/settings',
-            icon : (<IconSettings props={{color : 'text-neutral-950 dark:text-neutral-50'}} />)
+            name: 'Settings',
+            route: '/settings',
+            icon: (<IconSettings props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />)
         }
     ]
 
@@ -43,7 +43,7 @@ export default function BottomNavbar() {
     return (
         <div className='flex p-4 w-full items-center justify-around'>
             {navbarItems.map((item, index) => (
-                <Link key={index} href={item.route} className={`flex flex-col items-center gap-2 px-4 rounded-lg py-2 cursor-pointer ${activeItem === item.name ? 'bg-blue-50' : ''}`}>
+                <Link prefetch key={index} href={item.route} className={`flex flex-col items-center gap-2 px-4 rounded-lg py-2 cursor-pointer ${activeItem === item.name ? 'bg-blue-50' : ''}`}>
                     <div className={`icon ${activeItem === item.name ? 'text-blue-500' : ''}`}>
                         {item.icon}
                     </div>
