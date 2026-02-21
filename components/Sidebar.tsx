@@ -46,14 +46,14 @@ export default function Sidebar() {
 
     return (
         <div className={`${isTablet ? 'hidden' : 'block'} flex flex-col p-4 gap-12 w-1/4 max-w-80 border-r border-neutral-300 dark:border-neutral-400 dark:bg-neutral-950`}>
-            <header className='logo'>
+            <Link href={'/notes'} className='logo cursor-pointer'>
                 <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
-            </header>
+            </Link>
             <div className="flex flex-col gap-6 overflow-hidden h-full">
                 <section className="sidebar-top">
                     <ul className='flex flex-col gap-4'>
                         {sidebarItems.map(item => (
-                            <Link prefetch href={item.name === 'Archived Notes' ? '/archived' : '/notes'} key={item.name} className={`flex items-center justify-between p-2 cursor-pointer ${!searchParams.has('tag') && activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`}>
+                            <Link prefetch href={item.name === 'Archived Notes' ? '/archived' : '/notes'} key={item.name} className={`item-hover flex items-center justify-between p-2 cursor-pointer ${!searchParams.has('tag') && activeItem === item.name ? 'activeItem dark:bg-neutral-700' : ''}`}>
                                 <div className='flex items-center gap-4'>
                                     <div className={`${!searchParams.has('tag') && activeItem === item.name ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}>{item.icon}</div>
                                     <p className={`${!searchParams.has('tag') && activeItem === item.name ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{item.name}</p>
@@ -69,7 +69,7 @@ export default function Sidebar() {
                     <div className='flex flex-col gap-4 overflow-y-auto'>
                         {loading && (<div className='w-full h-full flex items-center justify-center'><CircularProgress color='secondary' /></div>)}
                         {tags && tags?.map(tag => (
-                            <Link href={`/notes?tag=${tag}`} key={tag} className={`flex items-center justify-between p-2 cursor-pointer ${activeTag === tag ? 'activeItem dark:bg-neutral-700' : ''}`} >
+                            <Link href={`/notes?tag=${tag}`} key={tag} className={`item-hover flex items-center justify-between p-2 cursor-pointer ${activeTag === tag ? 'activeItem dark:bg-neutral-700' : ''}`} >
                                 <div className='flex items-center gap-4'>
                                     <div className={`${activeTag === tag ? 'text-blue-500' : 'text-neutral-950 dark:text-neutral-50'}`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3.016 5.966c.003-1.411 1.07-2.677 2.456-2.916.284-.05 3.616-.042 4.995-.041 1.364 0 2.527.491 3.49 1.452 2.045 2.042 4.088 4.085 6.128 6.13 1.208 1.21 1.224 3.066.022 4.28a805.496 805.496 0 0 1-5.229 5.228c-1.212 1.201-3.069 1.186-4.279-.022-2.064-2.058-4.127-4.115-6.182-6.182-.795-.8-1.264-1.766-1.368-2.895-.084-.903-.035-4.26-.033-5.034Z" clipRule="evenodd" /><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.907 8.315a1.607 1.607 0 0 1-1.61 1.583c-.872-.002-1.599-.73-1.594-1.596a1.604 1.604 0 0 1 1.633-1.607c.864.003 1.575.736 1.571 1.62Z" clipRule="evenodd" /></svg></div>
                                     <p className={`${activeTag === tag ? 'font-medium dark:text-neutral-50' : 'dark:text-neutral-50'}`}>{tag}</p>

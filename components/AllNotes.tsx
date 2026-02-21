@@ -51,7 +51,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                 {loading && (<LoadingState />)}
                 {isArchive && <p className='dark:text-neutral-50 lg:text-xs'>All your archived notes are stored here. You can restore or delete them anytime.</p>}
                 {isArchive ? (filteredNotes?.map(note => (
-                    <Link prefetch href={`/archived/${note._id}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
+                    <Link prefetch href={`/archived/${note._id}`} className={`item-hover note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
                         <header className="flex flex-col gap-2" >
                             <h2 className="font-bold text-lg lg:text-base">{note.title}</h2>
                             <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2 ">
@@ -68,7 +68,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                         </div>
                     </Link>
                 ))) : (notes?.length > 0 ? filteredNotes?.map(note => (
-                    <Link prefetch href={`/notes/${note._id}${activeSidebarTag ? `?tag=${activeSidebarTag}` : ''}`} className={`note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
+                    <Link prefetch href={`/notes/${note._id}${activeSidebarTag ? `?tag=${activeSidebarTag}` : ''}`} className={`item-hover note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
                         <header className="flex flex-col gap-2" >
                             <h2 className="font-bold text-lg lg:text-base">{note.title}</h2>
                             <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2">

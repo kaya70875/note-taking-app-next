@@ -37,9 +37,9 @@ export default function SettingsSidebar() {
     const activeItem = settingsItems.find(item => pathName.includes(`settings${item.route}`))?.name; // Find the active item based on the pathname
 
     return (
-        <section className="settings-section flex flex-col p-6 xs:p-3 gap-8 w-4/12 xxl:w-5/12 xl:w-7/12 lg:w-full border-r lg:border-none border-neutral-300 dark:border-neutral-700 h-full">
+        <section className="settings-section flex flex-col p-6 xs:p-3 gap-4 w-4/12 xxl:w-5/12 xl:w-7/12 lg:w-full border-r lg:border-none border-neutral-300 dark:border-neutral-700 h-full">
             {settingsItems.map(settings => (
-                <Link prefetch href={`${settings.name !== 'Logout' ? `/settings${settings.route}` : '/login'}`} key={settings.name} className={`flex items-center justify-between p-2 rounded-lg w-3/4 ${activeItem === settings.name ? 'bg-neutral-200 dark:bg-neutral-700' : ''}`} >
+                <Link prefetch href={`${settings.name !== 'Logout' ? `/settings${settings.route}` : '/login'}`} key={settings.name} className={`item-hover flex items-center justify-between py-3 px-2 rounded-lg w-full ${activeItem === settings.name ? 'bg-neutral-200 dark:bg-neutral-700' : ''}`} >
                     <div className='flex items-center gap-2'>
                         <div className={`icon ${activeItem === settings.name ? 'text-blue-500' : ''}`}>{settings.svg}</div>
                         <p className='text-neutral-950 dark:text-neutral-100'>{settings.name}</p>

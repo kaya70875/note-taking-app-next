@@ -37,9 +37,9 @@ export default function Layout({
     const activeNoteId = params.id; // Access dynamic route parameter like this in next 15.
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [loading , setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const DynamicModal = dynamic(() => import('@components/Modal') , {ssr : false});
+    const DynamicModal = dynamic(() => import('@components/Modal'), { ssr: false });
 
     const isArchive = isArchiveOpen();
 
@@ -77,9 +77,9 @@ export default function Layout({
         <div className="flex flex-col w-full">
             {isTablet ? (
                 <div className="flex flex-col justify-between h-full bg-neutral-200 dark:bg-neutral-900">
-                    <div className="logo px-4 xs:px-2 py-6 xs:py-3">
+                    <Link href={'/notes'} className="logo px-4 xs:px-2 py-6 xs:py-3 cursor-pointer">
                         <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
-                    </div>
+                    </Link>
                     <TabletLayout>
                         {children}
                     </TabletLayout>
@@ -103,18 +103,18 @@ export default function Layout({
                         {children}
                         <section className="archive-section w-1/5 p-4 lg:p-2 flex justify-center">
                             <div className="buttons flex flex-col gap-4 w-full">
-                                <button onClick={handleArchiveNote} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+                                <button onClick={handleArchiveNote} className="item-hover flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
                                     {isArchive ? <IconRestore props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <IconArchive props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
                                     <p className="text-neutral-950 dark:text-neutral-100">{isArchive ? 'Restore Note' : 'Archive Note'}</p>
                                 </button>
 
-                                <button onClick={() => setModalOpen(prev => !prev)} className="flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+                                <button onClick={() => setModalOpen(prev => !prev)} className="item-hover flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
                                     <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                                     <p className="text-neutral-950 dark:text-neutral-100">Delete Note</p>
                                 </button>
 
                                 <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
-                                    {modalOpen && <DynamicModal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading}/>}
+                                    {modalOpen && <DynamicModal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading} />}
                                 </div>
 
                             </div>
