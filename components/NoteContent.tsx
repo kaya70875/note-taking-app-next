@@ -102,7 +102,7 @@ export default function page() {
                                 name="title"
                                 value={formData.title}
                                 onChange={handleInputChange}
-                                className="text-lg font-bold border rounded-lg p-2"
+                                className="text-lg font-bold border rounded-lg p-2 border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900"
                             />
                         ) : (
                             <h1 className="text-lg font-bold dark:text-neutral-50">{notes.title}</h1>
@@ -126,7 +126,7 @@ export default function page() {
                                                     tags: e.target.value.split(',').map((tag) => tag.trim()),
                                                 }))
                                             }
-                                            className="border rounded-lg p-2"
+                                            className="border rounded-lg p-2 border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900"
                                         />
                                     ) : (
                                         notes.tags.map((tag) => (

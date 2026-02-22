@@ -10,7 +10,7 @@ export default function ChangePassword() {
 
     const { handleResetPassword } = useAuthActions();
     const { showToast } = useToast();
-    const {state , dispatch} = useFormReducer();
+    const { state, dispatch } = useFormReducer();
 
     const [showPassword, setShowPassword] = useState({
         oldPassword: false,
@@ -18,7 +18,7 @@ export default function ChangePassword() {
         confirmPassword: false,
     });
 
-    const [currentPassword , setCurrentPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
 
     const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,7 @@ export default function ChangePassword() {
             return;
         }
 
-        if(!state.validPass) {
+        if (!state.validPass) {
             showToast('Password must be at least 8 characters long and contain at least one number.', 'error');
             return;
         }
@@ -36,14 +36,14 @@ export default function ChangePassword() {
         setLoading(true);
 
         try {
-            const response : any = await handleResetPassword(currentPassword, state.password);
+            const response: any = await handleResetPassword(currentPassword, state.password);
 
             if (response.error) {
                 showToast('Current password is wrong.', 'error');
             } else {
                 showToast('Password changed successfully', 'success');
             }
-        } catch (error : any) {
+        } catch (error: any) {
             console.error(error);
             showToast('Something went wrong. Please try again.', 'error');
         } finally {
@@ -60,7 +60,7 @@ export default function ChangePassword() {
             <div className='flex flex-col gap-8'>
                 <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="old-pass">Old Password</label>
-                    <input type={showPassword.oldPassword ? 'text' : 'password'} id="old-pass" className='input dark:border-neutral-700' onChange={(e) => setCurrentPassword(e.currentTarget.value)} />
+                    <input type={showPassword.oldPassword ? 'text' : 'password'} id="old-pass" className='input border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900' onChange={(e) => setCurrentPassword(e.currentTarget.value)} />
                     <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword })}>
                         <div className='eye-icon'>
                             {showPassword.oldPassword ? <HidePassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <ShowPassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
@@ -70,7 +70,7 @@ export default function ChangePassword() {
 
                 <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="new-pass">New Password</label>
-                    <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className={`${!state.validPass && state.password ? 'input-invalid !w-full' : 'input dark:border-neutral-700'}`} onChange={(e) => dispatch({ type:REDUCER_ACTION_TYPE.SET_PASSWORD , payload: e.currentTarget.value })} />
+                    <input type={showPassword.newPassword ? 'text' : 'password'} id="new-pass" className={`${!state.validPass && state.password ? 'input-invalid !w-full' : 'input border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900'}`} onChange={(e) => dispatch({ type: REDUCER_ACTION_TYPE.SET_PASSWORD, payload: e.currentTarget.value })} />
                     <div className="input-info flex items-center gap-1">
                         <IconInfo props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                         <p className='text-neutral-950 dark:text-neutral-300'>At least 8 characters</p>
@@ -84,7 +84,7 @@ export default function ChangePassword() {
 
                 <div className="input-wrapper w-1/2 xxl:w-3/4 lg:w-full flex flex-col gap-1 relative">
                     <label className='dark:text-neutral-300' htmlFor="confirm-pass">Confirm New Password</label>
-                    <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className={`${state.confirmPassword && !state.validMatch ? 'input-invalid !w-full' : 'input dark:border-neutral-700'}`} onChange={(e) => dispatch({ type:REDUCER_ACTION_TYPE.SET_CONFIRM_PASSWORD , payload: e.currentTarget.value })} />
+                    <input type={showPassword.confirmPassword ? 'text' : 'password'} id="confirm-pass" className={`${state.confirmPassword && !state.validMatch ? 'input-invalid !w-full' : 'input border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900'}`} onChange={(e) => dispatch({ type: REDUCER_ACTION_TYPE.SET_CONFIRM_PASSWORD, payload: e.currentTarget.value })} />
                     <div className="show-pass w-full absolute top-1/2 right-0 cursor-pointer" onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}>
                         <div className="eye-icon">
                             {showPassword.confirmPassword ? <HidePassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} /> : <ShowPassword props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />}
