@@ -62,7 +62,7 @@ export default function CreateNote() {
             content: '',
             tags: [],
         });
-        router.push('/notes');
+        router.prefetch('/notes');
     };
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
