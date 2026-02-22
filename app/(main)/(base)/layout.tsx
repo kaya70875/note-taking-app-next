@@ -18,6 +18,8 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
+const DynamicModal = dynamic(() => import('@components/Modal'), { ssr: false });
+
 type LayoutProps = {
     children: React.ReactNode,
 }
@@ -38,8 +40,6 @@ export default function Layout({
 
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const DynamicModal = dynamic(() => import('@components/Modal'), { ssr: false });
 
     const isArchive = isArchiveOpen();
 
@@ -108,13 +108,13 @@ export default function Layout({
                                     <p className="text-neutral-950 dark:text-neutral-100">{isArchive ? 'Restore Note' : 'Archive Note'}</p>
                                 </button>
 
-                                <button onClick={() => setModalOpen(prev => !prev)} className="item-hover flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
+                                <button onClick={() => setModalOpen(true)} className="item-hover flex lg:flex-col items-center gap-2 border border-neutral-300 dark:border-neutral-700 p-2 rounded-lg">
                                     <IconDelete props={{ color: 'text-neutral-950 dark:text-neutral-100' }} />
                                     <p className="text-neutral-950 dark:text-neutral-100">Delete Note</p>
                                 </button>
 
                                 <div className={`modal-backdrop fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-50 z-10 ${modalOpen ? 'block' : 'hidden'}`}>
-                                    {modalOpen && <DynamicModal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading} />}
+                                    <DynamicModal onClose={setModalOpen} onDelete={handleDeleteNote} loading={loading} />
                                 </div>
 
                             </div>
