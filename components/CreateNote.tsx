@@ -10,7 +10,7 @@ import useScreenSize from '@hooks/useScreenSize';
 import dynamic from '@node_modules/next/dynamic';
 import { Note } from '../types/notes';
 
-const DynamicTextEditor = dynamic(() => import('./QuillEditor') , {ssr : false});
+const DynamicTextEditor = dynamic(() => import('./QuillEditor'), { ssr: false });
 
 export default function CreateNote() {
 
@@ -66,16 +66,16 @@ export default function CreateNote() {
     };
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
-            { isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleCreate} navType='create' />}
+            {isTablet && <NoteContentNav handleCancel={handleCancel} handleCreate={handleCreate} navType='create' />}
             {isTablet && <div className="line"></div>}
-            <header className="flex flex-col h-[85%] justify-between">
+            <header className="flex flex-col h-[85%] justify-start gap-4">
                 <div className="content-top flex flex-col gap-6">
                     <input
                         type="text"
                         name="title"
                         value={formData.title}
                         onChange={handleInputChange}
-                        className="text-lg font-bold rounded-lg p-2 border border-neutral-300 dark:border-neutral-700"
+                        className="text-lg font-bold rounded-lg p-2 border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900"
                     />
                     <div className="flex flex-col gap-4">
                         <div className="memo-info flex items-center gap-8 w-full">
@@ -93,7 +93,7 @@ export default function CreateNote() {
                                             ...prev,
                                             tags: e.target.value.split(',').map((tag) => tag.trim()) as never[],
                                         }))}
-                                    className="rounded-lg p-2 border w-full border-neutral-300 dark:border-neutral-700"
+                                    className="rounded-lg p-2 border w-full border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900"
                                     placeholder='Enter tags'
                                 />
                             </div>
@@ -105,7 +105,7 @@ export default function CreateNote() {
                                 <p className='text-neutral-950 dark:text-neutral-300'>Last Edited</p>
                             </div>
                             <div className="tags-section flex gap-4">
-                                <p className='text-neutral-950 dark:text-neutral-300'>Not Saved Yet...</p>
+                                <p className='text-neutral-950 dark:text-neutral-300 text-sm opacity-70'>Not Saved Yet...</p>
                             </div>
                         </div>
                     </div>
@@ -119,14 +119,14 @@ export default function CreateNote() {
                         <>
                             <button
                                 onClick={handleCreate}
-                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg disabled:opacity-50 disabled:hover:bg-blue-600"
+                                className="primary-btn w-1/4 md:w-1/6"
                                 disabled={loading}
                             >
                                 Save Note
                             </button>
                             <button
                                 onClick={handleCancel}
-                                className="flex items-center justify-center bg-neutral-200 p-3 border-none text-neutral-600 rounded-lg"
+                                className="flex items-center justify-center border border-neutral-500 dark:border-neutral-700 p-3 dark:text-neutral-200 rounded-lg w-1/6 hover:bg-neutral-200 dark:hover:bg-neutral-900 transition-all duration-150"
                             >
                                 Cancel
                             </button>
