@@ -92,7 +92,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                 )
                 )}
             </div>
-            <Link href={'/create'} prefetch className='create-btn-ellipse hidden lg:flex items-center justify-center p-4 h-14 w-14 text-neutral-50 bg-blue-500 rounded-full absolute bottom-20 right-4' >+</Link>
+            <Link href={'/create'} prefetch className='create-btn-ellipse hidden lg:flex items-center justify-center p-4 h-14 w-14 text-neutral-50 bg-blue-500 rounded-full absolute bottom-28 xs:bottom-20 right-4' >+</Link>
         </div>
 
 

@@ -41,7 +41,7 @@ export default function BottomNavbar() {
     const activeItem = navbarItems.find(item => pathName === item.route)?.name;
 
     return (
-        <div className='flex p-4 w-full items-center justify-around'>
+        <div className='flex p-4 fixed bottom-0 w-full items-center justify-around bg-neutral-200 dark:bg-neutral-900'>
             {navbarItems.map((item, index) => (
                 <Link prefetch key={index} href={item.route} className={`flex flex-col items-center gap-2 px-4 rounded-lg py-2 cursor-pointer ${activeItem === item.name ? 'bg-blue-50' : ''}`}>
                     <div className={`icon ${activeItem === item.name ? 'text-blue-500' : ''}`}>
