@@ -54,9 +54,9 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                     <Link prefetch href={`/archived/${note._id}`} className={`item-hover note-action cursor-pointer p-2 ${activeNoteId === note._id ? 'bg-neutral-100 dark:bg-neutral-700 rounded-lg' : ''}`} key={note._id} >
                         <header className="flex flex-col gap-2" >
                             <h2 className="font-bold text-lg lg:text-base">{note.title}</h2>
-                            <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2 ">
+                            <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2">
                                 {note.tags.map(tag => (
-                                    <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 p-1 rounded-lg text-sm">{tag}</p>
+                                    <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 px-2 py-1 rounded-lg text-sm">{tag}</p>
                                 ))}
                             </div>
                         </header>
@@ -73,7 +73,7 @@ export default function AllNotes({ searchQuery }: AllNotesProps) {
                             <h2 className="font-bold text-lg lg:text-base">{note.title}</h2>
                             <div className="tag-wrapper flex flex-wrap lg:flex-nowrap gap-2">
                                 {note.tags.slice(0, 2).map(tag => (
-                                    <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 p-1 rounded-lg text-sm">{tag}</p>
+                                    <p key={tag} className="bg-neutral-200 dark:bg-neutral-600 dark:text-neutral-50 px-2 py-1 rounded-lg text-sm font-light">{tag}</p>
                                 ))}
                             </div>
                         </header>
