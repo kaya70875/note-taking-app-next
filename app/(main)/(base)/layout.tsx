@@ -93,7 +93,7 @@ export default function Layout({
                     <Navbar setSearchQuery={setSearchQuery} />
                     <div className="flex w-full flex-grow min-h-0 dark:bg-neutral-950">
                         <section className="notes-section flex flex-col p-5 xl:p-3 lg:p-2 gap-4 w-3/12 border-r border-neutral-300 dark:border-neutral-700">
-                            <Link href={'/create'} className="primary-btn w-full lg:text-sm" >
+                            <Link prefetch href={'/create'} className="primary-btn w-full lg:text-sm" >
                                 + Create New Note
                             </Link>
 
