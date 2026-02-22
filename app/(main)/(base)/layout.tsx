@@ -77,7 +77,7 @@ export default function Layout({
         <div className="flex flex-col w-full">
             {isTablet ? (
                 <div className="flex flex-col justify-between h-full bg-neutral-200 dark:bg-neutral-900">
-                    <Link href={'/notes'} className="logo px-4 xs:px-2 py-6 xs:py-3 cursor-pointer">
+                    <Link prefetch href={'/notes'} className="logo px-4 xs:px-2 py-6 xs:py-3 cursor-pointer">
                         <LogoSvg props={{ color: 'text-neutral-950 dark:text-neutral-50' }} />
                     </Link>
                     <TabletLayout>
