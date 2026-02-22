@@ -9,6 +9,7 @@ import NoteContentNav from './layoutShift/NoteContentNav';
 import useScreenSize from '@hooks/useScreenSize';
 import dynamic from '@node_modules/next/dynamic';
 import { Note } from '../types/notes';
+import Link from '@node_modules/next/link';
 
 const DynamicTextEditor = dynamic(() => import('./QuillEditor'), { ssr: false });
 
@@ -62,7 +63,6 @@ export default function CreateNote() {
             content: '',
             tags: [],
         });
-        router.prefetch('/notes');
     };
     return (
         <div className="content-section w-full flex flex-1 flex-col gap-4 p-4 xs:p-1 border-r lg:border-none border-neutral-300 dark:border-e-neutral-700">
@@ -128,7 +128,7 @@ export default function CreateNote() {
                                 onClick={handleCancel}
                                 className="flex items-center justify-center border border-neutral-500 dark:border-neutral-700 p-3 dark:text-neutral-200 rounded-lg w-1/6 hover:bg-neutral-200 dark:hover:bg-neutral-900 transition-all duration-150"
                             >
-                                Cancel
+                                <Link href={'/notes'} prefetch>Cancel</Link>
                             </button>
                         </>
                     )}
