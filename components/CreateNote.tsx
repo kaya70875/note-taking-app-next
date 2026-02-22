@@ -122,7 +122,7 @@ export default function CreateNote() {
                                 className="primary-btn w-1/4 md:w-1/6"
                                 disabled={loading}
                             >
-                                Save Note
+                                Create Note
                             </button>
                             <button
                                 onClick={handleCancel}

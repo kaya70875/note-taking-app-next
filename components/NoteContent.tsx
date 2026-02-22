@@ -12,7 +12,7 @@ import useScreenSize from '@hooks/useScreenSize';
 import dynamic from '@node_modules/next/dynamic';
 import { LoadingState } from './reusables/LoadingState';
 
-const DynamicTextEditor = dynamic(() => import('./QuillEditor') , {ssr : false});
+const DynamicTextEditor = dynamic(() => import('./QuillEditor'), { ssr: false });
 
 type Status = 'ready' | 'fetching' | 'done' | 'error';
 
@@ -21,7 +21,7 @@ export default function page() {
     const { getRelevantNotes, updateNote } = useNoteActions();
     const { showToast } = useToast();
 
-    const {isTablet } = useScreenSize();
+    const { isTablet } = useScreenSize();
 
     const params = useParams();
     const id = params.id; // Access dynamic route parameter like this in next 15.
@@ -35,8 +35,8 @@ export default function page() {
 
     });
 
-    const [status , setStatus] = useState<Status>('ready');
-    const [disabled ,  setDisabled] = useState(false);
+    const [status, setStatus] = useState<Status>('ready');
+    const [disabled, setDisabled] = useState(false);
 
     const formattedDate = useMemo(() => {
         return notes ? new Date(notes.updatedAt).toLocaleDateString() : ''
@@ -158,14 +158,13 @@ export default function page() {
                             <>
                                 <button
                                     onClick={handleSave}
-                                    className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg disabled:opacity-50 disabled:hover:bg-blue-600"
-                                    disabled={disabled}
+                                    className="primary-btn w-1/4 md:w-1/6"
                                 >
-                                    Save Note
+                                    Edit Note
                                 </button>
                                 <button
                                     onClick={handleCancel}
-                                    className="flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 p-3 border-none text-neutral-600 rounded-lg"
+                                    className="flex items-center justify-center border border-neutral-500 dark:border-neutral-700 p-3 dark:text-neutral-200 rounded-lg w-1/6 hover:bg-neutral-200 dark:hover:bg-neutral-900 transition-all duration-150"
                                 >
                                     Cancel
                                 </button>
@@ -173,7 +172,7 @@ export default function page() {
                         ) : (
                             <button
                                 onClick={() => setEditMode(true)}
-                                className="flex items-center justify-center bg-blue-500 p-3 border-none text-neutral-50 rounded-lg lg:hidden"
+                                className="primary-btn w-32 lg:hidden"
                             >
                                 Edit Note
                             </button>
